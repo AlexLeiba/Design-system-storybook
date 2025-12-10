@@ -1,12 +1,3 @@
-import { Button } from "./components/ui/Button/Button";
-import { Checkbox } from "./components/ui/Checkbox/Checkbox";
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-} from "./components/ui/Dialog/Dialog";
-import { FileUpload } from "./components/ui/FileUpload/FileUpload";
 import { Input } from "./components/ui/Input/Input";
 
 function App() {
