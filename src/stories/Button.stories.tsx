@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../components/ui/Button/Button";
 import Label from "../components/ui/Label/Label";
 
-// Meta<typeof Button> takes care to pass only attributes that exists.
+// Meta<typeof Button> takes care to pass only attributes that exists in Meta.
 const meta: Meta<typeof Button> = {
   title: "Example/Button",
   component: Button,

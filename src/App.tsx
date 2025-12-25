@@ -1,51 +1,55 @@
-import { Input } from "./components/ui/Input/Input";
+import Label from "./components/ui/Label/Label";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "./components/ui/Tabs/Tabs";
 
 function App() {
   return (
-    <div className="h-[calc(100vh-250px)] bg-yellow-50 flex-col justify-between">
-      {/* <Tabs defaultValue="tab1">
-          <TabsList>
-            <TabsTrigger
-              variant="tertiary"
-              // customTitleClassName=""
-              size="large"
-              value="tab1"
-            >
-              <Label>Tab 1</Label>
-            </TabsTrigger>
-            <TabsTrigger
-              variant="primary"
-              size="large"
-              value="tab2"
-              className="bg-green-300"
-            >
-              {" "}
-              <Label>Tab 2</Label>
-            </TabsTrigger>
-          </TabsList>
+    <div className="h-[calc(100vh-250px)] bg-yellow-500 flex-col justify-between w-full">
+      <Tabs defaultValue="tab2">
+        <TabsList className="bg-black text-white " position="center">
+          <TabsTrigger
+            variant="tertiary"
+            // customTitleClassName=""
+            size="large"
+            value="tab1"
+          >
+            <Label className="text-white">Tab 1</Label>
+          </TabsTrigger>
+          <TabsTrigger
+            variant="tertiary"
+            size="large"
+            value="tab2"
+            customTitleClassName=""
+          >
+            <Label>Tab 2</Label>
+          </TabsTrigger>
+          <TabsTrigger
+            variant="tertiary"
+            size="large"
+            value="tab3"
+            // className="bg-green-300"
+            customTitleClassName=""
+          >
+            <Label>Tab 2</Label>
+          </TabsTrigger>
+          <TabsTrigger
+            variant="tertiary"
+            size="large"
+            value="tab4"
+            // className="bg-green-300"
+            customTitleClassName=""
+          >
+            <Label>Tab 2</Label>
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="tab1">Content 1</TabsContent>
-          <TabsContent value="tab2">Content 2</TabsContent>
-        </Tabs> */}
-      <Input
-        title={"Input title"}
-        error="dsdsdssdsd"
-        errorClassName="text-2xl"
-        titleClassName="text-2xl"
-      />
-      <Input
-        title={"Input title"}
-        success
-        className="text-3xl font-bold border-4"
-      />
-
-      <Input title={"Input title"} sizeType={"large"} />
-      <Input
-        type="password"
-        title={"Input title"}
-        sizeType={"small"}
-        eyeClassName="text-red-600"
-      />
+        <TabsContent value="tab1">Content 1</TabsContent>
+        <TabsContent value="tab2">Content 2</TabsContent>
+      </Tabs>
     </div>
   );
 }

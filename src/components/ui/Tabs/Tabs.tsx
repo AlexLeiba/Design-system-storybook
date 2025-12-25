@@ -8,6 +8,20 @@ import React, {
 } from "react";
 import { cn } from "../../../../lib/utilities";
 import { Button } from "../Button/Button";
+import { cva } from "class-variance-authority";
+
+const tabsListVariants = cva(
+  "inline-flex gap-2 p-1 border-2 border-gray-400 rounded-2xl w-full",
+  {
+    variants: {
+      position: {
+        left: "flex flex-row justify-start",
+        center: "flex flex-row justify-center",
+        right: "flex flex-row justify-end",
+      },
+    },
+  }
+);
 
 type ContextProps = {
   tabContent: string;
@@ -18,8 +32,9 @@ const TabsContext = createContext<ContextProps>({
   setTabContent: () => {},
 });
 
-type PropsTabs = {
+type PropsTabsWrapper = {
   defaultValue: string;
+  fullWidth?: boolean;
   children: React.ReactNode;
 };
 function useTabsData() {
@@ -27,25 +42,40 @@ function useTabsData() {
 }
 
 // PARENT TABS
-export function Tabs({ defaultValue, children }: PropsTabs) {
+export function Tabs({
+  defaultValue,
+  fullWidth = false,
+  children,
+}: PropsTabsWrapper) {
   const [tabContent, setTabContent] = useState(defaultValue);
   return (
     <TabsContext.Provider value={{ tabContent, setTabContent }}>
-      <div className="inline-block">{children}</div>
+      <div className={cn(fullWidth ? "flex flex-col" : "inline-flex flex-col")}>
+        {children}
+      </div>
     </TabsContext.Provider>
   );
 }
 
 type TabsListProps = ComponentProps<"div"> & {
   children: React.ReactNode;
+  fullWidth?: boolean;
+  position?: "left" | "center" | "right";
 };
 // CONTAINER OF TABS LIST, WILL TAKE TAB TRIGGERS AS CHILDREN
-export function TabsList({ children, className, ...props }: TabsListProps) {
+export function TabsList({
+  children,
+  className = "",
+  fullWidth = false,
+  position = "left",
+  ...props
+}: TabsListProps) {
   return (
     <div
       className={cn(
-        className ? className : "",
-        "inline-flex gap-2 p-1 border-2 border-gray-400 rounded-2xl"
+        tabsListVariants({ position }),
+
+        className
       )}
       {...props}
     >

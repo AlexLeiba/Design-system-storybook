@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import React, {
   createContext,
   useContext,
+  useEffect,
   useRef,
   useState,
   type ComponentProps,
@@ -60,6 +61,10 @@ export function Dialog({
       document.removeEventListener("click", clickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setOpen(isOpened);
+  }, [isOpened]);
   return (
     <DialogContext.Provider
       value={{ open, setOpen, handleSubmit, handleCancel }}
@@ -99,20 +104,25 @@ export function DialogHeader({
 
   return (
     <div className="relative" {...props}>
-      <X
+      <button
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
           "absolute top-0 right-0 cursor-pointer hover:opacity-80",
           closeButtonClassName
         )}
-      />
+      >
+        <X />
+      </button>
       <div className="mt-6">{children}</div>
     </div>
   );
 }
 
-export function DialogBody({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+type DialogBodyProps = ComponentProps<"div"> & {
+  children: React.ReactNode;
+};
+export function DialogBody({ children, className = "" }: DialogBodyProps) {
+  return <div className={cn(className)}>{children}</div>;
 }
 
 const footerVariants = cva(["flex w-full  gap-2"], {
@@ -168,7 +178,6 @@ export function DialogFooter({
         <Button
           disabled={loading || disabled}
           fullWidth={fullWidth}
-          //   variant={variant === "delete" ? "secondary" : "primary"}
           onClick={() => {
             handleCancel();
             setOpen(false);
