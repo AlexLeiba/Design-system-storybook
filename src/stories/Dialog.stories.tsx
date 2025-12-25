@@ -89,9 +89,6 @@ const meta: Meta = {
       defaultValue: false,
     },
   },
-  // parameters: {
-  //   layout: "fullscreen",
-  // },
 };
 
 export default meta;
