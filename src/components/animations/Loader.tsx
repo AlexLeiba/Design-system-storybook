@@ -16,6 +16,7 @@ const loaderVariants = cva(
         destructive: "text-gray-800",
         tertiary: "text-white",
         ghost: "text-gray-800",
+        link: "text-gray-800",
       },
       visibilityState: {
         true: "",
