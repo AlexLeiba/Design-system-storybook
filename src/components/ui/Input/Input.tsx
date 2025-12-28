@@ -6,18 +6,19 @@ import { cn } from "../../../../lib/utilities";
 
 const inputVariants = cva(
   [
-    "p-2 font-lite text-gray-900 w-full",
-    "focus:outline-none focus:ring focus:ring-black disabled:ring disabled:ring-gray-400 disabled:cursor-not-allowed ",
+    "py-2 px-3  text-gray-900 w-full",
+    "focus:outline-none focus:ring focus:ring-gray-6",
+    "disabled:ring disabled:ring-gray-300 disabled:cursor-not-allowed",
   ],
   {
     variants: {
       variant: {
-        primary: "border-2 rounded-2xl border-gray-400",
-        secondary: "border-2 rounded-3xl border-gray-400 disabled:bg-gray-200",
+        primary: "border rounded-2xl border-gray-400",
+        secondary: "border rounded-3xl border-gray-400 disabled:bg-gray-200",
       },
       sizeType: {
-        small: "text-sm",
-        medium: "text-base",
+        small: "text-base ",
+        medium: "text-xl ",
         large: "p-4 text-2xl",
       },
       errorState: {
@@ -27,6 +28,10 @@ const inputVariants = cva(
       successState: {
         false: "",
         true: "border-green-500 focus:border-green-600 focus:ring-green-600 pr-12",
+      },
+      passwordType: {
+        false: "",
+        true: "pr-12",
       },
       weight: {
         thin: "font-thin",
@@ -91,7 +96,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             {title}
           </p>
         </label>
-        <div className="relative w-full">
+        <div className="relative">
           {type === "textarea" ? (
             <textarea
               rows={4}
@@ -111,7 +116,13 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           ) : (
             <input
               id="input"
-              type={type}
+              type={
+                type === "password"
+                  ? showPassword
+                    ? "text"
+                    : "password"
+                  : type
+              }
               className={cn(
                 inputVariants({
                   variant,
@@ -119,19 +130,21 @@ export const Input = forwardRef<HTMLInputElement, Props>(
                   weight,
                   errorState: !!error,
                   successState: !!success,
+                  passwordType: type === "password",
                 }),
                 className
               )}
               {...props}
             />
           )}
-          {type === "password" && (
+          {type === "password" && !success && (
             <>
               {showPassword ? (
                 <button
+                  disabled={props.disabled}
                   onClick={() => setShowPassword(false)}
                   className={cn(
-                    "absolute top-[calc(50%-0.7rem)] right-4",
+                    "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed",
                     success ? "text-green-600" : "text-gray-400",
                     eyeClassName
                   )}
@@ -140,9 +153,10 @@ export const Input = forwardRef<HTMLInputElement, Props>(
                 </button>
               ) : (
                 <button
+                  disabled={props.disabled}
                   onClick={() => setShowPassword(true)}
                   className={cn(
-                    "absolute top-[calc(50%-0.7rem)] right-4",
+                    "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed",
                     success ? "text-green-600" : "text-gray-400",
                     eyeClassName
                   )}
@@ -163,7 +177,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           {error && (
             <BadgeAlert
               className={cn(
-                "absolute top-[calc(50%-0.7rem)] right-4",
+                "absolute top-[50%] translate-y-[-50%] right-4",
                 error ? "text-red-600" : "text-gray-400"
               )}
             />

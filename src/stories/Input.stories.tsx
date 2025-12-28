@@ -5,11 +5,24 @@ const meta: Meta<typeof Input> = {
   title: "Example/Input",
   component: Input,
   tags: ["autodocs"],
-  argTypes: {},
-  args: {
-    onChange: (e) => console.log(e.target.value),
-    onBlur: (e) => console.log(e.target.value),
-    onFocus: (e) => console.log(e.target.value),
+  argTypes: {
+    value: { control: "text" },
+    title: { control: "text" },
+    variant: {
+      control: "radio",
+      options: ["primary", "secondary"],
+      defaultValue: "primary",
+    },
+    sizeType: {
+      control: "radio",
+      options: ["small", "medium", "large"],
+      defaultValue: "medium",
+    },
+    onChange: { action: "check" },
+    className: { control: "check" },
+    eyeClassName: { control: "check" },
+    errorClassName: { control: "check" },
+    titleClassName: { control: "check" },
   },
 };
 
@@ -17,72 +30,80 @@ export default meta;
 
 type Story = StoryObj<typeof Input>;
 
-export const PrimaryThin: Story = {
+export const DefaultInput: Story = {
   args: {
-    title: "input",
-    weight: "thin",
+    title: "Input label",
     variant: "primary",
-    value: "primary input value thin...",
+    value: "default input placeholder...",
+    sizeType: "medium",
+  },
+};
+export const InputSuccess: Story = {
+  args: {
+    title: "Input label",
+    variant: "primary",
+    value: "type here...",
+    sizeType: "medium",
+    success: true,
+  },
+};
+export const InputError: Story = {
+  args: {
+    title: "Input label",
+    variant: "primary",
+    value: "type here...",
+    sizeType: "medium",
+    error: "Error message",
+  },
+};
+export const InputPassword: Story = {
+  args: {
+    title: "Input label",
+    variant: "primary",
+    value: "type here...",
+    sizeType: "medium",
+    type: "password",
+  },
+};
+export const InputDisabled: Story = {
+  args: {
+    title: "Input label",
+    variant: "primary",
+    value: "type here...",
+    sizeType: "medium",
+    disabled: true,
+  },
+};
+export const InputSmall: Story = {
+  args: {
+    title: "Input label",
+    variant: "primary",
+    value: "primary input value...",
     sizeType: "small",
   },
 };
-export const PrimaryBold: Story = {
+export const InputMedium: Story = {
   args: {
-    title: "input",
-    weight: "bold",
+    title: "Input label",
     variant: "primary",
     value: "primary input value...",
     sizeType: "medium",
   },
 };
-export const PrimaryLarge: Story = {
+export const InputLarge: Story = {
   args: {
-    title: "input",
-    weight: "thin",
+    title: "Input label",
     variant: "primary",
     value: "primary input value...",
     sizeType: "large",
   },
 };
-export const Primary: Story = {
+export const InputTextarea: Story = {
   args: {
-    title: "input",
-    weight: "thin",
+    title: "Input label",
     variant: "primary",
     value: "primary input value...",
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    title: "input",
-    weight: "thin",
-    variant: "secondary",
-    value: "secondary input value...",
-  },
-};
-export const Disabled: Story = {
-  args: {
-    title: "input",
-    weight: "thin",
-    variant: "secondary",
-    disabled: true,
-    value: "Disabled input value...",
-  },
-};
-export const Error: Story = {
-  args: {
-    title: "input",
-    weight: "thin",
-    variant: "primary",
-    error: "Error message",
-  },
-};
-export const Success: Story = {
-  args: {
-    title: "input",
-    weight: "thin",
-    variant: "primary",
-    success: true,
+    sizeType: "large",
+    type: "textarea",
   },
 };
