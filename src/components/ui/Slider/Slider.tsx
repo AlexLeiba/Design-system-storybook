@@ -24,11 +24,36 @@ function useSlider() {
 
   return values;
 }
-type Props = {
+
+type Props = ComponentProps<"div"> & {
   children: React.ReactNode;
+  navButtonIconSize?: number;
+  navButtonRightIcon?: React.ReactNode;
+  navButtonLeftIcon?: React.ReactNode;
+  navButtonLeftClassName?: string;
+  navButtonRightClassName?: string;
+  paginationDotsButtonClassName?: string;
+  paginationDotsContainerClassName?: string;
+  paginationDotsSelectedButtonColor?: string;
+  paginationDotsButtonColor?: string;
+  paginationDotsIconSize?: string;
 };
-export function Slider({ children }: Props) {
-  const [slider, setSlider] = useState(1);
+
+export function Slider({
+  children,
+  navButtonRightIcon,
+  navButtonLeftIcon,
+  navButtonIconSize,
+  navButtonLeftClassName,
+  navButtonRightClassName,
+  paginationDotsButtonClassName,
+  paginationDotsContainerClassName,
+  paginationDotsSelectedButtonColor,
+  paginationDotsButtonColor,
+
+  className = "",
+}: Props) {
+  const [slider, setSlider] = useState(0);
   const childrenLength = React.Children.count(children);
 
   return (
@@ -41,82 +66,148 @@ export function Slider({ children }: Props) {
     >
       <div className="overflow-hidden relative">
         <NavButton
+          navButtonRightIcon={navButtonRightIcon}
+          navButtonLeftIcon={navButtonLeftIcon}
+          iconSize={navButtonIconSize}
+          className={navButtonLeftClassName}
+          title="previous slide"
           direction="left"
           onClick={() =>
             setSlider((prev) => {
-              console.log("click");
-              if (prev <= 1) {
-                return childrenLength;
+              if (prev <= 0) {
+                return childrenLength - 1;
               }
               return prev - 1;
             })
           }
         />
         <div
-          style={{ width: `${slider * 100}vw` }}
-          className="flex  bg-green-500 justify-start flex-row-reverse "
+          style={{
+            minWidth: `100vw`,
+            transform: `translateX(${slider === 0 ? 0 : -slider * 100}vw)`,
+          }}
+          className={cn(
+            className,
+            "flex  transition-all duration-500 ease-in-out"
+          )}
         >
           {children}
         </div>
         <NavButton
+          navButtonRightIcon={navButtonRightIcon}
+          navButtonLeftIcon={navButtonLeftIcon}
+          iconSize={navButtonIconSize}
+          title="next slide"
           direction="right"
+          className={navButtonRightClassName}
           onClick={() =>
             setSlider((prev) => {
-              console.log("click");
-              if (prev === childrenLength) {
-                return 1;
+              if (prev + 1 === childrenLength) {
+                return 0;
               }
               return prev + 1;
             })
           }
         />
-        <PaginatedDots />
+        <PaginatedDots
+          buttonClassName={paginationDotsButtonClassName}
+          className={paginationDotsContainerClassName}
+          selectedButtonColor={paginationDotsSelectedButtonColor}
+          buttonColor={paginationDotsButtonColor}
+        />
       </div>
     </SliderContext.Provider>
   );
 }
-type SliderItemProps = {
+type SliderItemProps = ComponentProps<"div"> & {
   children: React.ReactNode;
 };
-export function SliderItem({ children }: SliderItemProps) {
-  const { setSlider, slider, childrenLength } = useSlider();
-  console.log("🚀 ~ SliderItem ~ slider:", slider, childrenLength);
-  return <div className="min-w-screen relative">{children}</div>;
+export function SliderItem({ children, className = "" }: SliderItemProps) {
+  return (
+    <div className={cn(className, "max-h-screen min-w-screen relative ")}>
+      {children}
+    </div>
+  );
 }
 
 type NavButtonProps = ComponentProps<"button"> & {
   direction: "left" | "right";
+  iconSize?: number;
+  navButtonRightIcon?: React.ReactNode;
+  navButtonLeftIcon?: React.ReactNode;
 };
-function NavButton({ direction, ...props }: NavButtonProps) {
+function NavButton({
+  direction,
+  className = "",
+  iconSize,
+  navButtonRightIcon,
+  navButtonLeftIcon,
+  ...props
+}: NavButtonProps) {
   return (
     <button
       className={cn(
         "cursor-pointer absolute top-1/2 translate-y-[-50%] ",
         "p-4 rounded-full bg-white/30 hover:bg-white/90 hover:shadow-2xl z-10",
-        direction === "left" ? "left-6" : "right-6"
+        direction === "left" ? "left-6" : "right-6",
+        className
       )}
       {...props}
     >
-      {direction === "left" ? <ChevronLeft /> : <ChevronRight />}
+      {direction === "left" ? (
+        navButtonLeftIcon ? (
+          navButtonLeftIcon
+        ) : (
+          <ChevronLeft size={iconSize} />
+        )
+      ) : navButtonRightIcon ? (
+        navButtonRightIcon
+      ) : (
+        <ChevronRight size={iconSize} />
+      )}
     </button>
   );
 }
 
-type PaginatedDotsProps = ComponentProps<"button"> & {};
-function PaginatedDots({ ...props }: PaginatedDotsProps) {
+type PaginatedDotsProps = ComponentProps<"button"> & {
+  buttonClassName?: string;
+  selectedButtonColor?: string;
+  buttonColor?: string;
+};
+function PaginatedDots({
+  className = "",
+  buttonClassName = "",
+  buttonColor = "#4a5565",
+  selectedButtonColor = "#e5e7eb",
+  ...props
+}: PaginatedDotsProps) {
   const { slider, childrenLength, setSlider } = useSlider();
   const childrenArray = new Array(childrenLength).fill(0);
   return (
-    <div className="flex gap-2 justify-center absolute bottom-4 left-1/2 translate-x-[-50%]">
+    <div
+      className={cn(
+        "bottom-4  gap-2 justify-center",
+        "flex absolute left-1/2 translate-x-[-50%]",
+        className
+      )}
+    >
       {childrenArray.map((_, index) => {
         return (
           <button
-            onClick={() => setSlider(index + 1)}
+            title={(index + 1).toString()}
+            key={index}
+            onClick={() => setSlider(index)}
             {...props}
             className={cn(
               "p-2 bg-gray-800 hover:opacity-80 cursor-pointer rounded-full",
-              slider === index + 1 ? "bg-gray-200" : "bg-gray-600"
+              buttonClassName
             )}
+            style={{
+              backgroundColor:
+                slider === index
+                  ? selectedButtonColor || "#e5e7eb"
+                  : buttonColor || "#4a5565",
+            }}
           />
         );
       })}{" "}
