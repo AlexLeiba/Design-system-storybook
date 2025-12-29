@@ -16,10 +16,14 @@ function DialogComponent({
   submitButtonTitle,
   variant,
   isOpened,
+  disabled,
+  loading,
+  withClickOutside,
 }: DialogProps & DialogFooterProps) {
   return (
     <div className="h-[500px]">
       <Dialog
+        withClickOutside={withClickOutside}
         isOpened={isOpened}
         handleCancel={() => {}}
         handleSubmit={() => {}}
@@ -35,6 +39,8 @@ function DialogComponent({
         </DialogBody>
 
         <DialogFooter
+          disabled={disabled}
+          loading={loading}
           variant={variant}
           fullWidth={fullWidth}
           buttonDirection={buttonDirection}
@@ -88,6 +94,18 @@ const meta: Meta = {
       control: "boolean",
       defaultValue: false,
     },
+    withClickOutside: {
+      control: "boolean",
+      defaultValue: false,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
   },
 };
 
@@ -95,31 +113,20 @@ export default meta;
 
 type Story = StoryObj<typeof DialogComponent>;
 
-// SET ARGS PASSED BY CONTROLS
-export const DialogDefault: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is default Dialog component, the code doesn't show how to use it. If you want to see how to use it, check the code of the examples below.", //additional desc in the auto generated docs.
-      },
-    },
-  },
-  args: {
-    isOpened: true,
-    fullWidth: false,
-    buttonDirection: "row",
-    buttonPosition: "right",
-    variant: "submit",
-    cancelButtonTitle: "Cancel",
-    submitButtonTitle: "Submit",
-  },
+export const DialogExample: Story = {
+  render: (args) =>
+    DialogComponent({ ...args, withClickOutside: false, isOpened: true }),
 };
 
 export const DialogVertical: Story = {
   render: () => (
     <div className="h-[500px]">
-      <Dialog isOpened={true} handleCancel={() => {}} handleSubmit={() => {}}>
+      <Dialog
+        withClickOutside={false}
+        isOpened={true}
+        handleCancel={() => {}}
+        handleSubmit={() => {}}
+      >
         <DialogHeader>
           <h2 className="text-2xl">Dialog Title</h2>
         </DialogHeader>
@@ -145,7 +152,12 @@ export const DialogVertical: Story = {
 export const DialogHorizontal: Story = {
   render: () => (
     <div className="h-[500px]">
-      <Dialog isOpened={true} handleCancel={() => {}} handleSubmit={() => {}}>
+      <Dialog
+        isOpened={true}
+        withClickOutside={false}
+        handleCancel={() => {}}
+        handleSubmit={() => {}}
+      >
         <DialogHeader>
           <h2 className="text-2xl">Dialog Title</h2>
         </DialogHeader>
@@ -172,7 +184,12 @@ export const DialogHorizontal: Story = {
 export const DialogDelete: Story = {
   render: () => (
     <div className="h-[500px]">
-      <Dialog isOpened={true} handleCancel={() => {}} handleSubmit={() => {}}>
+      <Dialog
+        withClickOutside={false}
+        isOpened={true}
+        handleCancel={() => {}}
+        handleSubmit={() => {}}
+      >
         <DialogHeader>
           <h2 className="text-2xl">Dialog Title</h2>
         </DialogHeader>

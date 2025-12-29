@@ -6,6 +6,14 @@ const meta: Meta = {
   component: Checkbox,
   tags: ["autodocs"],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
+  },
 };
 
 export default meta;

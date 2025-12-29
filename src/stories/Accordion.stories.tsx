@@ -6,26 +6,19 @@ import {
 } from "../components/ui/Accordion/Accordion";
 
 type AccordionExampleUiProps = {
-  defaultValue?: string;
-  value1: string;
-  value2: string;
-  value3: string;
-  label1: string;
-  label2: string;
-  label3: string;
+  defaultExpandedTab?: string;
+
+  label: string;
+  value: string;
 };
 const AccordionExampleUi = ({
-  value1,
-  value2,
-  value3,
-  label1,
-  label2,
-  label3,
-  defaultValue,
+  label = "Tab",
+  defaultExpandedTab,
+  value,
 }: AccordionExampleUiProps) => {
   return (
-    <Accordion defaultValue={defaultValue}>
-      <AccordionHeaderTrigger value={value1} label={label1}>
+    <Accordion defaultExpandedTab={defaultExpandedTab}>
+      <AccordionHeaderTrigger value={value || "tab1"} label={label + 1}>
         <AccordionContent>
           <h2 className="text-xl">Accordion Content 1</h2>
           <p className="text-xs">
@@ -46,7 +39,7 @@ const AccordionExampleUi = ({
           </p>
         </AccordionContent>
       </AccordionHeaderTrigger>
-      <AccordionHeaderTrigger value={value2} label={label2}>
+      <AccordionHeaderTrigger value={value || "tab2"} label={label + 2}>
         <AccordionContent>
           <h2 className="text-xl">Accordion Content 2</h2>
           <p className="text-xs">
@@ -59,7 +52,7 @@ const AccordionExampleUi = ({
           </p>
         </AccordionContent>
       </AccordionHeaderTrigger>
-      <AccordionHeaderTrigger value={value3} label={label3}>
+      <AccordionHeaderTrigger value={value || "tab3"} label={label + 3}>
         <AccordionContent>
           <h2 className="text-xl">Accordion Content 3</h2>
           <p>
@@ -89,13 +82,21 @@ const meta: Meta<typeof AccordionExampleUi> = {
   component: AccordionExampleUi,
   tags: ["autodocs"],
   argTypes: {
-    value1: { control: "text", defaultValue: "tab1" },
-    value2: { control: "text", defaultValue: "tab2" },
-    value3: { control: "text", defaultValue: "tab3" },
-    label1: { control: "text", defaultValue: "Tab 1" },
-    label2: { control: "text", defaultValue: "Tab 2" },
-    label3: { control: "text", defaultValue: "Tab 3" },
-    defaultValue: { control: "text", defaultValue: "tab1" },
+    label: {
+      control: "text",
+      defaultExpandedTab: "Accordion tab",
+      description: "Label for each tab",
+    },
+    value: {
+      control: "check",
+      description: "Unique custom value to identify each tab",
+    },
+
+    defaultExpandedTab: {
+      control: "text",
+      defaultExpandedTab: "tab2",
+      description: "(tab1 , tab2 , tab3)",
+    },
   },
 };
 
@@ -104,31 +105,11 @@ export default meta;
 type Story = StoryObj<typeof AccordionExampleUi>;
 
 export const AccordionUIExample: Story = {
-  args: {
-    value1: "tab1",
-    value2: "tab2",
-    value3: "tab3",
-    label1: "Tab 1",
-    label2: "Tab 2",
-    label3: "Tab 3",
-    defaultValue: "tab1",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "The code doesn't show how to use it. If you want to see how to use it, check the code of the examples below.",
-      },
-    },
-  },
-};
-
-export const AccordionCodeUsage: Story = {
   render: () => (
-    <Accordion className="" defaultValue={"tab1"}>
+    <Accordion defaultExpandedTab={"tab1"} className="">
       <AccordionHeaderTrigger
-        value="tab1"
-        label="Tab 1"
+        value={"tab1"}
+        label={"Accordion tab 1"}
         className=""
         classNameTriggerLabel=""
         classNameTriggerLabelContainer=""
@@ -153,14 +134,8 @@ export const AccordionCodeUsage: Story = {
           </p>
         </AccordionContent>
       </AccordionHeaderTrigger>
-      <AccordionHeaderTrigger
-        value="tab2"
-        label="Tab 2"
-        classNameTriggerLabel=""
-        classNameTriggerLabelContainer=""
-        className=""
-      >
-        <AccordionContent className="">
+      <AccordionHeaderTrigger value={"tab2"} label={"Accordion tab 2"}>
+        <AccordionContent>
           <h2 className="text-xl">Accordion Content 2</h2>
           <p className="text-xs">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
@@ -172,13 +147,7 @@ export const AccordionCodeUsage: Story = {
           </p>
         </AccordionContent>
       </AccordionHeaderTrigger>
-      <AccordionHeaderTrigger
-        value="tab3"
-        label="Tab 3"
-        classNameTriggerLabel=""
-        classNameTriggerLabelContainer=""
-        className=""
-      >
+      <AccordionHeaderTrigger value={"tab3"} label={"Accordion tab 3"}>
         <AccordionContent>
           <h2 className="text-xl">Accordion Content 3</h2>
           <p>
@@ -205,7 +174,7 @@ export const AccordionCodeUsage: Story = {
     docs: {
       description: {
         story:
-          "Check the code of the component with all its props by clicking on the 'Show Code' button.",
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
       },
     },
   },

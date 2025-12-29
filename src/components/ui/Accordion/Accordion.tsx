@@ -27,14 +27,14 @@ function useAccordionContext() {
 }
 
 type AccordionProps = ComponentProps<"div"> & {
-  defaultValue?: string;
+  defaultExpandedTab?: string;
 };
 export function Accordion({
-  defaultValue = "",
+  defaultExpandedTab = "",
   className = "",
   children,
 }: AccordionProps) {
-  const [item, setItem] = useState(defaultValue);
+  const [item, setItem] = useState(defaultExpandedTab);
   return (
     <AccordionContext.Provider value={{ item, setItem }}>
       <div className={cn("w-full p-2", className)}>{children}</div>

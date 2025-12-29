@@ -32,6 +32,18 @@ const meta: Omit<Meta<typeof Button>, "iconRight" | "iconLeft"> = {
       control: "check",
       defaultValue: "",
     },
+    loading: {
+      control: "boolean",
+      defaultValue: false,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
   },
 };
 
@@ -40,11 +52,6 @@ export default meta;
 type Story = Omit<StoryObj<typeof Button>, "iconRight" | "iconLeft">; //this is the type of the component
 
 export const Primary: Story = {
-  parameters: {
-    docs: {
-      description: {},
-    },
-  },
   args: {
     variant: "primary",
     size: "medium",
@@ -53,13 +60,6 @@ export const Primary: Story = {
 };
 
 export const Secondary: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a secondary button",
-      },
-    },
-  },
   args: {
     variant: "secondary",
     size: "medium",
@@ -67,13 +67,6 @@ export const Secondary: Story = {
   },
 };
 export const Tertiary: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a secondary button",
-      },
-    },
-  },
   args: {
     variant: "tertiary",
     size: "medium",
@@ -81,13 +74,6 @@ export const Tertiary: Story = {
   },
 };
 export const Destructive: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a secondary button",
-      },
-    },
-  },
   args: {
     variant: "destructive",
     size: "medium",
@@ -95,13 +81,6 @@ export const Destructive: Story = {
   },
 };
 export const Ghost: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a secondary button",
-      },
-    },
-  },
   args: {
     variant: "ghost",
     size: "medium",
@@ -109,13 +88,6 @@ export const Ghost: Story = {
   },
 };
 export const Link: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a secondary button",
-      },
-    },
-  },
   args: {
     variant: "link",
     size: "medium",

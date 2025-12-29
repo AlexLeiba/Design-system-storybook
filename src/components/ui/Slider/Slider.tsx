@@ -36,7 +36,6 @@ type Props = ComponentProps<"div"> & {
   paginationDotsContainerClassName?: string;
   paginationDotsSelectedButtonColor?: string;
   paginationDotsButtonColor?: string;
-  paginationDotsIconSize?: string;
 };
 
 export function Slider({

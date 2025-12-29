@@ -30,6 +30,7 @@ export type DialogProps = ComponentProps<"div"> & {
   handleSubmit: () => void;
   handleCancel: () => void;
   isOpened?: boolean;
+  withClickOutside?: boolean;
 };
 
 const dialogVariants = cva([
@@ -42,6 +43,7 @@ export function Dialog({
   handleSubmit,
   handleCancel,
   isOpened = false,
+  withClickOutside = true,
   className = "",
 }: DialogProps) {
   const [open, setOpen] = useState(isOpened);
@@ -51,7 +53,8 @@ export function Dialog({
     const clickOutside = (e: MouseEvent) => {
       if (
         refContainer.current &&
-        !refContainer.current.contains(e.target as Node)
+        !refContainer.current.contains(e.target as Node) &&
+        withClickOutside
       ) {
         setOpen(false);
       }
@@ -60,7 +63,7 @@ export function Dialog({
     return () => {
       document.removeEventListener("click", clickOutside);
     };
-  }, []);
+  }, [withClickOutside]);
 
   useEffect(() => {
     setOpen(isOpened);
@@ -162,7 +165,8 @@ export type DialogFooterProps = VariantProps<typeof footerVariants> &
 export function DialogFooter({
   variant,
   fullWidth,
-  buttonDirection,
+  buttonDirection = "row",
+  buttonPosition = "right",
   cancelButtonTitle,
   submitButtonTitle,
   cancelButtonClassName = "",
@@ -174,7 +178,11 @@ export function DialogFooter({
   const { setOpen, handleCancel, handleSubmit } = useDialog();
   return (
     <div className="flex flex-col justify-end " {...props}>
-      <div className={cn(footerVariants({ variant, buttonDirection }))}>
+      <div
+        className={cn(
+          footerVariants({ variant, buttonDirection, buttonPosition })
+        )}
+      >
         <Button
           disabled={loading || disabled}
           fullWidth={fullWidth}
