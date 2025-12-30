@@ -7,6 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Checkbox } from "../Checkbox/Checkbox";
 import Label from "../Label/Label";
 import { cn } from "../../../../lib/utilities";
+import { Check } from "lucide-react";
 
 type OptionsType = {
   value: string;
@@ -30,7 +31,7 @@ const dropdownVariants = cva(
         true: "border-green-500! pr-12",
       },
       size: {
-        small: "p-1",
+        small: "p-2",
         medium: "p-4",
         large: "p-6",
       },
@@ -57,12 +58,12 @@ const dropdownVariants = cva(
   }
 );
 
-const optionVariants = cva("p-2 w-full hover:bg-black/10 cursor-pointer ", {
+const optionVariants = cva(["p-2 w-full hover:bg-black/10 cursor-pointer "], {
   variants: {
     size: {
-      small: "p-1",
-      medium: "p-2",
-      large: "p-4",
+      small: "p-2",
+      medium: "p-4",
+      large: "p-6",
     },
     variant: {
       primary: " rounded-xl  bg-white",
@@ -93,7 +94,7 @@ const optionTitleVariant = cva("p-2 text-left ", {
   },
 });
 const containerOptionsVariants = cva(
-  "flex flex-col gap-2 absolute z-50 top-[calc(100%)] left-0 right-0 ",
+  "flex flex-col gap-2 absolute z-50 top-[calc(100%+0.5rem)] w-[100%] left-0 right-0 ",
   {
     variants: {
       size: {
@@ -119,7 +120,8 @@ type VariantsType = VariantProps<typeof dropdownVariants>;
 type Props = VariantsType &
   HTMLAttributes<HTMLDivElement> & {
     options: OptionsType[];
-    title: string;
+    defaultSelectedSingleValueValue: OptionsType;
+    defaultSelectedMultipleValues: OptionsType[];
     error?: string;
     success?: boolean;
     disabled?: boolean;
@@ -130,12 +132,14 @@ type Props = VariantsType &
     dropMenuContainerClassName?: string;
     dropMenuElementClassName?: string;
     dropMenuElementTitleClassName?: string;
+    size?: "small" | "medium" | "large";
     handleSelectValue: (value: OptionsType) => void;
     // variant?: "primary" | "secondary" | "ghost";
   };
 function Dropdown({
   options,
-  title,
+  defaultSelectedSingleValueValue = { value: "", label: "" },
+  defaultSelectedMultipleValues = [],
   error,
   success,
   disabled,
@@ -153,8 +157,13 @@ function Dropdown({
 }: Props) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [select, setSelect] = useState<OptionsType>({ value: "", label: "" });
-  const [selectMultiple, setSelectMultiple] = useState<OptionsType[]>([]);
+  const [select, setSelect] = useState<OptionsType>({
+    value: defaultSelectedSingleValueValue.value,
+    label: defaultSelectedSingleValueValue.label,
+  });
+  const [selectMultiple, setSelectMultiple] = useState<OptionsType[]>(
+    defaultSelectedMultipleValues
+  );
 
   function handleSelect(
     selectedValue: OptionsType,
@@ -218,13 +227,17 @@ function Dropdown({
             disabled: disabled,
             successState: !!success,
             errorState: !!error,
+            size: props.size,
           }),
           className
         )}
         disabled={disabled}
       >
         {selectType === "single" && (
-          <Label>{(selectType === "single" && select.label) || title}</Label>
+          <Label>
+            {(selectType === "single" && select.label) ||
+              defaultSelectedSingleValueValue.label}
+          </Label>
         )}
         {selectType === "multiple" && (
           <div className="flex gap-2">
@@ -254,7 +267,7 @@ function Dropdown({
                   sizeType: props.size,
                 })}
               >
-                {title}
+                {defaultSelectedSingleValueValue.label}
               </p>
             )}
           </div>
@@ -278,6 +291,7 @@ function Dropdown({
                   onClick={() => handleSelect(option, "single")}
                   className={cn(
                     optionVariants({ variant, size: props.size }),
+                    "flex justify-between items-center",
                     dropMenuElementClassName
                   )}
                   key={option.value}
@@ -290,6 +304,7 @@ function Dropdown({
                   >
                     {option.label}
                   </p>
+                  {select.value === option.value && <Check />}
                 </button>
               ))}
             </div>
@@ -319,6 +334,7 @@ function Dropdown({
                   title={""}
                 >
                   <Checkbox
+                    handleChange={() => {}}
                     onClick={() => handleSelect(option, "multiple")}
                     onChange={() => handleSelect(option, "multiple")}
                     checked={

@@ -36,6 +36,10 @@ const meta: Omit<Meta<typeof Button>, "iconRight" | "iconLeft"> = {
       control: "boolean",
       defaultValue: false,
     },
+    disabled: {
+      control: "boolean",
+      defaultValue: false,
+    },
   },
   parameters: {
     docs: {
@@ -97,8 +101,6 @@ export const Link: Story = {
 
 export const Small: Story = {
   args: {
-    //args is what is passed into the component as props
-
     size: "small",
     variant: "primary",
     children: "Button",
@@ -106,8 +108,6 @@ export const Small: Story = {
 };
 export const Medium: Story = {
   args: {
-    //args is what is passed into the component as props
-
     size: "medium",
     variant: "primary",
     children: "Button",
@@ -115,8 +115,6 @@ export const Medium: Story = {
 };
 export const Large: Story = {
   args: {
-    //args is what is passed into the component as props
-
     size: "large",
     variant: "primary",
     children: "Button",
@@ -124,8 +122,6 @@ export const Large: Story = {
 };
 export const Loading: Story = {
   args: {
-    //args is what is passed into the component as props
-
     size: "large",
     variant: "primary",
     children: "Button",
@@ -134,8 +130,6 @@ export const Loading: Story = {
 };
 export const Disabled: Story = {
   args: {
-    //args is what is passed into the component as props
-
     size: "large",
     variant: "primary",
     children: "Button",
@@ -144,8 +138,6 @@ export const Disabled: Story = {
 };
 export const WithIcons: Story = {
   args: {
-    //args is what is passed into the component as props
-
     size: "large",
     variant: "primary",
     children: "Button",

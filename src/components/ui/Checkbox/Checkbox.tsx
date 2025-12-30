@@ -31,6 +31,8 @@ type Props = ComponentProps<"input"> &
     success?: boolean;
     titleClassName?: string;
     errorClassName?: string;
+    defaultChecked?: boolean;
+    handleChange: (value: boolean) => void;
   };
 export function Checkbox({
   title,
@@ -39,6 +41,9 @@ export function Checkbox({
   sizeType,
   titleClassName = "",
   errorClassName = "",
+  defaultChecked = false,
+  handleChange,
+
   ...props
 }: Props) {
   return (
@@ -50,6 +55,7 @@ export function Checkbox({
               labelInputVariants({
                 errorState: !!error,
                 successState: !!success,
+                sizeType,
               }),
               titleClassName
             )}
@@ -60,6 +66,8 @@ export function Checkbox({
       </label>
 
       <input
+        defaultChecked={defaultChecked}
+        onChange={(e) => handleChange(e.target.checked)}
         className={checkboxVariants({ sizeType, errorState: !!error })}
         id="checkbox"
         {...props}

@@ -5,7 +5,31 @@ const meta: Meta = {
   title: "Example/Checkbox",
   component: Checkbox,
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: {
+    sizeType: {
+      control: "radio",
+      options: ["small", "medium", "large"],
+      defaultValue: "medium",
+    },
+    error: {
+      control: "text",
+    },
+    success: {
+      control: "boolean",
+    },
+    titleClassName: {
+      control: "check",
+    },
+    errorClassName: {
+      control: "check",
+    },
+    handleChange: {
+      control: "check",
+    },
+    defaultChecked: {
+      control: "boolean",
+    },
+  },
   parameters: {
     docs: {
       description: {
@@ -23,12 +47,16 @@ type Story = StoryObj<typeof Checkbox>;
 export const CheckboxDefault: Story = {
   args: {
     title: "Checkbox label default",
+    handleChange: (v) => console.log(v),
+    defaultChecked: true,
   },
 };
 export const CheckboxMedium: Story = {
   args: {
     title: "Checkbox label medium",
     sizeType: "medium",
+    handleChange: (v) => console.log(v),
+    defaultChecked: true,
   },
 };
 export const CheckboxLarge: Story = {
@@ -36,6 +64,8 @@ export const CheckboxLarge: Story = {
     title: "Checkbox label large",
     sizeType: "large",
     error: "Error message",
+    handleChange: (v) => console.log(v),
+    defaultChecked: true,
   },
 };
 
@@ -43,6 +73,8 @@ export const CheckboxDefaultError: Story = {
   args: {
     title: "Checkbox label Error",
     error: "Error message",
+    handleChange: (v) => console.log(v),
+    defaultChecked: true,
   },
 };
 
@@ -50,5 +82,7 @@ export const CheckboxDefaultSuccess: Story = {
   args: {
     title: "Checkbox label Success",
     success: true,
+    handleChange: (v) => console.log(v),
+    defaultChecked: true,
   },
 };

@@ -1,18 +1,10 @@
 import type { StoryObj, Meta } from "@storybook/react";
 import Dropdown from "../components/ui/Dropdown/Dropdown";
 
-const DropdownComponent = () => {
+const DropdownComponent = (args: any) => {
   return (
-    <div className="h-[300px] ">
-      <Dropdown
-        title={"Dropdown title"}
-        options={[
-          { value: "option1", label: "Option 1" },
-          { value: "option2", label: "Option 2" },
-          { value: "option3", label: "Option 3" },
-        ]}
-        handleSelectValue={(v) => console.log("selected", v)}
-      />
+    <div className="h-[400px] ">
+      <Dropdown {...args} />
     </div>
   );
 };
@@ -29,34 +21,67 @@ const meta: Meta = {
         { value: "option3", label: "Option 3" },
       ],
     },
-  },
-  tags: ["autodocs"],
-};
-
-export default meta;
-
-type Story = StoryObj<typeof Dropdown>;
-
-export const DropdownDefault: Story = {
-  render: (args) => (
-    <div className="h-[300px]">
-      <Dropdown
-        label={args.label}
-        title={args.title}
-        options={args.options}
-        handleSelectValue={(v) => console.log("selected", v)}
-      />
-    </div>
-  ),
-  args: {
-    label: "Default Dropdown",
-    title: "default value",
-    options: [
-      { value: "option1", label: "Option 1" },
-      { value: "option2", label: "Option 2" },
-      { value: "option3", label: "Option 3" },
-    ],
-    handleSelectValue: (v) => console.log("first", v),
+    defaultSelectedSingleValueValue: {
+      control: "object",
+      defaultValue: { value: "option1", label: "Option 1" },
+    },
+    label: {
+      control: "text",
+      defaultValue: "Dropdown label",
+    },
+    size: {
+      control: "radio",
+      options: ["small", "medium", "large"],
+    },
+    variant: {
+      control: "radio",
+      options: ["primary", "secondary", "ghost"],
+      defaultValue: "primary",
+    },
+    error: {
+      control: "text",
+      defaultValue: "",
+    },
+    success: {
+      control: "boolean",
+      defaultValue: false,
+    },
+    disabled: {
+      control: "boolean",
+      defaultValue: false,
+    },
+    selectedType: {
+      control: "radio",
+      options: ["single", "multiple"],
+      defaultValue: "single",
+    },
+    className: {
+      control: "check",
+      defaultValue: "",
+    },
+    labelClassName: {
+      control: "check",
+      defaultValue: "",
+    },
+    errorClassName: {
+      control: "check",
+      defaultValue: "",
+    },
+    dropMenuContainerClassName: {
+      control: "check",
+      defaultValue: "",
+    },
+    dropMenuElementClassName: {
+      control: "check",
+      defaultValue: "",
+    },
+    dropMenuElementTitleClassName: {
+      control: "check",
+      defaultValue: "",
+    },
+    handleSelectValue: {
+      control: "check",
+    },
   },
   parameters: {
     docs: {
@@ -66,60 +91,113 @@ export const DropdownDefault: Story = {
       },
     },
   },
+  tags: ["autodocs"],
 };
 
+export default meta;
+
+type Story = StoryObj<typeof Dropdown>;
+
+export const DropdownSingleDefault: Story = {
+  args: {
+    defaultSelectedSingleValueValue: {
+      value: "option1",
+      label: " Option 1",
+    },
+    selectType: "single",
+    variant: "primary",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    handleSelectValue: (value) => console.log(value),
+  },
+};
 export const DropdownMultipleOptionsDefault: Story = {
-  render: (args) => (
-    <div className="h-[300px]">
-      <Dropdown
-        selectType="multiple"
-        label={"Multiple Options Dropdown"}
-        title={"default value"}
-        options={[
-          { value: "option1", label: "Option 1" },
-          { value: "option2", label: "Option 2" },
-          { value: "option3", label: "Option 3" },
-        ]}
-        handleSelectValue={(v) => console.log("selected", v)}
-      />
-    </div>
-  ),
+  args: {
+    defaultSelectedMultipleValues: [
+      {
+        value: "option1",
+        label: " Option 1",
+      },
+    ],
+    selectType: "multiple",
+    variant: "primary",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    handleSelectValue: (value) => console.log(value),
+  },
+};
+export const DropdownMultipleOptionsSecondary: Story = {
+  args: {
+    defaultSelectedMultipleValues: [
+      {
+        value: "option1",
+        label: " Option 1",
+      },
+    ],
+    selectType: "multiple",
+    variant: "secondary",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    handleSelectValue: (value) => console.log(value),
+  },
+};
+export const DropdownMultipleOptionsGhost: Story = {
+  args: {
+    defaultSelectedMultipleValues: [
+      {
+        value: "option1",
+        label: " Option 1",
+      },
+    ],
+    selectType: "multiple",
+    variant: "ghost",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    handleSelectValue: (value) => console.log(value),
+  },
 };
 
 export const DropdownSuccess: Story = {
-  render: (args) => (
-    <div className="h-[300px]">
-      <Dropdown
-        success
-        selectType="multiple"
-        label={"Dropdown success"}
-        title={"default value"}
-        options={[
-          { value: "option1", label: "Option 1" },
-          { value: "option2", label: "Option 2" },
-          { value: "option3", label: "Option 3" },
-        ]}
-        handleSelectValue={(v) => console.log("selected", v)}
-      />
-    </div>
-  ),
+  args: {
+    defaultSelectedSingleValueValue: {
+      value: "option1",
+      label: " Option 1",
+    },
+    selectType: "multiple",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    handleSelectValue: (value) => console.log(value),
+    success: true,
+  },
 };
-
 export const DropdownError: Story = {
-  render: (args) => (
-    <div className="h-[300px]">
-      <Dropdown
-        error="Error message"
-        selectType="multiple"
-        label={"Dropdown error"}
-        title={"default value"}
-        options={[
-          { value: "option1", label: "Option 1" },
-          { value: "option2", label: "Option 2" },
-          { value: "option3", label: "Option 3" },
-        ]}
-        handleSelectValue={(v) => console.log("selected", v)}
-      />
-    </div>
-  ),
+  args: {
+    defaultSelectedSingleValueValue: {
+      value: "option1",
+      label: " Option 1",
+    },
+    selectType: "multiple",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    handleSelectValue: (value) => console.log(value),
+    error: "Error message",
+  },
 };
