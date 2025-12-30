@@ -8,7 +8,11 @@ const meta: Meta<typeof Slider> = {
   tags: ["autodocs"],
   argTypes: {
     children: { control: "check" },
-    className: { control: "check" },
+    className: {
+      control: "check",
+      description: "Slider container class",
+      defaultValue: "",
+    },
     navButtonIconSize: { control: "check", defaultValue: 20 },
     navButtonLeftClassName: { control: "check" },
     navButtonRightClassName: { control: "check" },
@@ -18,6 +22,19 @@ const meta: Meta<typeof Slider> = {
     paginationDotsContainerClassName: { control: "check" },
     paginationDotsSelectedButtonColor: { control: "check" },
     paginationDotsButtonColor: { control: "check" },
+    animationInterval: {
+      control: "check",
+      defaultValue: 0,
+      description: "Animation interval in milliseconds",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
   },
 };
 
@@ -28,7 +45,8 @@ type Story = StoryObj<typeof Slider>;
 export const SliderDefault: Story = {
   render: () => (
     <Slider
-      className=""
+      animationInterval={3000}
+      className="h-96"
       paginationDotsContainerClassName=""
       paginationDotsButtonClassName=""
       paginationDotsSelectedButtonColor=""

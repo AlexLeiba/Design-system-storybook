@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ComponentProps,
   type Dispatch,
@@ -36,6 +37,7 @@ type Props = ComponentProps<"div"> & {
   paginationDotsContainerClassName?: string;
   paginationDotsSelectedButtonColor?: string;
   paginationDotsButtonColor?: string;
+  animationInterval?: number;
 };
 
 export function Slider({
@@ -51,9 +53,37 @@ export function Slider({
   paginationDotsButtonColor,
 
   className = "",
+  animationInterval = 0,
 }: Props) {
   const [slider, setSlider] = useState(0);
   const childrenLength = React.Children.count(children);
+
+  function handleMoveSlider(direction: "left" | "right") {
+    if (direction === "left") {
+      setSlider((prev) => {
+        if (prev <= 0) {
+          return childrenLength - 1;
+        }
+        return prev - 1;
+      });
+    }
+    if (direction === "right") {
+      setSlider((prev) => {
+        if (prev + 1 === childrenLength) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }
+  }
+
+  useEffect(() => {
+    if (animationInterval <= 0) return;
+
+    setInterval(() => {
+      handleMoveSlider("right");
+    }, animationInterval);
+  }, [animationInterval]);
 
   return (
     <SliderContext.Provider
@@ -71,14 +101,7 @@ export function Slider({
           className={navButtonLeftClassName}
           title="previous slide"
           direction="left"
-          onClick={() =>
-            setSlider((prev) => {
-              if (prev <= 0) {
-                return childrenLength - 1;
-              }
-              return prev - 1;
-            })
-          }
+          onClick={() => handleMoveSlider("left")}
         />
         <div
           style={{
@@ -99,14 +122,7 @@ export function Slider({
           title="next slide"
           direction="right"
           className={navButtonRightClassName}
-          onClick={() =>
-            setSlider((prev) => {
-              if (prev + 1 === childrenLength) {
-                return 0;
-              }
-              return prev + 1;
-            })
-          }
+          onClick={() => handleMoveSlider("right")}
         />
         <PaginatedDots
           buttonClassName={paginationDotsButtonClassName}

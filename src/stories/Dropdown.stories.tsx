@@ -62,7 +62,7 @@ export const DropdownDefault: Story = {
     docs: {
       description: {
         story:
-          "This is a default dropdown , the code doesn't show how to use it. If you want to see how to use it, check the code of the examples below.", //additional desc in the auto generated docs.
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
       },
     },
   },
