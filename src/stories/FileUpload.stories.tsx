@@ -5,7 +5,16 @@ const meta: Meta = {
   title: "Example/FileUpload",
   component: FileUpload,
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: { handleSubmitFile: { action: "function" } },
+  args: {},
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
+  },
 };
 
 export default meta;
@@ -13,27 +22,11 @@ type Story = StoryObj<typeof FileUpload>;
 
 export const FileUploadDefaultSingle: Story = {
   args: { buttonTitle: "File Upload Primary Single" },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is a default button with size:medium, variant:primary and single file upload",
-      },
-    },
-  },
 };
 export const FileUploadDefaultMultiple: Story = {
   args: {
     buttonTitle: "File Upload Primary Multiple",
     uploadVariant: "multiple",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is a default button with size:medium, variant:primary and multiple file upload",
-      },
-    },
   },
 };
 
@@ -43,13 +36,6 @@ export const FileUploadSecondary: Story = {
     buttonTitle: "Upload File Secondary",
     size: "small",
   },
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a secondary button with small size",
-      },
-    },
-  },
 };
 export const FileUploadTertiary: Story = {
   args: {
@@ -57,25 +43,11 @@ export const FileUploadTertiary: Story = {
     buttonTitle: "Upload File",
     size: "medium",
   },
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a tertiary button with medium size",
-      },
-    },
-  },
 };
 export const FileUploadPrimaryLarge: Story = {
   args: {
     buttonVariant: "primary",
     buttonTitle: "Upload File",
     size: "large",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "This is a primary button with large size",
-      },
-    },
   },
 };

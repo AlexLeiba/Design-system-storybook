@@ -100,6 +100,7 @@ type Story = StoryObj<typeof Dropdown>;
 
 export const DropdownSingleDefault: Story = {
   args: {
+    label: "Dropdown label",
     defaultSelectedSingleValueValue: {
       value: "option1",
       label: " Option 1",
@@ -116,6 +117,7 @@ export const DropdownSingleDefault: Story = {
 };
 export const DropdownMultipleOptionsDefault: Story = {
   args: {
+    label: "Dropdown label",
     defaultSelectedMultipleValues: [
       {
         value: "option1",
@@ -134,6 +136,7 @@ export const DropdownMultipleOptionsDefault: Story = {
 };
 export const DropdownMultipleOptionsSecondary: Story = {
   args: {
+    label: "Dropdown label",
     defaultSelectedMultipleValues: [
       {
         value: "option1",
@@ -152,6 +155,7 @@ export const DropdownMultipleOptionsSecondary: Story = {
 };
 export const DropdownMultipleOptionsGhost: Story = {
   args: {
+    label: "Dropdown label",
     defaultSelectedMultipleValues: [
       {
         value: "option1",
@@ -171,6 +175,7 @@ export const DropdownMultipleOptionsGhost: Story = {
 
 export const DropdownSuccess: Story = {
   args: {
+    label: "Dropdown label",
     defaultSelectedSingleValueValue: {
       value: "option1",
       label: " Option 1",
@@ -187,6 +192,7 @@ export const DropdownSuccess: Story = {
 };
 export const DropdownError: Story = {
   args: {
+    label: "Dropdown label",
     defaultSelectedSingleValueValue: {
       value: "option1",
       label: " Option 1",

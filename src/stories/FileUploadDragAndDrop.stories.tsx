@@ -5,7 +5,16 @@ const meta: Meta = {
   title: "Example/FileUploadDragAndDrop",
   component: FileUpload,
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: { handleSubmitFile: { action: "function" } },
+
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
+  },
 };
 
 export default meta;
@@ -17,14 +26,6 @@ export const FileUploadDragAndDropDefault: Story = {
     buttonTitle: "File Upload Drag and Drop Default",
     uiVariant: "dragAndDropContainer",
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is a default drag and drop file uploader with size:medium , upload type:images, single upload",
-      },
-    },
-  },
 };
 export const FileUploadDragAndDropMultiple: Story = {
   args: {
@@ -33,28 +34,12 @@ export const FileUploadDragAndDropMultiple: Story = {
     uploadVariant: "multiple",
     size: "small",
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is a default drag and drop file uploader with size:small and multiple upload",
-      },
-    },
-  },
 };
 export const FileUploadDragAndDropLarge: Story = {
   args: {
     buttonTitle: "File Upload Drag and Drop Large",
     uiVariant: "dragAndDropContainer",
     size: "large",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is a default drag and drop file uploader with size:large and single upload",
-      },
-    },
   },
 };
 export const FileUploadDragAndDropOnlyFiles: Story = {
@@ -63,13 +48,5 @@ export const FileUploadDragAndDropOnlyFiles: Story = {
     uiVariant: "dragAndDropContainer",
     size: "small",
     fileTypes: "files",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This is a default drag and drop file uploader with size:medium ,single upload, upload file type:files",
-      },
-    },
   },
 };
