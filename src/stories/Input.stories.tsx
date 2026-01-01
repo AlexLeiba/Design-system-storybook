@@ -18,11 +18,24 @@ const meta: Meta<typeof Input> = {
       options: ["small", "medium", "large"],
       defaultValue: "medium",
     },
-    onChange: { action: "check" },
-    className: { control: "check" },
+    disabled: { control: "boolean" },
+    onChange: {
+      action: "check",
+      description:
+        "onChange handler which will return the value stored under the <b>name attribute</b> and accessible via event.target.value",
+    },
+    className: { control: "check", description: "Input container class" },
     eyeClassName: { control: "check" },
     errorClassName: { control: "check" },
     titleClassName: { control: "check" },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
   },
 };
 

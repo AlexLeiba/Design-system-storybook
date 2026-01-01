@@ -1,6 +1,7 @@
 import { type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { labelInputVariants } from "../../../../lib/cvaVariants";
+import { cn } from "../../../../lib/utilities";
 
 const radioVariants = cva("", {
   variants: {
@@ -20,29 +21,52 @@ type Props = ComponentProps<"input"> &
     title: string;
     error?: string;
     success?: boolean;
+    classNameLabel?: string;
+    classNameInput?: string;
+    classNameError?: string;
+    disabled?: boolean;
     // sizee?: "small" | "medium" | "large";
   };
 
-export function Radio({ title, error, success, sizeType, ...props }: Props) {
+export function Radio({
+  title,
+  error,
+  success,
+  sizeType,
+  className = "",
+  classNameInput = "",
+  classNameLabel = "",
+  classNameError = "",
+  disabled,
+  ...props
+}: Props) {
   return (
-    <div className="flex-col gap-1">
-      <label htmlFor="radio">
+    <div className={cn("flex-col gap-1", className)}>
+      <label htmlFor={title}>
         <p
-          className={labelInputVariants({
-            errorState: !!error,
-            successState: !!success,
-          })}
+          className={cn(
+            labelInputVariants({
+              errorState: !!error,
+              successState: !!success,
+              sizeType,
+              disabledState: disabled,
+            }),
+            classNameLabel
+          )}
         >
           {title}
         </p>
       </label>
       <input
-        className={radioVariants({ sizeType })}
+        disabled={disabled}
+        className={cn(radioVariants({ sizeType }), classNameInput)}
         type="radio"
-        id="radio"
+        id={title}
         {...props}
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p className={cn("text-sm text-red-600", classNameError)}>{error}</p>
+      )}
     </div>
   );
 }

@@ -17,17 +17,30 @@ const meta: Meta = {
     success: {
       control: "boolean",
     },
+
+    handleChange: {
+      control: "check",
+    },
+    defaultChecked: {
+      control: "boolean",
+    },
+    disabled: {
+      control: "boolean",
+    },
+    name: {
+      control: "text",
+      description:
+        "Checkbox <b>name</b> which will represent name of the checkbox value stored in the submitted form",
+    },
     titleClassName: {
       control: "check",
     },
     errorClassName: {
       control: "check",
     },
-    handleChange: {
+    className: {
       control: "check",
-    },
-    defaultChecked: {
-      control: "boolean",
+      description: "Checkbox container class",
     },
   },
   parameters: {

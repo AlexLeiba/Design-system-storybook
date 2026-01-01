@@ -15,6 +15,7 @@ type TabsContentProps = {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "small" | "medium" | "large";
   loading?: boolean;
+  disabled?: boolean;
 };
 const TabsComponentDefault = ({
   defaultValue,
@@ -24,43 +25,65 @@ const TabsComponentDefault = ({
   variant,
   size,
   loading,
+  disabled,
 }: TabsContentProps) => {
   return (
-    <Tabs defaultValue={defaultValue}>
+    <Tabs defaultValue={defaultValue} fullWidth>
       <TabsList>
         <TabsTrigger
+          fullWidth
           variant={variant}
           size={size}
           loading={loading}
           value={value1}
+          disabled={disabled}
         >
           Tab 1
         </TabsTrigger>
         <TabsTrigger
+          fullWidth
           variant={variant}
           size={size}
           loading={loading}
           value={value2}
+          disabled={disabled}
         >
           Tab 2
         </TabsTrigger>
         <TabsTrigger
+          fullWidth
           variant={variant}
           size={size}
           loading={loading}
           value={value3}
+          disabled={disabled}
         >
           Tab 3
         </TabsTrigger>
       </TabsList>
       <TabsContent value={value1}>
         <Label>Content of Tab 1</Label>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
+          pariatur veniam.
+        </p>
       </TabsContent>
       <TabsContent value={value2}>
         <Label>Content of Tab 2</Label>
+        <p>
+          2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
+          pariatur veniam.
+        </p>
       </TabsContent>
       <TabsContent value={value3}>
         <Label>Content of Tab 3</Label>
+        <p>
+          3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
+          pariatur veniam.
+        </p>
       </TabsContent>
     </Tabs>
   );
@@ -97,6 +120,18 @@ const meta: Meta<typeof TabsComponentDefault> = {
       control: "radio",
       options: ["small", "medium", "large"],
       defaultValue: "medium",
+    },
+    disabled: {
+      control: "boolean",
+      defaultValue: false,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
     },
   },
 };
@@ -140,12 +175,27 @@ export const TabsSecondary: Story = {
       </TabsList>
       <TabsContent value="tab1">
         <Label>Content of Tab 1</Label>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
+          pariatur veniam.
+        </p>
       </TabsContent>
       <TabsContent value="tab2">
         <Label>Content of Tab 2</Label>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
+          pariatur veniam.
+        </p>
       </TabsContent>
       <TabsContent value="tab3">
         <Label>Content of Tab 3</Label>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
+          pariatur veniam.
+        </p>
       </TabsContent>
     </Tabs>
   ),

@@ -6,7 +6,7 @@ const meta: Meta<typeof SearchInput> = {
   component: SearchInput,
   tags: ["autodocs"],
   argTypes: {
-    value: { control: "check" },
+    value: { control: "text" },
     title: { control: "text" },
 
     sizeType: {
@@ -15,9 +15,24 @@ const meta: Meta<typeof SearchInput> = {
       defaultValue: "medium",
     },
     handleChange: { control: "check" },
-    className: { control: "check" },
+    disabled: { control: "boolean" },
 
-    titleClassName: { control: "check" },
+    className: {
+      control: "check",
+      description: "SearchInput container className",
+    },
+    classNameTitle: { control: "check" },
+    classNameInput: { control: "check" },
+    classNameXIcon: { control: "check" },
+    classNameIconSearchIcon: { control: "check" },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
   },
 };
 
@@ -30,6 +45,7 @@ export const DefaultInput: Story = {
     title: "Search Input label",
     value: "search input placeholder...",
     sizeType: "medium",
+    handleChange: (v) => console.log(v),
   },
 };
 export const SmallSearchInput: Story = {
@@ -37,6 +53,7 @@ export const SmallSearchInput: Story = {
     title: "Search Input label",
     value: "search input placeholder...",
     sizeType: "small",
+    handleChange: (v) => console.log(v),
   },
 };
 export const MediumSearchInput: Story = {
@@ -44,6 +61,7 @@ export const MediumSearchInput: Story = {
     title: "Search Input label",
     value: "search input placeholder...",
     sizeType: "medium",
+    handleChange: (v) => console.log(v),
   },
 };
 export const LargeSearchInput: Story = {
@@ -51,5 +69,15 @@ export const LargeSearchInput: Story = {
     title: "Search Input label",
     value: "search input placeholder...",
     sizeType: "large",
+    handleChange: (v) => console.log(v),
+  },
+};
+export const DisabledSearchInput: Story = {
+  args: {
+    title: "Search Input label",
+    value: "search input placeholder...",
+    sizeType: "large",
+    disabled: true,
+    handleChange: (v) => console.log(v),
   },
 };

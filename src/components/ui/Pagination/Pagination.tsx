@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useState, type ComponentProps } from "react";
 import { cn } from "../../../../lib/utilities";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PageButton from "./PageButton";
 
-type PaginationProps = {
+type PaginationProps = ComponentProps<"div"> & {
   nrOfPages: number;
   currentPage: number;
   onChangePage: (page: number) => void;
+  classNameButtonLeft?: string;
+  classNameButtonRight?: string;
+  classNamePageButton?: string;
+  classNameInput?: string;
+  disabled?: boolean;
 };
 
 export function Pagination({
-  nrOfPages,
-  currentPage,
+  nrOfPages = 1,
+  currentPage = 1,
   onChangePage,
+  classNameButtonLeft = "",
+  classNameButtonRight = "",
+  classNamePageButton = "",
+  classNameInput = "",
+  disabled = false,
+  className = "",
+  ...props
 }: PaginationProps) {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState(1);
@@ -38,11 +50,20 @@ export function Pagination({
   }
 
   return (
-    <div className="flex gap-1 ">
+    <div
+      className={cn(
+        "flex gap-1 ",
+        disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "",
+        className
+      )}
+      {...props}
+    >
       <button
+        disabled={disabled}
         title="previous page"
         className={cn(
-          "py-1 px-3 rounded-lg cursor-pointer hover:bg-black/80 hover:text-white transition-all"
+          "py-1 px-3 rounded-lg cursor-pointer hover:bg-black/80 hover:text-white transition-all",
+          classNameButtonLeft
         )}
         onClick={() => handleChangePage(currentPage - 1)}
       >
@@ -52,6 +73,7 @@ export function Pagination({
         pages.map((page) => {
           return (
             <button
+              disabled={disabled}
               title={page.toString()}
               key={page}
               className={cn(
@@ -69,6 +91,8 @@ export function Pagination({
       ) : (
         <>
           <PageButton
+            disabled={disabled}
+            classNamePageButton={classNamePageButton}
             title="1"
             onClick={() => handleChangePage(1)}
             isSelected={currentPage === 1}
@@ -76,6 +100,8 @@ export function Pagination({
             1
           </PageButton>
           <PageButton
+            disabled={disabled}
+            classNamePageButton={classNamePageButton}
             title="2"
             onClick={() => handleChangePage(2)}
             isSelected={currentPage === 2}
@@ -84,31 +110,30 @@ export function Pagination({
           </PageButton>
 
           {showInput ? (
-            <div className=" flex ">
-              <input
-                title="change page input"
-                autoFocus
-                type="number"
-                className="py-1 px-3  w-[50px] bg-white  text-xl rounded-lg cursor-pointer hover:bg-black/80 hover:text-white transition-all"
-                value={inputValue}
-                onChange={(e) => setInputValue(Number(e.target.value))}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleSubmitNewPage();
-                  }
-                }}
-              />
-            </div>
+            <input
+              disabled={disabled}
+              title="change page value"
+              autoFocus
+              type="number"
+              className={cn(
+                "py-1 px-3  w-[50px] bg-white  text-xl rounded-lg cursor-pointer hover:bg-black/80 hover:text-white transition-all",
+                classNameInput
+              )}
+              value={inputValue}
+              onChange={(e) => setInputValue(Number(e.target.value))}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmitNewPage();
+                }
+              }}
+            />
           ) : (
             <PageButton
-              title={
-                currentPage > 2 && currentPage < pages.length - 1
-                  ? currentPage.toString()
-                  : ""
-              }
+              disabled={disabled}
+              title="change page value"
               isSelected={currentPage > 2 && currentPage < pages.length - 1}
               onClick={() => setShowInput(true)}
-              classNamePageButton="px-2 min-w-[52px]"
+              classNamePageButton={cn("px-2 min-w-[52px]", classNamePageButton)}
             >
               <span className="mr-1">..</span>
               {currentPage > 2 && currentPage < pages.length - 1 && currentPage}
@@ -120,9 +145,11 @@ export function Pagination({
             return (
               <div className="flex justify-center">
                 <PageButton
+                  disabled={disabled}
                   title={page.toString()}
                   isSelected={currentPage === page}
                   onClick={() => handleChangePage(page)}
+                  classNamePageButton={classNamePageButton}
                 >
                   {page}
                 </PageButton>
@@ -134,7 +161,8 @@ export function Pagination({
       <button
         title="next page"
         className={cn(
-          "py-1 px-3 rounded-lg cursor-pointer hover:bg-black/80 hover:text-white transition-all"
+          "py-1 px-3 rounded-lg cursor-pointer hover:bg-black/80 hover:text-white transition-all",
+          classNameButtonRight
         )}
         onClick={() => handleChangePage(currentPage + 1)}
       >

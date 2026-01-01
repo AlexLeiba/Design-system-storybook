@@ -80,10 +80,12 @@ export function Slider({
   useEffect(() => {
     if (animationInterval <= 0) return;
 
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       handleMoveSlider("right");
     }, animationInterval);
-  }, [animationInterval]);
+
+    return () => clearInterval(intervalId);
+  }, [animationInterval, slider]);
 
   return (
     <SliderContext.Provider
@@ -109,8 +111,9 @@ export function Slider({
             transform: `translateX(${slider === 0 ? 0 : -slider * 100}vw)`,
           }}
           className={cn(
+            "transition-all duration-500 ease-in-out",
             className,
-            "flex  transition-all duration-500 ease-in-out"
+            "flex"
           )}
         >
           {children}

@@ -11,13 +11,13 @@ import { Button } from "../Button/Button";
 import { cva } from "class-variance-authority";
 
 const tabsListVariants = cva(
-  "inline-flex gap-2 p-1 border-2 border-gray-400 rounded-2xl w-full",
+  "inline-flex gap-2 p-1 border-2 border-gray-400 rounded-2xl  ",
   {
     variants: {
       position: {
-        left: "flex flex-row justify-start",
-        center: "flex flex-row justify-center",
-        right: "flex flex-row justify-end",
+        left: "inline-flex flex-row justify-start",
+        center: "inline-flex flex-row justify-center",
+        right: "inline-flex flex-row justify-end",
       },
     },
   }
@@ -32,7 +32,7 @@ const TabsContext = createContext<ContextProps>({
   setTabContent: () => {},
 });
 
-type PropsTabsWrapper = {
+type PropsTabsWrapper = ComponentProps<"div"> & {
   defaultValue: string;
   fullWidth?: boolean;
   children: React.ReactNode;
@@ -46,11 +46,12 @@ export function Tabs({
   defaultValue,
   fullWidth = false,
   children,
+  ...props
 }: PropsTabsWrapper) {
   const [tabContent, setTabContent] = useState(defaultValue);
   return (
     <TabsContext.Provider value={{ tabContent, setTabContent }}>
-      <div className={cn(fullWidth ? "flex flex-col" : "inline-flex flex-col")}>
+      <div className={cn(fullWidth ? "flex flex-col" : "")} {...props}>
         {children}
       </div>
     </TabsContext.Provider>
@@ -71,14 +72,7 @@ export function TabsList({
   ...props
 }: TabsListProps) {
   return (
-    <div
-      className={cn(
-        tabsListVariants({ position }),
-
-        className
-      )}
-      {...props}
-    >
+    <div className={cn(tabsListVariants({ position }), className)} {...props}>
       {children}
     </div>
   );
@@ -91,6 +85,7 @@ type TabsTriggerProps = ComponentProps<"button"> & {
   size?: "small" | "medium" | "large";
   loading?: boolean;
   customTitleClassName?: string;
+  fullWidth?: boolean;
 };
 
 // VALUE WILL BE PASSED AS PROPS AND TRIGGERED ON CLICK
@@ -100,8 +95,9 @@ export function TabsTrigger({
   variant,
   size,
   loading,
-  className,
-  customTitleClassName,
+  className = "",
+  fullWidth = false,
+  ...props
 }: TabsTriggerProps) {
   const { setTabContent, tabContent } = useTabsData();
   return (
@@ -110,21 +106,30 @@ export function TabsTrigger({
       variant={tabContent === value ? variant || "primary" : "ghost"}
       size={size}
       onClick={() => setTabContent?.(value)}
-      className={className}
-      customTitleClassName={customTitleClassName}
+      className={cn(fullWidth ? "w-full" : "", className)}
+      {...props}
     >
       {children}
     </Button>
   );
 }
 
-type TabsContentProps = {
+type TabsContentProps = ComponentProps<"div"> & {
   value: string;
   children: React.ReactNode;
 };
 
 // CONTENT DISPLAYED BASED ON SELECTED TAB  VALUE BY TabsTrigger
-export function TabsContent({ value, children }: TabsContentProps) {
+export function TabsContent({
+  value,
+  children,
+  className = "",
+  ...props
+}: TabsContentProps) {
   const { tabContent } = useTabsData();
-  return <div>{tabContent === value && children}</div>;
+  return (
+    <div className={cn(className)} {...props}>
+      {tabContent === value && children}
+    </div>
+  );
 }

@@ -6,6 +6,12 @@ import { PreviewImage } from "./PreviewImage";
 import { Button } from "../Button/Button";
 import { cn } from "../../../../lib/utilities";
 
+// TODO
+// slider to clear interval on click
+// dropdown: disabled state
+// input disabled
+// checkbox,radio disabled
+
 type Props = {
   handleSubmitFile?: (data: {
     error: string;
@@ -199,6 +205,7 @@ export function FileUpload({
       {/* DRAG AND DROP */}
       {uiVariant === "dragAndDropContainer" && (
         <DragAndDropContainer
+          disabled={disabled || loading}
           className={dragAndDropContainerClassName}
           buttonTitle={buttonTitle}
           onClick={() => uploadRef.current?.click()}

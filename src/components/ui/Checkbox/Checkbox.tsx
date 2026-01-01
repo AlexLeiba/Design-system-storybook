@@ -32,6 +32,7 @@ type Props = ComponentProps<"input"> &
     titleClassName?: string;
     errorClassName?: string;
     defaultChecked?: boolean;
+    disabled?: boolean;
     handleChange: (value: boolean) => void;
   };
 export function Checkbox({
@@ -42,13 +43,14 @@ export function Checkbox({
   titleClassName = "",
   errorClassName = "",
   defaultChecked = false,
+  disabled = false,
   handleChange,
 
   ...props
 }: Props) {
   return (
     <div className="flex flex-col gap-1 items-start">
-      <label htmlFor={props.id || "checkbox"}>
+      <label htmlFor={title || "checkbox"}>
         {title && (
           <p
             className={cn(
@@ -56,6 +58,7 @@ export function Checkbox({
                 errorState: !!error,
                 successState: !!success,
                 sizeType,
+                disabledState: disabled,
               }),
               titleClassName
             )}
@@ -66,12 +69,13 @@ export function Checkbox({
       </label>
 
       <input
+        id={title || "checkbox"}
+        disabled={disabled}
         defaultChecked={defaultChecked}
         onChange={(e) => handleChange(e.target.checked)}
         className={checkboxVariants({ sizeType, errorState: !!error })}
-        id="checkbox"
-        {...props}
         type="checkbox"
+        {...props}
       />
 
       {error && (

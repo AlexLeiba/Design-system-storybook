@@ -8,7 +8,7 @@ const inputVariants = cva(
   [
     "py-2 px-3  text-gray-900 w-full",
     "focus:outline-none focus:ring focus:ring-gray-6",
-    "disabled:ring disabled:ring-gray-300 disabled:cursor-not-allowed",
+    "disabled:ring disabled:ring-gray-300 disabled:cursor-not-allowed disabled:opacity-50  ",
   ],
   {
     variants: {
@@ -60,7 +60,7 @@ type Props = VariantProps<typeof inputVariants> &
     titleClassName?: string;
     errorClassName?: string;
     eyeClassName?: string;
-    // sizeType?: "small" | "medium" | "large";
+    disabled?: boolean;
   };
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -72,6 +72,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     success,
     sizeType,
     type,
+    disabled = false,
     className = "",
     titleClassName = "",
     errorClassName = "",
@@ -87,7 +88,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               labelInputVariants({
                 errorState: !!error,
                 successState: !!success,
-                disabledState: props.disabled,
+                disabledState: disabled,
                 sizeType,
               }),
               titleClassName
@@ -99,6 +100,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         <div className="relative">
           {type === "textarea" ? (
             <textarea
+              disabled={disabled}
               rows={4}
               id="input"
               className={cn(
@@ -115,6 +117,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             />
           ) : (
             <input
+              disabled={disabled}
               id="input"
               type={
                 type === "password"
@@ -141,7 +144,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             <>
               {showPassword ? (
                 <button
-                  disabled={props.disabled}
+                  disabled={disabled}
                   onClick={() => setShowPassword(false)}
                   className={cn(
                     "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed",
@@ -153,10 +156,10 @@ export const Input = forwardRef<HTMLInputElement, Props>(
                 </button>
               ) : (
                 <button
-                  disabled={props.disabled}
+                  disabled={disabled}
                   onClick={() => setShowPassword(true)}
                   className={cn(
-                    "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed",
+                    "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed ",
                     success ? "text-green-600" : "text-gray-400",
                     eyeClassName
                   )}

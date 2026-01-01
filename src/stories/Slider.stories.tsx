@@ -7,12 +7,6 @@ const meta: Meta<typeof Slider> = {
   component: Slider,
   tags: ["autodocs"],
   argTypes: {
-    children: { control: "check" },
-    className: {
-      control: "check",
-      description: "Slider container class",
-      defaultValue: "",
-    },
     navButtonIconSize: { control: "check", defaultValue: 20 },
     navButtonLeftClassName: { control: "check" },
     navButtonRightClassName: { control: "check" },
@@ -26,6 +20,16 @@ const meta: Meta<typeof Slider> = {
       control: "check",
       defaultValue: 0,
       description: "Animation interval in milliseconds",
+    },
+    children: {
+      control: "check",
+      description:
+        "Slider items, check out how children are passed to Slider by clicking the  button: <b>Show code</b>",
+    },
+    className: {
+      control: "check",
+      description:
+        "Slider container class, can be used to <b> change the ease animation type and transition </b>",
     },
   },
   parameters: {

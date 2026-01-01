@@ -45,6 +45,7 @@ export function Dialog({
   isOpened = false,
   withClickOutside = true,
   className = "",
+  ...props
 }: DialogProps) {
   const [open, setOpen] = useState(isOpened);
   const refContainer = useRef<HTMLDivElement>(null);
@@ -77,6 +78,7 @@ export function Dialog({
         className={cn(
           open ? "bg-black/50 fixed inset-0 flex items-center " : "hidden"
         )}
+        {...props}
       >
         {/* modal body */}
         {open && (
@@ -108,6 +110,7 @@ export function DialogHeader({
   return (
     <div className="relative" {...props}>
       <button
+        title="Close"
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
           "absolute top-0 right-0 cursor-pointer hover:opacity-80",

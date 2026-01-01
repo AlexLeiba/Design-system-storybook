@@ -8,7 +8,7 @@ const searchInputVariants = cva(
   [
     "w-full border border-gray-400  py-2  rounded-2xl px-12",
     "focus-within:outline-none focus-within:ring focus-within:ring-gray-400 ",
-    "disabled:cursor-not-allowed disabled:opacity-50 disabled:ring disabled:ring-gray-400 disabled:ring-offset-2 disabled:ring-offset-gray-100 ",
+    "disabled:cursor-not-allowed disabled:opacity-50 disabled:ring   ",
   ],
   {
     variants: {
@@ -26,15 +26,23 @@ const searchInputVariants = cva(
 
 type Props = ComponentProps<"input"> & {
   handleChange: (searchValue: string) => void;
-  titleClassName?: string;
   sizeType?: "small" | "medium" | "large";
+  disabled?: boolean;
+  classNameTitle?: string;
+  classNameInput?: string;
+  classNameIconSearchIcon?: string;
+  classNameXIcon?: string;
 };
 export function SearchInput({
   handleChange,
   title,
   sizeType = "medium",
-  titleClassName = "",
+  classNameTitle = "",
+  classNameInput = "",
+  classNameIconSearchIcon = "",
+  classNameXIcon = "",
   className = "",
+  disabled = false,
   ...props
 }: Props) {
   const [search, setSearch] = useState("");
@@ -45,18 +53,23 @@ export function SearchInput({
   }
 
   return (
-    <div className="inline-flex w-full flex-col">
-      <label htmlFor="input">
+    <div
+      className={cn(
+        "inline-flex w-full flex-col",
+        disabled ? "pointer-events-none" : "",
+        className
+      )}
+    >
+      <label htmlFor={title || "search"}>
         <p
-          id="input"
           className={cn(
             labelInputVariants({
               errorState: false,
               successState: false,
-              disabledState: props.disabled,
+              disabledState: disabled,
               sizeType,
             }),
-            titleClassName
+            classNameTitle
           )}
         >
           {title}
@@ -64,16 +77,32 @@ export function SearchInput({
       </label>
       <div className="relative">
         <input
-          className={cn(searchInputVariants({ sizeType }), className)}
+          id={title || "search"}
+          disabled={disabled}
+          className={cn(searchInputVariants({ sizeType }), classNameInput)}
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
+          {...props}
         />
-        <Search className="cursor-pointer absolute left-4 top-[50%] -translate-y-[50%]" />
+        <Search
+          className={cn(
+            "absolute left-4 top-[50%] -translate-y-[50%]",
+            disabled ? "opacity-50" : "",
+            classNameIconSearchIcon
+          )}
+        />
         {search.length > 0 && (
-          <X
+          <button
+            disabled={disabled}
             onClick={() => handleSearch("")}
-            className="cursor-pointer absolute right-4 top-[50%] -translate-y-[50%]"
-          />
+            className={cn(
+              "cursor-pointer absolute right-4 top-[50%] -translate-y-[50%]",
+              disabled ? "opacity-50" : "",
+              classNameXIcon
+            )}
+          >
+            <X />
+          </button>
         )}
       </div>
     </div>
