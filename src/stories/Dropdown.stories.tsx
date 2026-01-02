@@ -1,18 +1,24 @@
 import type { StoryObj, Meta } from "@storybook/react";
-import Dropdown from "../components/ui/Dropdown/Dropdown";
+import { Dropdown as DropdownComponent } from "../components/ui/Dropdown/Dropdown";
 
-const DropdownComponent = (args: any) => {
+const Dropdown = (args: any) => {
   return (
     <div className="h-[400px] ">
-      <Dropdown {...args} />
+      <DropdownComponent {...args} />
     </div>
   );
 };
 
 const meta: Meta = {
   title: "Example / Dropdown",
-  component: DropdownComponent,
+  component: Dropdown,
   argTypes: {
+    defaultSelectedSingleValue: {
+      control: "object",
+      defaultValue: { value: "option1", label: "Option 1" },
+      description:
+        "The value should be found in the options array <b>below</b>",
+    },
     options: {
       control: "object",
       defaultValue: [
@@ -20,10 +26,6 @@ const meta: Meta = {
         { value: "option2", label: "Option 2" },
         { value: "option3", label: "Option 3" },
       ],
-    },
-    defaultSelectedSingleValueValue: {
-      control: "object",
-      defaultValue: { value: "option1", label: "Option 1" },
     },
     label: {
       control: "text",
@@ -50,7 +52,7 @@ const meta: Meta = {
       control: "boolean",
       defaultValue: false,
     },
-    selectedType: {
+    selectType: {
       control: "radio",
       options: ["single", "multiple"],
       defaultValue: "single",
@@ -96,12 +98,12 @@ const meta: Meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof Dropdown>;
+type Story = StoryObj<typeof DropdownComponent>;
 
 export const DropdownSingleDefault: Story = {
   args: {
     label: "Dropdown label",
-    defaultSelectedSingleValueValue: {
+    defaultSelectedSingleValue: {
       value: "option1",
       label: " Option 1",
     },
@@ -176,7 +178,7 @@ export const DropdownMultipleOptionsGhost: Story = {
 export const DropdownSuccess: Story = {
   args: {
     label: "Dropdown label",
-    defaultSelectedSingleValueValue: {
+    defaultSelectedSingleValue: {
       value: "option1",
       label: " Option 1",
     },
@@ -193,7 +195,7 @@ export const DropdownSuccess: Story = {
 export const DropdownError: Story = {
   args: {
     label: "Dropdown label",
-    defaultSelectedSingleValueValue: {
+    defaultSelectedSingleValue: {
       value: "option1",
       label: " Option 1",
     },

@@ -46,15 +46,15 @@ type AccordionItemProps = ComponentProps<"button"> & {
   value: string;
   children: React.ReactNode;
   label: string;
-  classNameTriggerLabel?: string;
-  classNameTriggerLabelContainer?: string;
+  classNameContentLabel?: string;
+  classNameContentLabelContainer?: string;
 };
 export function AccordionHeaderTrigger({
   value = "",
   children,
   className = "",
-  classNameTriggerLabel = "",
-  classNameTriggerLabelContainer = "",
+  classNameContentLabel = "",
+  classNameContentLabelContainer = "",
   label,
 }: AccordionItemProps) {
   const { item, setItem } = useAccordionContext();
@@ -97,11 +97,11 @@ export function AccordionHeaderTrigger({
       <div
         className={cn(
           "border-b-2 transition-all duration-200 overflow-hidden",
-          classNameTriggerLabelContainer
+          classNameContentLabelContainer
         )}
         style={{ height: item === value ? size : 0 }}
       >
-        <div ref={ref} className={cn("p-2", classNameTriggerLabel)}>
+        <div ref={ref} className={cn("p-2", classNameContentLabel)}>
           {children}
         </div>
       </div>

@@ -5,7 +5,89 @@ const meta: Meta = {
   title: "Example/FileUpload",
   component: FileUpload,
   tags: ["autodocs"],
-  argTypes: { handleSubmitFile: { action: "function" } },
+  argTypes: {
+    handleSubmitFile: { action: "function" },
+    buttonVariant: {
+      control: "radio",
+      options: [
+        "primary",
+        "secondary",
+        "tertiary",
+        "destructive",
+        "ghost",
+        "link",
+      ],
+      defaultValue: "primary",
+    },
+    size: {
+      control: "radio",
+      options: ["small", "medium", "large"],
+      defaultValue: "medium",
+    },
+    allowedFileTypes: {
+      control: "object",
+      defaultValue: {
+        files: ["csv", "xlsx", "txt", "pdf"],
+        images: ["jpg", "jpeg", "png", "webp", "svg"],
+      },
+      description: "Define allowed file types",
+    },
+    buttonClassName: { control: "check" },
+    buttonTitle: { control: "text" },
+    uploadVariant: {
+      control: "radio",
+      options: ["single", "multiple"],
+      defaultValue: "single",
+    },
+    disabled: { control: "boolean" },
+    error: { control: "text" },
+    success: { control: "boolean" },
+    title: { control: "text" },
+    inputName: {
+      control: "check",
+      description: "Input name which will be stored in the submitted form",
+    },
+    className: { control: "check", description: "FileUpload container class" },
+    dragAndDropContainerClassName: {
+      control: "check",
+      description: "FileUpload drag and drop container class",
+    },
+    dragAndDropContainerTitle: {
+      control: "check",
+      description: "FileUpload drag and drop container title",
+    },
+    dragAndDropContainerDescription: {
+      control: "check",
+      description: "FileUpload drag and drop container description",
+    },
+    dragAndDropContainerIcon: {
+      control: "check",
+      description: "FileUpload drag and drop container icon",
+    },
+    errorClassName: { control: "check" },
+    successClassName: { control: "check" },
+    previewImageContainerClassName: {
+      control: "check",
+      description: "FileUpload preview image container class",
+    },
+    previewImageContainerTitle: {
+      control: "check",
+      description: "FileUpload preview image container title",
+    },
+    previewImageContainerDescription: {
+      control: "check",
+      description: "FileUpload preview image container description",
+    },
+    previewImageContainerIcon: {
+      control: "check",
+      description: "FileUpload preview image container icon",
+    },
+    previewImageCloseButtonClassName: {
+      control: "check",
+      description: "FileUpload preview image close button class",
+    },
+    titleClassName: { control: "check" },
+  },
   args: {},
   parameters: {
     docs: {

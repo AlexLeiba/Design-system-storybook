@@ -16,15 +16,15 @@ const buttonVariants = cva(
   {
     variants: {
       size: {
-        small: "px-4",
+        small: "px-4 py-1 text-xs",
         large: "px-8 py-4 text-2xl",
-        medium: "px-6 ",
+        medium: "px-6 text-xl",
       },
       variant: {
         primary: "bg-gray-800 text-gray-100   focus:ring-gray-500",
         secondary: "bg-yellow-400 text-gray-900  focus:ring-gray-500",
         destructive: "bg-red-600 text-gray-100   focus:ring-gray-500",
-        tertiary: "bg-purple-800  text-gray-100  focus:ring-gray-500",
+        tertiary: "bg-transparent   focus:ring-gray-500 ring ring-gray-600",
         ghost: " text-gray-800  focus:ring-gray-500 bg-transparent",
         link: " text-gray-800  bg-transparent hover:underline p-0",
       },
@@ -69,17 +69,20 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
       loading = false,
       iconLeft,
       iconRight,
+      disabled = false,
       ...props
     }: Props,
     ref
   ) => {
     return (
       <button
+        disabled={disabled || loading}
         ref={ref}
         className={cn(buttonVariants({ size, variant, fullWidth }), className)}
         {...props}
       >
         {iconLeft && <div className="mr-1">{iconLeft}</div>}
+
         <div className="relative">
           <Loader visibility={loading} variant={variant} />
           <span className={loadingVariants({ loadingState: loading })}>

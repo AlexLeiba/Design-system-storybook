@@ -120,7 +120,7 @@ type VariantsType = VariantProps<typeof dropdownVariants>;
 type Props = VariantsType &
   HTMLAttributes<HTMLDivElement> & {
     options: OptionsType[];
-    defaultSelectedSingleValueValue: OptionsType;
+    defaultSelectedSingleValue: OptionsType;
     defaultSelectedMultipleValues: OptionsType[];
     error?: string;
     success?: boolean;
@@ -136,9 +136,9 @@ type Props = VariantsType &
     handleSelectValue: (value: OptionsType) => void;
     // variant?: "primary" | "secondary" | "ghost";
   };
-function Dropdown({
+export function Dropdown({
   options,
-  defaultSelectedSingleValueValue = { value: "", label: "" },
+  defaultSelectedSingleValue = { value: "", label: "" },
   defaultSelectedMultipleValues = [],
   error,
   success,
@@ -158,8 +158,8 @@ function Dropdown({
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [select, setSelect] = useState<OptionsType>({
-    value: defaultSelectedSingleValueValue.value,
-    label: defaultSelectedSingleValueValue.label,
+    value: defaultSelectedSingleValue.value,
+    label: defaultSelectedSingleValue.label,
   });
   const [selectMultiple, setSelectMultiple] = useState<OptionsType[]>(
     defaultSelectedMultipleValues
@@ -236,7 +236,7 @@ function Dropdown({
         {selectType === "single" && (
           <Label>
             {(selectType === "single" && select.label) ||
-              defaultSelectedSingleValueValue.label}
+              defaultSelectedSingleValue.label}
           </Label>
         )}
         {selectType === "multiple" && (
@@ -267,7 +267,7 @@ function Dropdown({
                   sizeType: props.size,
                 })}
               >
-                {defaultSelectedSingleValueValue.label}
+                {defaultSelectedSingleValue.label}
               </p>
             )}
           </div>
@@ -373,5 +373,3 @@ function Dropdown({
     </div>
   );
 }
-
-export default Dropdown;

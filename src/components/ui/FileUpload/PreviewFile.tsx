@@ -42,7 +42,7 @@ export function PreviewFile({
       {...props}
     >
       <button
-        title="delete image"
+        title="delete file"
         className={cn(
           "fize-4 bg-gray-400 rounded-full absolute top-1 right-1 z-20 cursor-pointer hover:opacity-80",
           closeButtonClassName

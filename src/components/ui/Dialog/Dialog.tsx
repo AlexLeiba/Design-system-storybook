@@ -29,6 +29,7 @@ export type DialogProps = ComponentProps<"div"> & {
   children: React.ReactNode;
   handleSubmit: () => void;
   handleCancel: () => void;
+  handleClose?: () => void;
   isOpened?: boolean;
   withClickOutside?: boolean;
 };
@@ -42,6 +43,7 @@ export function Dialog({
   children,
   handleSubmit,
   handleCancel,
+  handleClose,
   isOpened = false,
   withClickOutside = true,
   className = "",
@@ -58,6 +60,7 @@ export function Dialog({
         withClickOutside
       ) {
         setOpen(false);
+        handleClose?.();
       }
     };
     document.addEventListener("click", clickOutside);
@@ -69,6 +72,15 @@ export function Dialog({
   useEffect(() => {
     setOpen(isOpened);
   }, [isOpened]);
+
+  useEffect(() => {
+    if (open) {
+      // document.body.style.overflow = "hidden";
+    } else {
+      // document.body.style.overflow = "unset";
+      handleClose?.();
+    }
+  }, [open]);
   return (
     <DialogContext.Provider
       value={{ open, setOpen, handleSubmit, handleCancel }}
@@ -103,12 +115,13 @@ type DialogHeaderProps = ComponentProps<"div"> & {
 export function DialogHeader({
   children,
   closeButtonClassName = "",
+  className = "",
   ...props
 }: DialogHeaderProps) {
   const { setOpen } = useDialog();
 
   return (
-    <div className="relative" {...props}>
+    <div className={cn("relative", className)} {...props}>
       <button
         title="Close"
         onClick={() => setOpen((prev) => !prev)}
@@ -161,6 +174,7 @@ export type DialogFooterProps = VariantProps<typeof footerVariants> &
     submitButtonTitle?: string;
     cancelButtonClassName?: string;
     submitButtonClassName?: string;
+    containerButtonsClassName?: string;
     loading?: boolean;
     disabled?: boolean;
   };
@@ -174,16 +188,19 @@ export function DialogFooter({
   submitButtonTitle,
   cancelButtonClassName = "",
   submitButtonClassName = "",
+  containerButtonsClassName = "",
   loading,
   disabled,
+  className = "",
   ...props
 }: DialogFooterProps) {
   const { setOpen, handleCancel, handleSubmit } = useDialog();
   return (
-    <div className="flex flex-col justify-end " {...props}>
+    <div className={cn("flex flex-col justify-end ", className)} {...props}>
       <div
         className={cn(
-          footerVariants({ variant, buttonDirection, buttonPosition })
+          footerVariants({ variant, buttonDirection, buttonPosition }),
+          containerButtonsClassName
         )}
       >
         <Button

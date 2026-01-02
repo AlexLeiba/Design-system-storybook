@@ -7,6 +7,8 @@ import {
   type DialogFooterProps,
   type DialogProps,
 } from "../components/ui/Dialog/Dialog";
+import { useState } from "react";
+import { Button } from "../components/ui/Button/Button";
 
 function DialogComponent({
   fullWidth,
@@ -15,20 +17,25 @@ function DialogComponent({
   cancelButtonTitle,
   submitButtonTitle,
   variant,
-  isOpened,
   disabled,
   loading,
   withClickOutside,
 }: DialogProps & DialogFooterProps) {
+  const [showDialog, setShowDialog] = useState(true);
+
   return (
     <div className="h-[500px]">
+      <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
       <Dialog
+        className=""
         withClickOutside={withClickOutside}
-        isOpened={isOpened}
-        handleCancel={() => {}}
-        handleSubmit={() => {}}
+        isOpened={showDialog}
+        handleCancel={() => setShowDialog(false)}
+        handleSubmit={() => setShowDialog(false)}
+        handleClose={() => setShowDialog(false)}
       >
-        <DialogHeader closeButtonClassName="">
+        <DialogHeader closeButtonClassName="" className="">
           <h2 className="text-2xl">Dialog Title</h2>
         </DialogHeader>
 
@@ -47,6 +54,9 @@ function DialogComponent({
           cancelButtonTitle={cancelButtonTitle}
           submitButtonTitle={submitButtonTitle}
           buttonPosition={buttonPosition}
+          cancelButtonClassName=""
+          submitButtonClassName=""
+          className=""
         />
       </Dialog>
     </div>
@@ -99,7 +109,7 @@ const meta: Meta = {
       control: "check",
       defaultValue: false,
       description:
-        "<b>boolean prop</b> detects if the user clicks  outside to close the dialog",
+        "<b>boolean prop</b> detects if the user clicks  outside to close the dialog, for testing purposes only is set to false in order to keep the dialog visible while ",
     },
   },
   parameters: {
@@ -117,62 +127,281 @@ export default meta;
 type Story = StoryObj<typeof DialogComponent>;
 
 export const DialogDefault: Story = {
-  render: (args) =>
-    DialogComponent({ ...args, withClickOutside: false, isOpened: true }),
+  render: (args) => {
+    const {
+      fullWidth,
+      buttonDirection,
+      buttonPosition,
+      cancelButtonTitle,
+      submitButtonTitle,
+      variant,
+      disabled,
+      loading,
+    } = args;
+    const [showDialog, setShowDialog] = useState(true);
+
+    return (
+      <div className="h-[500px]">
+        <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
+        <Dialog
+          className=""
+          withClickOutside={false}
+          isOpened={showDialog}
+          handleCancel={() => setShowDialog(false)}
+          handleSubmit={() => setShowDialog(false)}
+          handleClose={() => setShowDialog(false)}
+        >
+          <DialogHeader closeButtonClassName="" className="">
+            <h2 className="text-2xl">Dialog Title</h2>
+          </DialogHeader>
+
+          <DialogBody className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nulla,
+            nesciunt facilis tempora at non modi reiciendis magnam aliquid
+            consequatur?
+          </DialogBody>
+
+          <DialogFooter
+            disabled={disabled}
+            loading={loading}
+            variant={variant}
+            fullWidth={fullWidth}
+            buttonDirection={buttonDirection}
+            cancelButtonTitle={cancelButtonTitle}
+            submitButtonTitle={submitButtonTitle}
+            buttonPosition={buttonPosition}
+            cancelButtonClassName=""
+            submitButtonClassName=""
+            className=""
+          />
+        </Dialog>
+      </div>
+    );
+  },
 };
+
 export const DialogVertical: Story = {
-  render: (args) =>
-    DialogComponent({
-      ...args,
-      withClickOutside: false,
-      isOpened: true,
-      variant: "submit",
-      buttonDirection: "column",
-      buttonPosition: "right",
-    }),
+  render: () => {
+    const [showDialog, setShowDialog] = useState(true);
+
+    return (
+      <div className="h-[500px]">
+        <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
+        <Dialog
+          className=""
+          withClickOutside={true}
+          isOpened={showDialog}
+          handleCancel={() => setShowDialog(false)}
+          handleSubmit={() => setShowDialog(false)}
+          handleClose={() => setShowDialog(false)}
+        >
+          <DialogHeader closeButtonClassName="" className="">
+            <h2 className="text-2xl">Dialog Title</h2>
+          </DialogHeader>
+
+          <DialogBody className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nulla,
+            nesciunt facilis tempora at non modi reiciendis magnam aliquid
+            consequatur?
+          </DialogBody>
+
+          <DialogFooter
+            disabled={false}
+            loading={false}
+            variant={"submit"}
+            fullWidth={false}
+            buttonDirection={"column"}
+            cancelButtonTitle={"Cancel"}
+            submitButtonTitle={"Submit"}
+            buttonPosition={"right"}
+            cancelButtonClassName=""
+            submitButtonClassName=""
+            className=""
+          />
+        </Dialog>
+      </div>
+    );
+  },
 };
+
 export const DialogHorizontalFullWidth: Story = {
-  render: (args) =>
-    DialogComponent({
-      ...args,
-      withClickOutside: false,
-      isOpened: true,
-      variant: "submit",
-      buttonDirection: "row",
-      buttonPosition: "right",
-      fullWidth: true,
-    }),
+  render: () => {
+    const [showDialog, setShowDialog] = useState(true);
+
+    return (
+      <div className="h-[500px]">
+        <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
+        <Dialog
+          className=""
+          withClickOutside={true}
+          isOpened={showDialog}
+          handleCancel={() => setShowDialog(false)}
+          handleSubmit={() => setShowDialog(false)}
+          handleClose={() => setShowDialog(false)}
+        >
+          <DialogHeader closeButtonClassName="" className="">
+            <h2 className="text-2xl">Dialog Title</h2>
+          </DialogHeader>
+
+          <DialogBody className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nulla,
+            nesciunt facilis tempora at non modi reiciendis magnam aliquid
+            consequatur?
+          </DialogBody>
+
+          <DialogFooter
+            disabled={false}
+            loading={false}
+            variant={"submit"}
+            fullWidth={true}
+            buttonDirection={"row"}
+            cancelButtonTitle={"Cancel"}
+            submitButtonTitle={"Submit"}
+            buttonPosition={"right"}
+            cancelButtonClassName=""
+            submitButtonClassName=""
+            className=""
+          />
+        </Dialog>
+      </div>
+    );
+  },
 };
+
 export const DialogHorizontalRight: Story = {
-  render: (args) =>
-    DialogComponent({
-      ...args,
-      withClickOutside: false,
-      isOpened: true,
-      variant: "submit",
-      buttonDirection: "row",
-      buttonPosition: "right",
-    }),
+  render: () => {
+    const [showDialog, setShowDialog] = useState(true);
+
+    return (
+      <div className="h-[500px]">
+        <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
+        <Dialog
+          className=""
+          withClickOutside={true}
+          isOpened={showDialog}
+          handleCancel={() => setShowDialog(false)}
+          handleSubmit={() => setShowDialog(false)}
+          handleClose={() => setShowDialog(false)}
+        >
+          <DialogHeader closeButtonClassName="" className="">
+            <h2 className="text-2xl">Dialog Title</h2>
+          </DialogHeader>
+
+          <DialogBody className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nulla,
+            nesciunt facilis tempora at non modi reiciendis magnam aliquid
+            consequatur?
+          </DialogBody>
+
+          <DialogFooter
+            disabled={false}
+            loading={false}
+            variant={"submit"}
+            fullWidth={false}
+            buttonDirection={"row"}
+            cancelButtonTitle={"Cancel"}
+            submitButtonTitle={"Submit"}
+            buttonPosition={"right"}
+            cancelButtonClassName=""
+            submitButtonClassName=""
+            className=""
+          />
+        </Dialog>
+      </div>
+    );
+  },
 };
+
 export const DialogHorizontalLeft: Story = {
-  render: (args) =>
-    DialogComponent({
-      ...args,
-      withClickOutside: false,
-      isOpened: true,
-      variant: "submit",
-      buttonDirection: "row",
-      buttonPosition: "left",
-    }),
+  render: () => {
+    const [showDialog, setShowDialog] = useState(true);
+
+    return (
+      <div className="h-[500px]">
+        <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
+        <Dialog
+          className=""
+          withClickOutside={true}
+          isOpened={showDialog}
+          handleCancel={() => setShowDialog(false)}
+          handleSubmit={() => setShowDialog(false)}
+          handleClose={() => setShowDialog(false)}
+        >
+          <DialogHeader closeButtonClassName="" className="">
+            <h2 className="text-2xl">Dialog Title</h2>
+          </DialogHeader>
+
+          <DialogBody className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nulla,
+            nesciunt facilis tempora at non modi reiciendis magnam aliquid
+            consequatur?
+          </DialogBody>
+
+          <DialogFooter
+            disabled={false}
+            loading={false}
+            variant={"submit"}
+            fullWidth={false}
+            buttonDirection={"row"}
+            cancelButtonTitle={"Cancel"}
+            submitButtonTitle={"Submit"}
+            buttonPosition={"left"}
+            cancelButtonClassName=""
+            submitButtonClassName=""
+            className=""
+          />
+        </Dialog>
+      </div>
+    );
+  },
 };
+
 export const DialogDelete: Story = {
-  render: (args) =>
-    DialogComponent({
-      ...args,
-      withClickOutside: false,
-      isOpened: true,
-      variant: "delete",
-      buttonDirection: "row",
-      buttonPosition: "right",
-    }),
+  render: () => {
+    const [showDialog, setShowDialog] = useState(true);
+
+    return (
+      <div className="h-[500px]">
+        <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
+
+        <Dialog
+          className=""
+          withClickOutside={true}
+          isOpened={showDialog}
+          handleCancel={() => setShowDialog(false)}
+          handleSubmit={() => setShowDialog(false)}
+          handleClose={() => setShowDialog(false)}
+        >
+          <DialogHeader closeButtonClassName="" className="">
+            <h2 className="text-2xl">Dialog Title</h2>
+          </DialogHeader>
+
+          <DialogBody className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nulla,
+            nesciunt facilis tempora at non modi reiciendis magnam aliquid
+            consequatur?
+          </DialogBody>
+
+          <DialogFooter
+            disabled={false}
+            loading={false}
+            variant={"delete"}
+            fullWidth={false}
+            buttonDirection={"row"}
+            cancelButtonTitle={"Cancel"}
+            submitButtonTitle={"Submit"}
+            buttonPosition={"right"}
+            cancelButtonClassName=""
+            submitButtonClassName=""
+            className=""
+          />
+        </Dialog>
+      </div>
+    );
+  },
 };

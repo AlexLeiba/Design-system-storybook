@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, type ComponentProps } from "react";
 import { labelInputVariants } from "../../../../lib/cvaVariants";
 import { DragAndDropContainer } from "./DragAndDropContainer";
 import { PreviewFile } from "./PreviewFile";
@@ -12,7 +12,7 @@ import { cn } from "../../../../lib/utilities";
 // input disabled
 // checkbox,radio disabled
 
-type Props = {
+type Props = ComponentProps<"div"> & {
   handleSubmitFile?: (data: {
     error: string;
     file: { name: string; url: string }[];
@@ -24,7 +24,13 @@ type Props = {
   uploadVariant?: "single" | "multiple";
   uiVariant?: "button" | "dragAndDropContainer";
   fileTypes: "files" | "images";
-  buttonVariant: "primary" | "secondary" | "tertiary";
+  buttonVariant:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "destructive"
+    | "ghost"
+    | "link";
   size: "small" | "medium" | "large";
   loading?: boolean;
   disabled?: boolean;
@@ -35,9 +41,14 @@ type Props = {
   dragAndDropContainerClassName?: string;
   previewImageContainerClassName?: string;
   previewImageCloseButtonClassName?: string;
+  allowedFileTypes: {
+    files: string[];
+    images: string[];
+  };
+  inputName?: string;
 };
 
-const allowedFileTypes = {
+const allowedTypes = {
   files: ["csv", "xlsx", "txt", "pdf"],
   images: ["jpg", "jpeg", "png", "webp", "svg"],
 };
@@ -61,6 +72,10 @@ export function FileUpload({
   dragAndDropContainerClassName = "",
   previewImageContainerClassName = "",
   previewImageCloseButtonClassName = "",
+  allowedFileTypes = allowedTypes,
+  inputName,
+  className = "",
+  ...props
 }: Props) {
   // TODO add loader here
   const [previewUrl, setPreviewUrl] = React.useState<string>("");
@@ -162,10 +177,10 @@ export function FileUpload({
   }, [uploadedMultipleFiles, uploadedSingleFile]);
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className={cn("flex flex-col gap-1", className)} {...props}>
       {/* LABEL */}
       {title && (
-        <label htmlFor="fileUpload">
+        <label htmlFor={title || "fileUpload"}>
           <p
             className={cn(
               labelInputVariants({
@@ -180,7 +195,8 @@ export function FileUpload({
         </label>
       )}
       <input
-        id="fileUpload"
+        name={inputName}
+        id={title || "fileUpload"}
         ref={uploadRef}
         className="hidden"
         type="file"
@@ -192,6 +208,7 @@ export function FileUpload({
       {/* BUTTON UPLOAD */}
       {uiVariant === "button" && (
         <Button
+          title={`upload ${fileTypes}`}
           disabled={disabled || loading}
           className={buttonClassName}
           loading={loading}
@@ -205,6 +222,7 @@ export function FileUpload({
       {/* DRAG AND DROP */}
       {uiVariant === "dragAndDropContainer" && (
         <DragAndDropContainer
+          title={`upload ${fileTypes}`}
           disabled={disabled || loading}
           className={dragAndDropContainerClassName}
           buttonTitle={buttonTitle}
