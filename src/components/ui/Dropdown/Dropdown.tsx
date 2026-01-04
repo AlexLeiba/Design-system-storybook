@@ -110,7 +110,7 @@ const optionSelectedLabelVariant = cva(" text-left ", {
     },
     disabledState: {
       false: "",
-      true: "text-gray-400 bg-gray-600 hover:not-[]:",
+      true: "text-gray-800 hover:not-[]:",
     },
   },
   defaultVariants: {
