@@ -11,6 +11,9 @@ const meta: Meta = {
       options: ["small", "medium", "large"],
       defaultValue: "medium",
     },
+    label: {
+      control: "text",
+    },
     error: {
       control: "text",
     },
@@ -30,17 +33,23 @@ const meta: Meta = {
     name: {
       control: "text",
       description:
-        "Checkbox <b>name</b> which will represent name of the checkbox value stored in the submitted form",
+        "Native checkbox attribute <b>name</b> which will represent name of the checkbox value stored in the submitted form",
     },
-    titleClassName: {
+    classNameLabel: {
       control: "check",
     },
-    errorClassName: {
+    classNameError: {
+      control: "check",
+    },
+    classNameContainerCheckboxAndLabel: {
+      control: "check",
+    },
+    classNameInputCheckbox: {
       control: "check",
     },
     className: {
       control: "check",
-      description: "Checkbox container class",
+      description: "Checkbox container className",
     },
   },
   parameters: {
@@ -57,16 +66,39 @@ export default meta;
 
 type Story = StoryObj<typeof Checkbox>;
 
-export const CheckboxDefault: Story = {
-  args: {
-    title: "Checkbox label default",
-    handleChange: (v) => console.log(v),
-    defaultChecked: true,
+export const CheckboxUsage: Story = {
+  render: (args) => {
+    return (
+      <div className="flex flex-col gap-2">
+        <Checkbox
+          defaultChecked
+          {...args}
+          label={args.label || "English"}
+          name="english"
+          value={"english"}
+          handleChange={(v) => console.log(v)}
+        />
+        <Checkbox
+          {...args}
+          label={args.label || "French"}
+          name="french"
+          value={"french"}
+          handleChange={(v) => console.log(v)}
+        />
+        <Checkbox
+          {...args}
+          label={args.label || "Spanish"}
+          name="spanish"
+          value={"spanish"}
+          handleChange={(v) => console.log(v)}
+        />
+      </div>
+    );
   },
 };
 export const CheckboxMedium: Story = {
   args: {
-    title: "Checkbox label medium",
+    label: "Checkbox label medium",
     sizeType: "medium",
     handleChange: (v) => console.log(v),
     defaultChecked: true,
@@ -74,7 +106,7 @@ export const CheckboxMedium: Story = {
 };
 export const CheckboxLarge: Story = {
   args: {
-    title: "Checkbox label large",
+    label: "Checkbox label large",
     sizeType: "large",
     error: "Error message",
     handleChange: (v) => console.log(v),
@@ -84,7 +116,7 @@ export const CheckboxLarge: Story = {
 
 export const CheckboxDefaultError: Story = {
   args: {
-    title: "Checkbox label Error",
+    label: "Checkbox label Error",
     error: "Error message",
     handleChange: (v) => console.log(v),
     defaultChecked: true,
@@ -93,7 +125,7 @@ export const CheckboxDefaultError: Story = {
 
 export const CheckboxDefaultSuccess: Story = {
   args: {
-    title: "Checkbox label Success",
+    label: "Checkbox label Success",
     success: true,
     handleChange: (v) => console.log(v),
     defaultChecked: true,

@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const labelInputVariants = cva(" text-gray-900 font-medium", {
+export const labelInputVariants = cva(" text-gray-900 font-normal", {
   variants: {
     errorState: {
       false: "",

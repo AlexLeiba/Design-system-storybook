@@ -35,7 +35,7 @@ function DialogComponent({
         handleSubmit={() => setShowDialog(false)}
         handleClose={() => setShowDialog(false)}
       >
-        <DialogHeader closeButtonClassName="" className="">
+        <DialogHeader classNameCloseButton="" className="">
           <h2 className="text-2xl">Dialog Title</h2>
         </DialogHeader>
 
@@ -54,8 +54,8 @@ function DialogComponent({
           cancelButtonTitle={cancelButtonTitle}
           submitButtonTitle={submitButtonTitle}
           buttonPosition={buttonPosition}
-          cancelButtonClassName=""
-          submitButtonClassName=""
+          classNameCancelButton=""
+          classNameSubmitButton=""
           className=""
         />
       </Dialog>
@@ -70,7 +70,7 @@ const meta: Meta = {
   argTypes: {
     isOpened: {
       control: "check",
-      defaultValue: true,
+      defaultValue: false,
       description: "<b>boolean prop</b>  used to open the dialog or close",
     },
     fullWidth: {
@@ -109,7 +109,7 @@ const meta: Meta = {
       control: "check",
       defaultValue: false,
       description:
-        "<b>boolean prop</b> detects if the user clicks  outside to close the dialog, for testing purposes only is set to false in order to keep the dialog visible while ",
+        "<b>boolean prop</b> detects if the user clicks  outside to close the dialog, for testing purposes only, is set to false in order to keep the dialog visible while ",
     },
   },
   parameters: {
@@ -138,7 +138,7 @@ export const DialogDefault: Story = {
       disabled,
       loading,
     } = args;
-    const [showDialog, setShowDialog] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
 
     return (
       <div className="h-[500px]">
@@ -152,7 +152,7 @@ export const DialogDefault: Story = {
           handleSubmit={() => setShowDialog(false)}
           handleClose={() => setShowDialog(false)}
         >
-          <DialogHeader closeButtonClassName="" className="">
+          <DialogHeader classNameCloseButton="" className="">
             <h2 className="text-2xl">Dialog Title</h2>
           </DialogHeader>
 
@@ -171,8 +171,8 @@ export const DialogDefault: Story = {
             cancelButtonTitle={cancelButtonTitle}
             submitButtonTitle={submitButtonTitle}
             buttonPosition={buttonPosition}
-            cancelButtonClassName=""
-            submitButtonClassName=""
+            classNameCancelButton=""
+            classNameSubmitButton=""
             className=""
           />
         </Dialog>
@@ -197,7 +197,7 @@ export const DialogVertical: Story = {
           handleSubmit={() => setShowDialog(false)}
           handleClose={() => setShowDialog(false)}
         >
-          <DialogHeader closeButtonClassName="" className="">
+          <DialogHeader classNameCloseButton="" className="">
             <h2 className="text-2xl">Dialog Title</h2>
           </DialogHeader>
 
@@ -216,8 +216,8 @@ export const DialogVertical: Story = {
             cancelButtonTitle={"Cancel"}
             submitButtonTitle={"Submit"}
             buttonPosition={"right"}
-            cancelButtonClassName=""
-            submitButtonClassName=""
+            classNameCancelButton=""
+            classNameSubmitButton=""
             className=""
           />
         </Dialog>
@@ -242,7 +242,7 @@ export const DialogHorizontalFullWidth: Story = {
           handleSubmit={() => setShowDialog(false)}
           handleClose={() => setShowDialog(false)}
         >
-          <DialogHeader closeButtonClassName="" className="">
+          <DialogHeader classNameCloseButton="" className="">
             <h2 className="text-2xl">Dialog Title</h2>
           </DialogHeader>
 
@@ -261,8 +261,8 @@ export const DialogHorizontalFullWidth: Story = {
             cancelButtonTitle={"Cancel"}
             submitButtonTitle={"Submit"}
             buttonPosition={"right"}
-            cancelButtonClassName=""
-            submitButtonClassName=""
+            classNameCancelButton=""
+            classNameSubmitButton=""
             className=""
           />
         </Dialog>
@@ -287,7 +287,7 @@ export const DialogHorizontalRight: Story = {
           handleSubmit={() => setShowDialog(false)}
           handleClose={() => setShowDialog(false)}
         >
-          <DialogHeader closeButtonClassName="" className="">
+          <DialogHeader classNameCloseButton="" className="">
             <h2 className="text-2xl">Dialog Title</h2>
           </DialogHeader>
 
@@ -306,8 +306,8 @@ export const DialogHorizontalRight: Story = {
             cancelButtonTitle={"Cancel"}
             submitButtonTitle={"Submit"}
             buttonPosition={"right"}
-            cancelButtonClassName=""
-            submitButtonClassName=""
+            classNameCancelButton=""
+            classNameSubmitButton=""
             className=""
           />
         </Dialog>
@@ -332,7 +332,7 @@ export const DialogHorizontalLeft: Story = {
           handleSubmit={() => setShowDialog(false)}
           handleClose={() => setShowDialog(false)}
         >
-          <DialogHeader closeButtonClassName="" className="">
+          <DialogHeader classNameCloseButton="" className="">
             <h2 className="text-2xl">Dialog Title</h2>
           </DialogHeader>
 
@@ -351,8 +351,8 @@ export const DialogHorizontalLeft: Story = {
             cancelButtonTitle={"Cancel"}
             submitButtonTitle={"Submit"}
             buttonPosition={"left"}
-            cancelButtonClassName=""
-            submitButtonClassName=""
+            classNameCancelButton=""
+            classNameSubmitButton=""
             className=""
           />
         </Dialog>
@@ -377,7 +377,7 @@ export const DialogDelete: Story = {
           handleSubmit={() => setShowDialog(false)}
           handleClose={() => setShowDialog(false)}
         >
-          <DialogHeader closeButtonClassName="" className="">
+          <DialogHeader classNameCloseButton="" className="">
             <h2 className="text-2xl">Dialog Title</h2>
           </DialogHeader>
 
@@ -396,8 +396,8 @@ export const DialogDelete: Story = {
             cancelButtonTitle={"Cancel"}
             submitButtonTitle={"Submit"}
             buttonPosition={"right"}
-            cancelButtonClassName=""
-            submitButtonClassName=""
+            classNameCancelButton=""
+            classNameSubmitButton=""
             className=""
           />
         </Dialog>

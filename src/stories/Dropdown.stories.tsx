@@ -17,7 +17,7 @@ const meta: Meta = {
       control: "object",
       defaultValue: { value: "option1", label: "Option 1" },
       description:
-        "The value should be found in the options array <b>below</b>",
+        "The value should be found in the <b>options attribute</b> array",
     },
     options: {
       control: "object",
@@ -30,6 +30,10 @@ const meta: Meta = {
     label: {
       control: "text",
       defaultValue: "Dropdown label",
+    },
+    placeholder: {
+      control: "text",
+      defaultValue: "Placeholder when no options is selected",
     },
     size: {
       control: "radio",
@@ -59,30 +63,41 @@ const meta: Meta = {
     },
     className: {
       control: "check",
-      defaultValue: "",
+      defaultValue: "className of the dropdown container",
     },
-    labelClassName: {
+    classNameLabel: {
       control: "check",
       defaultValue: "",
     },
-    errorClassName: {
+    classNameError: {
       control: "check",
       defaultValue: "",
     },
-    dropMenuContainerClassName: {
+    classNameDropMenuContainer: {
       control: "check",
       defaultValue: "",
     },
-    dropMenuElementClassName: {
+    classNameDropMenuElementButton: {
       control: "check",
       defaultValue: "",
     },
-    dropMenuElementTitleClassName: {
+    classNameDropMenuElementTitle: {
       control: "check",
       defaultValue: "",
     },
+    classNameContainerSelectedMultipleOptions: {
+      control: "check",
+      defaultValue: "",
+    },
+    classNamePlaceholder: {
+      control: "check",
+      defaultValue: "",
+    },
+
     handleSelectValue: {
       control: "check",
+      description:
+        "Function called when an option is selected <b> handleSelectValue: (value: OptionsType) => void;</b>",
     },
   },
   parameters: {
@@ -114,6 +129,14 @@ export const DropdownSingleDefault: Story = {
       { value: "option2", label: "Option 2" },
       { value: "option3", label: "Option 3" },
     ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
     handleSelectValue: (value) => console.log(value),
   },
 };
@@ -133,6 +156,14 @@ export const DropdownMultipleOptionsDefault: Story = {
       { value: "option2", label: "Option 2" },
       { value: "option3", label: "Option 3" },
     ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
     handleSelectValue: (value) => console.log(value),
   },
 };
@@ -152,6 +183,14 @@ export const DropdownMultipleOptionsSecondary: Story = {
       { value: "option2", label: "Option 2" },
       { value: "option3", label: "Option 3" },
     ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
     handleSelectValue: (value) => console.log(value),
   },
 };
@@ -171,6 +210,14 @@ export const DropdownMultipleOptionsGhost: Story = {
       { value: "option2", label: "Option 2" },
       { value: "option3", label: "Option 3" },
     ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
     handleSelectValue: (value) => console.log(value),
   },
 };
@@ -188,6 +235,14 @@ export const DropdownSuccess: Story = {
       { value: "option2", label: "Option 2" },
       { value: "option3", label: "Option 3" },
     ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
     handleSelectValue: (value) => console.log(value),
     success: true,
   },
@@ -205,7 +260,44 @@ export const DropdownError: Story = {
       { value: "option2", label: "Option 2" },
       { value: "option3", label: "Option 3" },
     ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
     handleSelectValue: (value) => console.log(value),
     error: "Error message",
+  },
+};
+
+export const DropdownMultipleOptionsDisabled: Story = {
+  args: {
+    label: "Dropdown label",
+    defaultSelectedMultipleValues: [
+      {
+        value: "option1",
+        label: " Option 1",
+      },
+    ],
+    selectType: "multiple",
+    variant: "primary",
+    options: [
+      { value: "option1", label: "Option 1" },
+      { value: "option2", label: "Option 2" },
+      { value: "option3", label: "Option 3" },
+    ],
+    className: "",
+    classNameLabel: "",
+    classNameError: "",
+    classNameDropMenuContainer: "",
+    classNameDropMenuElementButton: "",
+    classNameDropMenuElementTitle: "",
+    classNameContainerSelectedMultipleOptions: "",
+    classNamePlaceholder: "",
+    disabled: true,
+    handleSelectValue: (value) => console.log(value),
   },
 };

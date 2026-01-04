@@ -75,9 +75,9 @@ export function Dialog({
 
   useEffect(() => {
     if (open) {
-      // document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     } else {
-      // document.body.style.overflow = "unset";
+      document.body.style.overflow = "unset";
       handleClose?.();
     }
   }, [open]);
@@ -109,12 +109,12 @@ function useDialog() {
 
 type DialogHeaderProps = ComponentProps<"div"> & {
   children: React.ReactNode;
-  closeButtonClassName?: string;
+  classNameCloseButton?: string;
 };
 
 export function DialogHeader({
   children,
-  closeButtonClassName = "",
+  classNameCloseButton = "",
   className = "",
   ...props
 }: DialogHeaderProps) {
@@ -127,7 +127,7 @@ export function DialogHeader({
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
           "absolute top-0 right-0 cursor-pointer hover:opacity-80",
-          closeButtonClassName
+          classNameCloseButton
         )}
       >
         <X />
@@ -172,9 +172,9 @@ export type DialogFooterProps = VariantProps<typeof footerVariants> &
     fullWidth?: boolean;
     cancelButtonTitle?: string;
     submitButtonTitle?: string;
-    cancelButtonClassName?: string;
-    submitButtonClassName?: string;
-    containerButtonsClassName?: string;
+    classNameCancelButton?: string;
+    classNameSubmitButton?: string;
+    classNameContainerButtons?: string;
     loading?: boolean;
     disabled?: boolean;
   };
@@ -186,9 +186,9 @@ export function DialogFooter({
   buttonPosition = "right",
   cancelButtonTitle,
   submitButtonTitle,
-  cancelButtonClassName = "",
-  submitButtonClassName = "",
-  containerButtonsClassName = "",
+  classNameCancelButton = "",
+  classNameSubmitButton = "",
+  classNameContainerButtons = "",
   loading,
   disabled,
   className = "",
@@ -200,7 +200,7 @@ export function DialogFooter({
       <div
         className={cn(
           footerVariants({ variant, buttonDirection, buttonPosition }),
-          containerButtonsClassName
+          classNameContainerButtons
         )}
       >
         <Button
@@ -210,14 +210,14 @@ export function DialogFooter({
             handleCancel();
             setOpen(false);
           }}
-          className={cn(cancelButtonClassName)}
+          className={cn(classNameCancelButton)}
         >
           <Label>{cancelButtonTitle || "Cancel"}</Label>
         </Button>
         <Button
           loading={loading}
           disabled={loading || disabled}
-          className={cn(submitButtonClassName)}
+          className={cn(classNameSubmitButton)}
           fullWidth={fullWidth}
           size={"medium"}
           variant={variant === "delete" ? "destructive" : "secondary"}

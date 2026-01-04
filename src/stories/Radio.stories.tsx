@@ -15,26 +15,28 @@ const meta: Meta = {
 
     success: { control: "boolean" },
     error: { control: "text" },
-    onChange: {
-      action: "onChange",
+    handleChange: {
+      action: "handleChange",
       description:
-        "onChange handler which will return the value stored under the key <b>name attribute</b> and accessible via event.target.value",
+        "handleChange will return the value stored under the attribute <b>value</b> which import styled from 'styled-components/native'; accessible via event.target.value",
     },
     title: { control: "text", description: "Radio label" },
     value: {
       control: "text",
-      description: "Radio <b>value</b> which will be stored in the form",
+      description:
+        "Native radio attribute <b>value</b> which will be stored in the submitted form",
     },
     name: {
       control: "text",
       description:
-        "Radio <b>unique name</b> which will represent the radio selected value in the submitted form",
+        "Native radio attribute <b>name</b> which will be shared across all radio options in the same group",
     },
 
-    className: { control: "check", description: "Radio container className" },
     classNameLabel: { control: "check" },
-    classNameInput: { control: "check" },
+    classNameRadioInput: { control: "check" },
     classNameError: { control: "check" },
+    classNameContainerCheckboxAndLabel: { control: "check" },
+    className: { control: "check", description: "Radio container className" },
   },
   parameters: {
     docs: {
@@ -49,32 +51,57 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof Radio>;
 
-export const RadioDefault: Story = {
-  args: {
-    title: "Radio label default",
+export const RadioUsage: Story = {
+  render: (args) => {
+    return (
+      <div className="flex flex-col gap-2">
+        <Radio
+          {...args}
+          defaultValue={"english"}
+          label={args.label || "English"}
+          name="language"
+          value={"english"}
+          handleChange={(v) => console.log(v)}
+        />
+        <Radio
+          {...args}
+          label={args.label || "French"}
+          name="language"
+          value={"french"}
+          handleChange={(v) => console.log(v)}
+        />
+        <Radio
+          {...args}
+          label={args.label || "Spanish"}
+          name="language"
+          value={"spanish"}
+          handleChange={(v) => console.log(v)}
+        />
+      </div>
+    );
   },
 };
 export const RadioDefaultMedium: Story = {
   args: {
-    title: "Radio label medium",
+    label: "Radio label medium",
     sizeType: "medium",
   },
 };
 export const RadioDefaultLarge: Story = {
   args: {
-    title: "Radio label large",
+    label: "Radio label large",
     sizeType: "large",
   },
 };
 export const RadioSuccess: Story = {
   args: {
-    title: "Radio label success",
+    label: "Radio label success",
     success: true,
   },
 };
 export const RadioError: Story = {
   args: {
-    title: "Rdio label error",
+    label: "Radio label error",
     error: "Error message",
   },
 };

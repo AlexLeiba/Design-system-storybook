@@ -5,9 +5,11 @@ import {
 } from "../../../../lib/cvaVariants";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Checkbox } from "../Checkbox/Checkbox";
-import Label from "../Label/Label";
+
 import { cn } from "../../../../lib/utilities";
 import { Check } from "lucide-react";
+import { SelectedItem } from "./SelectedItem";
+import Label from "../Label/Label";
 
 type OptionsType = {
   value: string;
@@ -16,7 +18,7 @@ type OptionsType = {
 
 const dropdownVariants = cva(
   [
-    " w-full relative not-disabled:hover:bg-black/10 cursor-pointer text-left",
+    " w-full relative not-disabled:hover:opacity-70 cursor-pointer text-left",
     "disabled:cursor-not-allowed disabled:opacity-50 ",
     "focus-within:outline-none focus-within:ring  focus:ring-offset-2 focus:ring-offset-gray-100",
   ],
@@ -31,9 +33,9 @@ const dropdownVariants = cva(
         true: "border-green-500! pr-12",
       },
       size: {
-        small: "p-2",
-        medium: "p-4",
-        large: "p-6",
+        small: "px-3 py-2",
+        medium: "px-4 py-3",
+        large: "px-5 py-3",
       },
       variant: {
         primary: "border rounded-xl border-gray-400",
@@ -42,11 +44,11 @@ const dropdownVariants = cva(
       },
       openState: {
         false: "",
-        true: "bg-black/20",
+        true: "bg-gray-200",
       },
       disabled: {
         false: "",
-        true: "text-gray-400 bg-gray-600 hover:not-[]:",
+        true: "text-gray-400 bg-gray-400 hover:not-[]:",
       },
     },
     defaultVariants: {
@@ -58,35 +60,57 @@ const dropdownVariants = cva(
   }
 );
 
-const optionVariants = cva(["p-2 w-full hover:bg-black/10 cursor-pointer "], {
+const optionVariants = cva(
+  ["py-2 px-4 w-full hover:opacity-70 cursor-pointer "],
+  {
+    variants: {
+      variant: {
+        primary: " rounded-xl  bg-white",
+        secondary: " rounded-3xl  disabled:bg-gray-200 bg-white",
+        ghost: "rounded-3xl bg-gray-200 ",
+      },
+      selectType: {
+        single: "",
+        multiple: "flex  items-center gap-2",
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+      // size: "medium",
+      selectType: "single",
+    },
+  }
+);
+const optionDropMenuTitleElementVariant = cva(" text-left ", {
   variants: {
     size: {
-      small: "p-2",
-      medium: "p-4",
-      large: "p-6",
-    },
-    variant: {
-      primary: " rounded-xl  bg-white",
-      secondary: " rounded-3xl  disabled:bg-gray-200 bg-white",
-      ghost: "rounded-3xl bg-gray-200 ",
-    },
-    selectType: {
-      single: "",
-      multiple: "flex  items-center gap-2",
+      small: "text-base px-2 ",
+      medium: "text-xl py-1 px-2",
+      large: "text-2xl py-2 px-4",
     },
   },
   defaultVariants: {
-    variant: "primary",
     size: "medium",
-    selectType: "single",
   },
 });
-const optionTitleVariant = cva("p-2 text-left ", {
+const optionSelectedLabelVariant = cva(" text-left ", {
   variants: {
     size: {
-      small: "text-xs",
-      medium: "text-2xl",
-      large: "text-2xl",
+      small: "text-base ",
+      medium: "text-xl ",
+      large: "text-2xl ",
+    },
+    errorState: {
+      false: "",
+      true: "border-red-500!  pr-12",
+    },
+    successState: {
+      false: "",
+      true: "border-green-500! pr-12",
+    },
+    disabledState: {
+      false: "",
+      true: "text-gray-400 bg-gray-600 hover:not-[]:",
     },
   },
   defaultVariants: {
@@ -98,9 +122,9 @@ const containerOptionsVariants = cva(
   {
     variants: {
       size: {
-        small: "p-1  shadow-xs",
-        medium: "p-2 shadow-md",
-        large: "p-4 shadow-lg",
+        small: " shadow-xs",
+        medium: " shadow-md",
+        large: " shadow-lg",
       },
       variant: {
         primary: " rounded-xl border-gray-400 bg-white ",
@@ -127,19 +151,22 @@ type Props = VariantsType &
     disabled?: boolean;
     label?: string;
     selectType?: "single" | "multiple";
-    labelClassName?: string;
-    errorClassName?: string;
-    dropMenuContainerClassName?: string;
-    dropMenuElementClassName?: string;
-    dropMenuElementTitleClassName?: string;
+    classNameLabel?: string;
+    classNameError?: string;
+    classNameDropMenuContainer?: string;
+    classNameDropMenuElementButton?: string;
+    classNameDropMenuElementTitle?: string;
+    classNameContainerSelectedMultipleOptions?: string;
+    classNamePlaceholder?: string;
     size?: "small" | "medium" | "large";
+    placeholder?: string;
     handleSelectValue: (value: OptionsType) => void;
-    // variant?: "primary" | "secondary" | "ghost";
   };
 export function Dropdown({
   options,
   defaultSelectedSingleValue = { value: "", label: "" },
   defaultSelectedMultipleValues = [],
+  placeholder = "Select a value",
   error,
   success,
   disabled,
@@ -147,13 +174,15 @@ export function Dropdown({
   className = "",
   label,
   selectType = "single",
-  labelClassName = "",
-  errorClassName = "",
-  dropMenuContainerClassName = "",
-  dropMenuElementClassName = "",
-  dropMenuElementTitleClassName = "",
+  classNameLabel = "",
+  classNameError = "",
+  classNameDropMenuContainer = "",
+  classNameDropMenuElementButton = "",
+  classNameDropMenuElementTitle = "",
+  classNameContainerSelectedMultipleOptions = "",
+  classNamePlaceholder = "",
+  size = "medium",
   handleSelectValue,
-  ...props
 }: Props) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -204,19 +233,16 @@ export function Dropdown({
   return (
     <div className="relative" ref={containerRef}>
       {label && (
-        <p
-          className={cn(
-            labelInputVariants({
-              errorState: !!error,
-              successState: !!success,
-              disabledState: disabled,
-              sizeType: props.size,
-            }),
-            labelClassName
-          )}
+        <Label
+          label={label}
+          error={error}
+          success={success}
+          disabled={disabled}
+          size={size}
+          classNameLabel={classNameLabel}
         >
           {label}
-        </p>
+        </Label>
       )}
       <button
         onClick={() => setOpen((prev) => !prev)}
@@ -227,47 +253,63 @@ export function Dropdown({
             disabled: disabled,
             successState: !!success,
             errorState: !!error,
-            size: props.size,
+            size: size,
           }),
           className
         )}
         disabled={disabled}
       >
+        {/* SELECTED SINGLE ITEM */}
         {selectType === "single" && (
-          <Label>
+          <p
+            className={cn(
+              optionSelectedLabelVariant({
+                errorState: !!error,
+                successState: !!success,
+                disabledState: disabled,
+                size: size,
+              }),
+              classNameLabel
+            )}
+          >
             {(selectType === "single" && select.label) ||
               defaultSelectedSingleValue.label}
-          </Label>
+          </p>
         )}
+        {/* SELECTED MULTIPLE ITEMS */}
         {selectType === "multiple" && (
-          <div className="flex gap-2">
+          <div
+            className={cn(
+              "flex gap-2 h-[35px] items-center",
+              classNameContainerSelectedMultipleOptions
+            )}
+          >
             {selectMultiple.length > 0 ? (
               selectMultiple.map((selectedValue) => {
                 return (
-                  <div className="flex gap-2 bg-gray-100 rounded-2xl py-1 px-2 text-white">
-                    <p
-                      className={labelInputVariants({
-                        errorState: !!error,
-                        successState: !!success,
-                        disabledState: disabled,
-                        sizeType: props.size,
-                      })}
-                    >
-                      {selectedValue.label}
-                    </p>
-                  </div>
+                  <SelectedItem
+                    selectedValue={selectedValue.label}
+                    error={error}
+                    disabled={disabled}
+                    success={success}
+                    size={size}
+                  />
                 );
               })
             ) : (
+              // DEFAULT SELECTED MULTIPLE ITEM
               <p
-                className={labelInputVariants({
-                  errorState: !!error,
-                  successState: !!success,
-                  disabledState: disabled,
-                  sizeType: props.size,
-                })}
+                className={cn(
+                  labelInputVariants({
+                    errorState: !!error,
+                    successState: !!success,
+                    disabledState: disabled,
+                    sizeType: size,
+                  }),
+                  classNamePlaceholder
+                )}
               >
-                {defaultSelectedSingleValue.label}
+                {placeholder}
               </p>
             )}
           </div>
@@ -275,31 +317,31 @@ export function Dropdown({
       </button>
       {open && (
         <>
-          {/* SINGLE */}
+          {/* SINGLE DROP OPTIONS */}
           {selectType === "single" ? (
             <div
               className={cn(
                 containerOptionsVariants({
                   variant,
-                  size: props.size,
+                  size: size,
                 }),
-                dropMenuContainerClassName
+                classNameDropMenuContainer
               )}
             >
               {options.map((option) => (
                 <button
                   onClick={() => handleSelect(option, "single")}
                   className={cn(
-                    optionVariants({ variant, size: props.size }),
+                    optionVariants({ variant }),
                     "flex justify-between items-center",
-                    dropMenuElementClassName
+                    classNameDropMenuElementButton
                   )}
                   key={option.value}
                 >
                   <p
                     className={cn(
-                      optionTitleVariant({ size: props.size }),
-                      dropMenuElementTitleClassName
+                      optionDropMenuTitleElementVariant({ size: size }),
+                      classNameDropMenuElementTitle
                     )}
                   >
                     {option.label}
@@ -309,14 +351,14 @@ export function Dropdown({
               ))}
             </div>
           ) : (
-            // MULTIPLE
+            // MULTIPLE DROP OPTIONS
             <div
               className={cn(
                 containerOptionsVariants({
                   variant,
-                  size: props.size,
+                  size: size,
                 }),
-                dropMenuContainerClassName
+                classNameDropMenuContainer
               )}
             >
               {options.map((option) => (
@@ -325,10 +367,10 @@ export function Dropdown({
                   className={cn(
                     optionVariants({
                       variant,
-                      size: props.size,
+
                       selectType,
                     }),
-                    dropMenuElementClassName
+                    classNameDropMenuElementButton
                   )}
                   key={option.value}
                   title={""}
@@ -342,12 +384,12 @@ export function Dropdown({
                         (value) => value.value === option.value || false
                       )
                     }
-                    sizeType={props.size || "medium"}
+                    sizeType={size || "medium"}
                   />
                   <p
                     className={cn(
-                      optionTitleVariant({ size: props.size }),
-                      dropMenuElementTitleClassName
+                      optionDropMenuTitleElementVariant({ size: size }),
+                      classNameDropMenuElementTitle
                     )}
                   >
                     {option.label}
@@ -362,9 +404,9 @@ export function Dropdown({
         <p
           className={cn(
             errorMessageVariants({
-              sizeType: props.size,
+              sizeType: size,
             }),
-            errorClassName
+            classNameError
           )}
         >
           {error}

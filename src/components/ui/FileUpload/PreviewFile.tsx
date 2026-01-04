@@ -51,7 +51,7 @@ export function PreviewFile({
         <X onClick={handleClear} className="text-white" />
       </button>
 
-      <a href={fileUrl} download={fileName}>
+      <a href={fileUrl} download={fileName} title="download file">
         <span className="line-clamp-3">{fileName}</span>
       </a>
     </div>

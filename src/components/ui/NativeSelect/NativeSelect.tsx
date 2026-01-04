@@ -1,4 +1,4 @@
-import React, { type ComponentProps } from "react";
+import { type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { labelInputVariants } from "../../../../lib/cvaVariants";
 
@@ -66,7 +66,13 @@ type Props = ComponentProps<"select"> &
     success?: boolean;
     options: OptionsType[];
   };
-export function Select({ title, error, success, options, ...props }: Props) {
+export function NativeSelect({
+  title,
+  error,
+  success,
+  options,
+  ...props
+}: Props) {
   return (
     <div
       className={selectVariants({

@@ -1,6 +1,6 @@
 import React from "react";
 
-function DateTimePicker() {
+export function DateTimePicker() {
   return (
     <div>
       <input type="datetime-local" className="type" />
@@ -9,5 +9,3 @@ function DateTimePicker() {
     </div>
   );
 }
-
-export default DateTimePicker;
