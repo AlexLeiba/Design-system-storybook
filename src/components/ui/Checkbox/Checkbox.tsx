@@ -9,9 +9,9 @@ import { cn } from "../../../../lib/utilities";
 const checkboxVariants = cva("accent-black", {
   variants: {
     sizeType: {
-      small: "w-4 h-4",
-      medium: "w-6 h-6",
-      large: "w-8 h-8",
+      small: "size-4",
+      medium: "size-6",
+      large: "size-8",
     },
     errorState: {
       false: "",
@@ -81,8 +81,8 @@ export function Checkbox({
           type="checkbox"
           {...props}
         />
-        <label htmlFor={label || "checkbox"}>
-          {label && (
+        {label && (
+          <label htmlFor={label || "checkbox"}>
             <p
               className={cn(
                 labelInputVariants({
@@ -96,8 +96,8 @@ export function Checkbox({
             >
               {label}
             </p>
-          )}
-        </label>
+          </label>
+        )}
       </div>
       {error && (
         <p

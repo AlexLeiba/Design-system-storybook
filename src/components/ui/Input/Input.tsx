@@ -1,4 +1,4 @@
-import { forwardRef, useState, type ComponentProps } from "react";
+import { useState, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { BadgeAlert, BadgeCheck, Eye, EyeClosed } from "lucide-react";
 import { labelInputVariants } from "../../../../lib/cvaVariants";
@@ -53,36 +53,36 @@ const inputVariants = cva(
 type Props = VariantProps<typeof inputVariants> &
   ComponentProps<"input"> &
   ComponentProps<"textarea"> & {
-    title: string;
+    label: string;
     error?: string;
     success?: boolean;
     type?: "number" | "text" | "password" | "textarea";
-    titleClassName?: string;
-    errorClassName?: string;
-    eyeClassName?: string;
+    classNameLabel?: string;
+    classNameError?: string;
+    classNameEye?: string;
     disabled?: boolean;
   };
 
-export const Input = forwardRef<HTMLInputElement, Props>(
-  ({
-    variant,
-    weight,
-    title,
-    error,
-    success,
-    sizeType,
-    type,
-    disabled = false,
-    className = "",
-    titleClassName = "",
-    errorClassName = "",
-    eyeClassName = "",
-    ...props
-  }: Props) => {
-    const [showPassword, setShowPassword] = useState(false);
-    return (
-      <div className="flex flex-col gap-1">
-        <label htmlFor="input">
+export function Input({
+  variant,
+  weight,
+  label,
+  error,
+  success,
+  sizeType,
+  type,
+  disabled = false,
+  className = "",
+  classNameLabel = "",
+  classNameEye = "",
+  classNameError = "",
+  ...props
+}: Props) {
+  const [showPassword, setShowPassword] = useState(false);
+  return (
+    <div className="flex flex-col gap-1">
+      {label && (
+        <label htmlFor={label || "input"}>
           <p
             className={cn(
               labelInputVariants({
@@ -91,105 +91,101 @@ export const Input = forwardRef<HTMLInputElement, Props>(
                 disabledState: disabled,
                 sizeType,
               }),
-              titleClassName
+              classNameLabel
             )}
           >
-            {title}
+            {label}
           </p>
         </label>
-        <div className="relative">
-          {type === "textarea" ? (
-            <textarea
-              disabled={disabled}
-              rows={4}
-              id="input"
-              className={cn(
-                inputVariants({
-                  variant,
-                  sizeType,
-                  weight,
-                  errorState: !!error,
-                  successState: !!success,
-                }),
-                className
-              )}
-              {...props}
-            />
-          ) : (
-            <input
-              disabled={disabled}
-              id="input"
-              type={
-                type === "password"
-                  ? showPassword
-                    ? "text"
-                    : "password"
-                  : type
-              }
-              className={cn(
-                inputVariants({
-                  variant,
-                  sizeType,
-                  weight,
-                  errorState: !!error,
-                  successState: !!success,
-                  passwordType: type === "password",
-                }),
-                className
-              )}
-              {...props}
-            />
-          )}
-          {type === "password" && !success && (
-            <>
-              {showPassword ? (
-                <button
-                  disabled={disabled}
-                  onClick={() => setShowPassword(false)}
-                  className={cn(
-                    "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed",
-                    success ? "text-green-600" : "text-gray-400",
-                    eyeClassName
-                  )}
-                >
-                  <Eye />
-                </button>
-              ) : (
-                <button
-                  disabled={disabled}
-                  onClick={() => setShowPassword(true)}
-                  className={cn(
-                    "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed ",
-                    success ? "text-green-600" : "text-gray-400",
-                    eyeClassName
-                  )}
-                >
-                  <EyeClosed />
-                </button>
-              )}
-            </>
-          )}
-          {success && (
-            <BadgeCheck
-              className={cn(
-                "absolute top-[calc(50%-0.7rem)] right-4",
-                success ? "text-green-600" : "text-gray-400"
-              )}
-            />
-          )}
-          {error && (
-            <BadgeAlert
-              className={cn(
-                "absolute top-[50%] translate-y-[-50%] right-4",
-                error ? "text-red-600" : "text-gray-400"
-              )}
-            />
-          )}
-        </div>
+      )}
+      <div className="relative">
+        {type === "textarea" ? (
+          <textarea
+            disabled={disabled}
+            rows={4}
+            id={label || "input"}
+            className={cn(
+              inputVariants({
+                variant,
+                sizeType,
+                weight,
+                errorState: !!error,
+                successState: !!success,
+              }),
+              className
+            )}
+            {...props}
+          />
+        ) : (
+          <input
+            disabled={disabled}
+            id="input"
+            type={
+              type === "password" ? (showPassword ? "text" : "password") : type
+            }
+            className={cn(
+              inputVariants({
+                variant,
+                sizeType,
+                weight,
+                errorState: !!error,
+                successState: !!success,
+                passwordType: type === "password",
+              }),
+              className
+            )}
+            {...props}
+          />
+        )}
+        {type === "password" && !success && (
+          <>
+            {showPassword ? (
+              <button
+                disabled={disabled}
+                onClick={() => setShowPassword(false)}
+                className={cn(
+                  "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed",
+                  success ? "text-green-600" : "text-gray-400",
+                  classNameEye
+                )}
+              >
+                <Eye />
+              </button>
+            ) : (
+              <button
+                disabled={disabled}
+                onClick={() => setShowPassword(true)}
+                className={cn(
+                  "absolute top-[calc(50%-0.7rem)] right-4 cursor-pointer hover:opacity-80 disabled:cursor-not-allowed ",
+                  success ? "text-green-600" : "text-gray-400",
+                  classNameEye
+                )}
+              >
+                <EyeClosed />
+              </button>
+            )}
+          </>
+        )}
+        {success && (
+          <BadgeCheck
+            className={cn(
+              "absolute top-[calc(50%-0.7rem)] right-4",
+              success ? "text-green-600" : "text-gray-400"
+            )}
+          />
+        )}
         {error && (
-          <p className={cn("text-red-600 text-xs", errorClassName)}>{error}</p>
+          <BadgeAlert
+            className={cn(
+              "absolute top-[50%] translate-y-[-50%] right-4",
+              error ? "text-red-600" : "text-gray-400"
+            )}
+          />
         )}
       </div>
-    );
-  }
-);
+      {error && (
+        <p className={cn("text-red-600 text-xs", classNameError)}>{error}</p>
+      )}
+    </div>
+  );
+}

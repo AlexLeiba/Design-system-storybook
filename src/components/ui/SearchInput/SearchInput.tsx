@@ -32,10 +32,11 @@ type Props = ComponentProps<"input"> & {
   classNameInput?: string;
   classNameIconSearchIcon?: string;
   classNameXIcon?: string;
+  label?: string;
 };
 export function SearchInput({
   handleChange,
-  title,
+  label,
   sizeType = "medium",
   classNameTitle = "",
   classNameInput = "",
@@ -60,24 +61,26 @@ export function SearchInput({
         className
       )}
     >
-      <label htmlFor={title || "search"}>
-        <p
-          className={cn(
-            labelInputVariants({
-              errorState: false,
-              successState: false,
-              disabledState: disabled,
-              sizeType,
-            }),
-            classNameTitle
-          )}
-        >
-          {title}
-        </p>
-      </label>
+      {label && (
+        <label htmlFor={label || "search"}>
+          <p
+            className={cn(
+              labelInputVariants({
+                errorState: false,
+                successState: false,
+                disabledState: disabled,
+                sizeType,
+              }),
+              classNameTitle
+            )}
+          >
+            {label}
+          </p>
+        </label>
+      )}
       <div className="relative">
         <input
-          id={title || "search"}
+          id={label || "search"}
           disabled={disabled}
           className={cn(searchInputVariants({ sizeType }), classNameInput)}
           value={search}

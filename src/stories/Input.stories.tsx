@@ -7,7 +7,7 @@ const meta: Meta<typeof Input> = {
   tags: ["autodocs"],
   argTypes: {
     value: { control: "text" },
-    title: { control: "text" },
+    label: { control: "text" },
     variant: {
       control: "radio",
       options: ["primary", "secondary"],
@@ -25,9 +25,9 @@ const meta: Meta<typeof Input> = {
         "onChange handler which will return the value stored under the <b>name attribute</b> and accessible via event.target.value",
     },
     className: { control: "check", description: "Input container class" },
-    eyeClassName: { control: "check" },
-    errorClassName: { control: "check" },
-    titleClassName: { control: "check" },
+    classNameEye: { control: "check" },
+    classNameError: { control: "check" },
+    classNameLabel: { control: "check" },
   },
   parameters: {
     docs: {
@@ -45,7 +45,7 @@ type Story = StoryObj<typeof Input>;
 
 export const DefaultInput: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "default input placeholder...",
     sizeType: "medium",
@@ -53,7 +53,7 @@ export const DefaultInput: Story = {
 };
 export const InputSuccess: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "type here...",
     sizeType: "medium",
@@ -62,7 +62,7 @@ export const InputSuccess: Story = {
 };
 export const InputError: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "type here...",
     sizeType: "medium",
@@ -71,7 +71,7 @@ export const InputError: Story = {
 };
 export const InputPassword: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "type here...",
     sizeType: "medium",
@@ -80,7 +80,7 @@ export const InputPassword: Story = {
 };
 export const InputDisabled: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "type here...",
     sizeType: "medium",
@@ -89,7 +89,7 @@ export const InputDisabled: Story = {
 };
 export const InputSmall: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "primary input value...",
     sizeType: "small",
@@ -97,7 +97,7 @@ export const InputSmall: Story = {
 };
 export const InputMedium: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "primary input value...",
     sizeType: "medium",
@@ -105,7 +105,7 @@ export const InputMedium: Story = {
 };
 export const InputLarge: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "primary input value...",
     sizeType: "large",
@@ -113,7 +113,7 @@ export const InputLarge: Story = {
 };
 export const InputTextarea: Story = {
   args: {
-    title: "Input label",
+    label: "Input label",
     variant: "primary",
     value: "primary input value...",
     sizeType: "large",

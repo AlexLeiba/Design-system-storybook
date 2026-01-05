@@ -8,7 +8,7 @@ type Props = ComponentProps<"p"> & {
   error?: string;
   success?: boolean;
   disabled?: boolean;
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | null;
   label?: string;
 };
 function Label({

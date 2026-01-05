@@ -1,53 +1,49 @@
 import { type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { labelInputVariants } from "../../../../lib/cvaVariants";
+import { cn } from "../../../../lib/utilities";
+import Label from "../Label/Label";
 
 type OptionsType = {
   value: string;
   label: string;
 };
 
-const selectVariants = cva("flex flex-col gap-1 ", {
+const selectVariants = cva("flex flex-col gap-1 pr-2 border  border-gray-400", {
   variants: {
-    variant: {
-      primary: "border rounded-xl border-gray-400",
-      secondary: "border-2 rounded-3xl border-gray-400 disabled:bg-gray-200",
-    },
     sizeType: {
-      small: "p-1",
-      medium: "p-2",
-      large: "p-4",
+      small: "",
+      medium: "",
+      large: "",
     },
     successState: {
-      true: "border-green-500 focus:border-green-600 focus:ring-green-600 pr-12",
+      true: "border-green-500 focus:border-green-600 focus:ring-green-600 ",
       false: "",
     },
     errorState: {
-      true: "border-red-500 focus:border-red-600 focus:ring-red-600 pr-12",
+      true: "border-red-500 focus:border-red-600 focus:ring-red-600 ",
       false: "",
     },
   },
   defaultVariants: {
-    variant: "primary",
     sizeType: "medium",
     successState: false,
     errorState: false,
   },
 });
 
-const selectInputVariants = cva("", {
+const selectInputVariants = cva("outline-none disabled:text-gray-400", {
   variants: {
     sizeType: {
-      small: "text-sm",
-      medium: "text-xl",
-      large: "p-4 text-2xl",
+      small: "text-sm  py-1 px-2",
+      medium: "text-xl  py-1 px-2",
+      large: " text-2xl  py-2 px-4",
     },
     successState: {
-      true: "border-green-500 focus:border-green-600 focus:ring-green-600 pr-12",
+      true: "border-green-500 focus:border-green-600 focus:ring-green-600 text-green-600",
       false: "",
     },
     errorState: {
-      true: "border-red-500 focus:border-red-600 focus:ring-red-600 pr-12",
+      true: "border-red-500 focus:border-red-600 focus:ring-red-600 text-red-600",
       false: "",
     },
   },
@@ -56,56 +52,81 @@ const selectInputVariants = cva("", {
     successState: false,
     errorState: false,
   },
-  // compoundVariants: {},
 });
 
 type Props = ComponentProps<"select"> &
   VariantProps<typeof selectVariants> & {
-    title: string;
+    label?: string;
     error?: string;
     success?: boolean;
     options: OptionsType[];
+    classNameSelectInput?: string;
+    classNameLabel?: string;
+    classNameError?: string;
+    handleSelectValue: (value: string) => void;
   };
 export function NativeSelect({
-  title,
+  label,
   error,
   success,
   options,
+  disabled = false,
+  sizeType = "medium",
+  handleSelectValue,
+  classNameSelectInput = "",
+  classNameLabel = "",
+  classNameError = "",
+  className = "",
   ...props
 }: Props) {
   return (
-    <div
-      className={selectVariants({
-        errorState: !!error,
-        successState: !!success,
-      })}
-    >
-      <label htmlFor="select">
-        <p
-          className={labelInputVariants({
+    <div className="flex flex-col gap-1">
+      {label && (
+        <Label
+          classNameLabel={classNameLabel}
+          label={label}
+          error={error}
+          success={success}
+          disabled={disabled}
+          size={sizeType}
+        >
+          {label}
+        </Label>
+      )}
+      <div
+        className={cn(
+          selectVariants({
             errorState: !!error,
             successState: !!success,
-            disabledState: props.disabled,
-          })}
-        >
-          {title}
-        </p>
-      </label>
-
-      <select
-        id="select"
-        className={selectInputVariants({ sizeType: props.sizeType })}
-        {...props}
+          }),
+          className
+        )}
       >
-        {options &&
-          options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-      </select>
-
-      {error && <p className="text-sm text-red-600">{error}</p>}
+        <select
+          disabled={disabled}
+          id={label || "select"}
+          className={cn(
+            selectInputVariants({
+              sizeType: sizeType,
+              errorState: !!error,
+              successState: !!success,
+            }),
+            classNameSelectInput
+          )}
+          onChange={(e) => handleSelectValue(e.target.value)}
+          {...props}
+        >
+          {options &&
+            options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+        </select>
+      </div>
+      {error && (
+        <p className={cn("text-sm text-red-600", classNameError)}>{error}</p>
+      )}
     </div>
   );
 }
