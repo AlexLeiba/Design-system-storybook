@@ -1,54 +1,68 @@
-import type { StoryObj, Meta } from "@storybook/react";
-import { Radio } from "../components/ui/Radio/Radio";
+import type { Meta } from "@storybook/react";
 import { Toast } from "../components/ui/Toast/Toast";
 import { ToastProvider } from "../components/ui/Toast/Context";
 import { useToast } from "../components/ui/Toast/useToast";
 import { Button } from "../components/ui/Button/Button";
-
-function TestToast() {
-  const { handler } = useToast(1000);
-  return (
-    <div className="flex gap-2 ">
-      <Button
-        variant={"destructive"}
-        onClick={() => handler("Error toast message", "error")}
-      >
-        Trigger error toast
-      </Button>
-      <Button
-        variant={"primary"}
-        onClick={() => handler("Info toast message", "info")}
-      >
-        Trigger info toast
-      </Button>
-      <Button
-        variant={"secondary"}
-        onClick={() => handler("Warning toast message", "warning")}
-      >
-        Trigger warning toast
-      </Button>
-      <Button
-        variant={"primary"}
-        className="bg-green-600"
-        onClick={() => handler("Success toast message", "success")}
-      >
-        Trigger success toast
-      </Button>
-    </div>
-  );
-}
-
-export function ToastDefault() {
+export function ToastDefault(args: {
+  position:
+    | "top-left"
+    | "top-center"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-center"
+    | "bottom-right";
+  sizeType: "small" | "medium" | "large";
+  fullWidth: boolean;
+  classNameToastBadge: string;
+  className: string;
+}) {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
-        <Toast className="" classNameToastBadge="" />
+        <Toast
+          className=""
+          classNameToastBadge=""
+          position={args.position}
+          fullWidth={args.fullWidth}
+          sizeType={args.sizeType}
+        />
         <TestToast />
       </ToastProvider>
     </div>
   );
 }
-
 const meta: Meta = {
   title: "Example/Toast",
   component: Toast,
@@ -88,11 +102,41 @@ const meta: Meta = {
     },
   },
 };
-
 export default meta;
-type Story = StoryObj<typeof Radio>;
 
 export function ToastTopLeft() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
@@ -108,6 +152,38 @@ export function ToastTopLeft() {
   );
 }
 export function ToastTopRight() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
@@ -123,6 +199,38 @@ export function ToastTopRight() {
   );
 }
 export function ToastTopCenter() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
@@ -138,6 +246,38 @@ export function ToastTopCenter() {
   );
 }
 export function ToastBottomLeft() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
@@ -153,6 +293,38 @@ export function ToastBottomLeft() {
   );
 }
 export function ToastBottomRight() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
@@ -168,6 +340,38 @@ export function ToastBottomRight() {
   );
 }
 export function ToastBottomCenter() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>
@@ -183,6 +387,38 @@ export function ToastBottomCenter() {
   );
 }
 export function ToastFullWidth() {
+  function TestToast() {
+    const { handler } = useToast(1000);
+    return (
+      <div className="flex gap-2 ">
+        <Button
+          variant={"destructive"}
+          onClick={() => handler("Error toast message", "error")}
+        >
+          Trigger error toast
+        </Button>
+        <Button
+          variant={"primary"}
+          onClick={() => handler("Info toast message", "info")}
+        >
+          Trigger info toast
+        </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() => handler("Warning toast message", "warning")}
+        >
+          Trigger warning toast
+        </Button>
+        <Button
+          variant={"primary"}
+          className="bg-green-600"
+          onClick={() => handler("Success toast message", "success")}
+        >
+          Trigger success toast
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="h-[300px]">
       <ToastProvider>

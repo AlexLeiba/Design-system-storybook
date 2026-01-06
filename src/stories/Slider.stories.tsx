@@ -8,12 +8,12 @@ const meta: Meta<typeof Slider> = {
   tags: ["autodocs"],
   argTypes: {
     navButtonIconSize: { control: "check", defaultValue: 20 },
-    navButtonLeftClassName: { control: "check" },
-    navButtonRightClassName: { control: "check" },
+    classNameNavButtonLeft: { control: "check" },
+    classNameNavButtonRight: { control: "check" },
     navButtonLeftIcon: { control: "check" },
     navButtonRightIcon: { control: "check" },
-    paginationDotsButtonClassName: { control: "check" },
-    paginationDotsContainerClassName: { control: "check" },
+    classNamePaginationDotsButton: { control: "check" },
+    classNamePaginationDotsContainer: { control: "check" },
     paginationDotsSelectedButtonColor: { control: "check" },
     paginationDotsButtonColor: { control: "check" },
     animationInterval: {
@@ -51,12 +51,10 @@ export const SliderDefault: Story = {
     <Slider
       animationInterval={3000}
       className="h-96"
-      paginationDotsContainerClassName=""
-      paginationDotsButtonClassName=""
-      paginationDotsSelectedButtonColor=""
-      paginationDotsButtonColor=""
-      navButtonLeftClassName=""
-      navButtonRightClassName=""
+      classNameNavButtonLeft=""
+      classNameNavButtonRight=""
+      classNamePaginationDotsButton=""
+      classNamePaginationDotsContainer=""
       navButtonIconSize={20}
       navButtonRightIcon={<ChevronRight />}
       navButtonLeftIcon={<ChevronLeft />}
@@ -69,17 +67,15 @@ export const SliderDefault: Story = {
         />
         <div className="absolute bottom-0 text-shadow-md text-shadow-zinc-950 text-white p-8">
           <h1 className="text-4xl">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus,
-            autem.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
           </h1>
           <p className="text-xl">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam
-            aliquid inventore, sapiente facere provident mollitia accusamus
-            delectus! Suscipit, rerum eligendi.
+            aliquid inventore, sapiente .
           </p>
         </div>
       </SliderItem>
-      <SliderItem>
+      <SliderItem className="">
         <img
           src={"/london.webp"}
           alt="london"
@@ -87,17 +83,15 @@ export const SliderDefault: Story = {
         />
         <div className="absolute bottom-0 text-shadow-zinc-950 text-white p-8">
           <h1 className="text-4xl">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus,
-            autem.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
           </h1>
           <p className="text-xl">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam
-            aliquid inventore, sapiente facere provident mollitia accusamus
-            delectus! Suscipit, rerum eligendi.
+            aliquid inventore, sapiente .
           </p>
         </div>
       </SliderItem>
-      <SliderItem>
+      <SliderItem className="">
         <img
           src={"/london-2.webp"}
           alt="london-2"
@@ -105,13 +99,11 @@ export const SliderDefault: Story = {
         />
         <div className="absolute bottom-0 text-shadow-zinc-950 text-shadow-md text-white p-8">
           <h1 className="text-4xl">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus,
-            autem.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
           </h1>
           <p className="text-xl">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam
-            aliquid inventore, sapiente facere provident mollitia accusamus
-            delectus! Suscipit, rerum eligendi.
+            aliquid inventore.
           </p>
         </div>
       </SliderItem>

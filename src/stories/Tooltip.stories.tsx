@@ -4,6 +4,7 @@ import {
   type Props as TooltipProps,
 } from "../components/ui/Tooltip/Tooltip";
 import { Button } from "../components/ui/Button/Button";
+import { ChevronDown } from "lucide-react";
 
 const TooltipWithButton = ({
   title,
@@ -40,11 +41,36 @@ const meta: Meta = {
     title: {
       control: "text",
       defaultValue: "This is a tooltip",
+      type: "string",
     },
     size: {
       control: "radio",
       options: ["small", "medium", "large"],
       defaultValue: "medium",
+      type: "string",
+    },
+    defaultVisible: {
+      control: "boolean",
+      defaultValue: false,
+      type: "boolean",
+    },
+    icon: {
+      control: "check",
+      description: "Tooltip right icon <b>type React.ReactNode</b>",
+    },
+    children: {
+      control: "check",
+      description: "Tooltip children <b>type React.ReactNode</b>",
+    },
+    className: {
+      control: "check",
+      description: "Tooltip container className",
+      type: "string",
+    },
+    classNameTitle: {
+      control: "check",
+      description: "Tooltip title className",
+      type: "string",
     },
   },
   parameters: {
@@ -69,15 +95,15 @@ export const TooltipDefault: Story = {
         size={args.size}
         variant={args.variant}
         handleIconClick={() => {}}
+        defaultVisible={args.defaultVisible}
+        className=""
+        classNameTitle=""
       >
         <Button className="w-[350px] ">"Hover over me to see tooltip"</Button>
       </Tooltip>
     </div>
   ),
-  args: {
-    title: "This is a tooltip",
-    size: "medium",
-  },
+
   parameters: {
     docs: {
       description: {
@@ -88,14 +114,15 @@ export const TooltipDefault: Story = {
   },
 };
 
-export const TooltipSecondary: Story = {
-  render: (args) => (
+export const TooltipSecondaryWithNewIcon: Story = {
+  render: () => (
     <div className="h-[200px] mt-10">
       <Tooltip
         title={"This is a tooltip"}
         size={"medium"}
         variant={"secondary"}
         handleIconClick={() => {}}
+        icon={<ChevronDown />}
       >
         <Button className="w-[350px] ">"Hover over me to see tooltip"</Button>
       </Tooltip>
@@ -106,12 +133,13 @@ export const TooltipSecondary: Story = {
     size: "medium",
   },
 };
-export const TooltipTertiary: Story = {
-  render: (args) => (
+
+export const TooltipTertiaryLarge = {
+  render: () => (
     <div className="h-[200px] mt-10">
       <Tooltip
         title={"This is a tooltip"}
-        size={"medium"}
+        size={"large"}
         variant={"tertiary"}
         handleIconClick={() => {}}
       >

@@ -9,13 +9,13 @@ import React, {
 import { cn } from "../../../../lib/utilities";
 
 const tooltipVariants = cva(
-  [" p-2 min-w-[200px] max-w-[350px] z-50", "flex justify-between"],
+  ["  pr-9 min-w-[200px] max-w-[350px] z-50", "flex justify-between"],
   {
     variants: {
       size: {
-        small: "px-2",
-        large: "px-4 py-4 text-2xl",
-        medium: "px-3 font-medium text-xl",
+        small: "pl-2",
+        large: "pl-5 py-3 text-2xl",
+        medium: "pl-3 py-2 font-medium text-xl",
       },
       variant: {
         primary: "bg-gray-800 text-white  rounded-xl focus:ring-gray-500",
@@ -52,7 +52,8 @@ export type Props = ComponentProps<"div"> &
     children: React.ReactNode;
     title: string;
     icon?: React.ReactNode;
-    visible?: boolean;
+    defaultVisible?: boolean;
+    classNameTitle?: string;
     handleIconClick?: () => void;
   };
 
@@ -63,15 +64,16 @@ export function Tooltip({
   variant = "primary",
   position,
   icon,
-  visible = false,
-
+  defaultVisible = false,
+  className = "",
+  classNameTitle = "",
   handleIconClick,
   ...props
 }: Props) {
   const childrenRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const [visibility, setVisibility] = useState(visible);
+  const [visibility, setVisibility] = useState(defaultVisible);
   const [coords, setCoords] = useState<{
     top?: number;
     left?: number;
@@ -94,8 +96,8 @@ export function Tooltip({
 
       const {
         left,
-        x, //position on x axis from left edge of element
-        y, //position of y axis from top edge of element
+        x,
+        y,
         width: targetElementWidth,
         height: targetElementHeight,
       } = coordsElementData;
@@ -304,13 +306,11 @@ export function Tooltip({
     return () => window.removeEventListener("scroll", updatePosition);
   }, [visibility]);
 
-  //
   return (
     <div
-      title="info"
       onMouseEnter={() => setVisibility(true)}
       onMouseLeave={() => setVisibility(false)}
-      className="relative inline-block"
+      className={"relative inline-block"}
     >
       {visibility && (
         <div
@@ -319,13 +319,21 @@ export function Tooltip({
             position: "absolute",
             ...coords,
           }}
-          className={tooltipVariants({ size, variant, position })}
+          className={cn(
+            tooltipVariants({ size, variant, position }),
+            className
+          )}
           {...props}
         >
-          <p className={titleVariants({ size })}>{title}</p>
+          <p className={cn(titleVariants({ size }), classNameTitle)}>
+            {title || "."}
+          </p>
 
           <div
-            className={cn(handleIconClick ? "cursor-pointer" : "cursor-text")}
+            className={cn(
+              "absolute top-1/2 -translate-y-1/2 right-2",
+              handleIconClick ? "cursor-pointer" : "cursor-text"
+            )}
             onClick={handleIconClick}
           >
             {icon || <Info />}

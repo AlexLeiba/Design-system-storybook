@@ -31,13 +31,13 @@ type Props = ComponentProps<"div"> & {
   navButtonIconSize?: number;
   navButtonRightIcon?: React.ReactNode;
   navButtonLeftIcon?: React.ReactNode;
-  navButtonLeftClassName?: string;
-  navButtonRightClassName?: string;
-  paginationDotsButtonClassName?: string;
-  paginationDotsContainerClassName?: string;
   paginationDotsSelectedButtonColor?: string;
   paginationDotsButtonColor?: string;
   animationInterval?: number;
+  classNameNavButtonLeft?: string;
+  classNameNavButtonRight?: string;
+  classNamePaginationDotsButton?: string;
+  classNamePaginationDotsContainer?: string;
 };
 
 export function Slider({
@@ -45,15 +45,14 @@ export function Slider({
   navButtonRightIcon,
   navButtonLeftIcon,
   navButtonIconSize,
-  navButtonLeftClassName,
-  navButtonRightClassName,
-  paginationDotsButtonClassName,
-  paginationDotsContainerClassName,
   paginationDotsSelectedButtonColor,
   paginationDotsButtonColor,
-
-  className = "",
   animationInterval = 0,
+  className = "",
+  classNameNavButtonLeft,
+  classNameNavButtonRight,
+  classNamePaginationDotsButton,
+  classNamePaginationDotsContainer,
 }: Props) {
   const [slider, setSlider] = useState(0);
   const childrenLength = React.Children.count(children);
@@ -100,7 +99,7 @@ export function Slider({
           navButtonRightIcon={navButtonRightIcon}
           navButtonLeftIcon={navButtonLeftIcon}
           iconSize={navButtonIconSize}
-          className={navButtonLeftClassName}
+          className={classNameNavButtonLeft}
           title="previous slide"
           direction="left"
           onClick={() => handleMoveSlider("left")}
@@ -124,12 +123,12 @@ export function Slider({
           iconSize={navButtonIconSize}
           title="next slide"
           direction="right"
-          className={navButtonRightClassName}
+          className={classNameNavButtonRight}
           onClick={() => handleMoveSlider("right")}
         />
         <PaginatedDots
-          buttonClassName={paginationDotsButtonClassName}
-          className={paginationDotsContainerClassName}
+          buttonClassName={classNamePaginationDotsButton}
+          className={classNamePaginationDotsContainer}
           selectedButtonColor={paginationDotsSelectedButtonColor}
           buttonColor={paginationDotsButtonColor}
         />

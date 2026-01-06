@@ -11,7 +11,7 @@ import { Button } from "../Button/Button";
 import { cva } from "class-variance-authority";
 
 const tabsListVariants = cva(
-  "inline-flex gap-2 p-1 border-2 border-gray-400 rounded-2xl  ",
+  "inline-flex gap-2 p-1 border-2 border-gray-200 rounded-2xl",
   {
     variants: {
       position: {
@@ -46,12 +46,16 @@ export function Tabs({
   defaultValue,
   fullWidth = false,
   children,
+  className = "",
   ...props
 }: PropsTabsWrapper) {
   const [tabContent, setTabContent] = useState(defaultValue);
   return (
     <TabsContext.Provider value={{ tabContent, setTabContent }}>
-      <div className={cn(fullWidth ? "flex flex-col" : "")} {...props}>
+      <div
+        className={cn(fullWidth ? "flex flex-col" : "", className)}
+        {...props}
+      >
         {children}
       </div>
     </TabsContext.Provider>
@@ -84,7 +88,6 @@ type TabsTriggerProps = ComponentProps<"button"> & {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "small" | "medium" | "large";
   loading?: boolean;
-  customTitleClassName?: string;
   fullWidth?: boolean;
 };
 

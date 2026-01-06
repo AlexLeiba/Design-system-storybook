@@ -8,60 +8,63 @@ import {
 import Label from "../components/ui/Label/Label";
 
 type TabsContentProps = {
-  defaultValue: string;
-  value1: string;
-  value2: string;
-  value3: string;
   variant?: "primary" | "secondary" | "tertiary";
   size?: "small" | "medium" | "large";
   loading?: boolean;
   disabled?: boolean;
+  value?: string;
+  defaultValue?: string;
+  fullWidthContainer?: boolean;
+  fullWidthTabs?: boolean;
+  position?: "right" | "center" | "left";
 };
-const TabsComponentDefault = ({
-  defaultValue,
-  value1,
-  value2,
-  value3,
+export function TabsDefault({
   variant,
   size,
   loading,
   disabled,
-}: TabsContentProps) => {
+  fullWidthContainer,
+  fullWidthTabs,
+  position = "left",
+}: TabsContentProps) {
   return (
-    <Tabs defaultValue={defaultValue} fullWidth>
-      <TabsList>
+    <Tabs defaultValue={"tab1"} fullWidth={fullWidthContainer} className="">
+      <TabsList position={position} className="mb-8">
         <TabsTrigger
-          fullWidth
+          fullWidth={fullWidthTabs}
           variant={variant}
           size={size}
           loading={loading}
-          value={value1}
+          value={"tab1"}
           disabled={disabled}
+          className=""
         >
           Tab 1
         </TabsTrigger>
         <TabsTrigger
-          fullWidth
+          fullWidth={fullWidthTabs}
           variant={variant}
           size={size}
           loading={loading}
-          value={value2}
+          value={"tab2"}
           disabled={disabled}
+          className=""
         >
           Tab 2
         </TabsTrigger>
         <TabsTrigger
-          fullWidth
+          fullWidth={fullWidthTabs}
           variant={variant}
           size={size}
           loading={loading}
-          value={value3}
+          value={"tab3"}
           disabled={disabled}
+          className=""
         >
           Tab 3
         </TabsTrigger>
       </TabsList>
-      <TabsContent value={value1}>
+      <TabsContent value={"tab1"} className="">
         <Label>Content of Tab 1</Label>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
@@ -69,7 +72,7 @@ const TabsComponentDefault = ({
           pariatur veniam.
         </p>
       </TabsContent>
-      <TabsContent value={value2}>
+      <TabsContent value={"tab2"}>
         <Label>Content of Tab 2</Label>
         <p>
           2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
@@ -77,7 +80,7 @@ const TabsComponentDefault = ({
           pariatur veniam.
         </p>
       </TabsContent>
-      <TabsContent value={value3}>
+      <TabsContent value={"tab3"}>
         <Label>Content of Tab 3</Label>
         <p>
           3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
@@ -87,26 +90,24 @@ const TabsComponentDefault = ({
       </TabsContent>
     </Tabs>
   );
-};
+}
 
 // component info.
-const meta: Meta<typeof TabsComponentDefault> = {
+const meta: Meta<typeof TabsDefault> = {
   title: "Example/Tabs",
-  component: TabsComponentDefault,
+  component: TabsDefault,
   tags: ["autodocs"],
   argTypes: {
-    value1: {
-      control: "text",
-      defaultValue: "tab1",
+    value: {
+      control: "check",
+      description:
+        "on <b>TabsTrigger</b> the <b>value</b> attribute represents the tab id, based on selected <b>value</b> the <b>TabsContent</b> will render its content.",
     },
-    value2: {
-      control: "text",
-      defaultValue: "tab2",
+    defaultValue: {
+      control: "check",
+      description: "Represents the default selected tab.",
     },
-    value3: {
-      control: "text",
-      defaultValue: "tab3",
-    },
+
     loading: {
       control: "boolean",
       defaultValue: false,
@@ -125,6 +126,14 @@ const meta: Meta<typeof TabsComponentDefault> = {
       control: "boolean",
       defaultValue: false,
     },
+    fullWidthContainer: {
+      control: "boolean",
+      defaultValue: false,
+    },
+    fullWidthTabs: {
+      control: "boolean",
+      defaultValue: false,
+    },
   },
   parameters: {
     docs: {
@@ -138,42 +147,44 @@ const meta: Meta<typeof TabsComponentDefault> = {
 
 export default meta;
 
-type Story = Omit<StoryObj<typeof TabsComponentDefault>, "children">;
+type Story = Omit<StoryObj<typeof TabsDefault>, "children">;
 
-export const TabsDefaultPrimaryUsage: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Default usage of Tabs, the code doesn't show how to use it. If you want to see how to use it, check the code of the examples below.", //additional desc in the auto generated docs.
-      },
-    },
-  },
-  args: {
-    defaultValue: "tab1",
-    value1: "tab1",
-    value2: "tab2",
-    value3: "tab3",
-    variant: "primary",
-    size: "medium",
-  },
-};
-
-export const TabsSecondary: Story = {
-  render: () => (
-    <Tabs defaultValue="tab1">
+export function TabsSecondaryFullWidth() {
+  return (
+    <Tabs defaultValue={"tab1"} fullWidth>
       <TabsList>
-        <TabsTrigger variant="secondary" value="tab1">
+        <TabsTrigger
+          fullWidth
+          variant={"secondary"}
+          size={"medium"}
+          loading={false}
+          value={"tab1"}
+          disabled={false}
+        >
           Tab 1
         </TabsTrigger>
-        <TabsTrigger variant="secondary" value="tab2">
+        <TabsTrigger
+          fullWidth
+          variant={"secondary"}
+          size={"medium"}
+          loading={false}
+          value={"tab2"}
+          disabled={false}
+        >
           Tab 2
         </TabsTrigger>
-        <TabsTrigger variant="secondary" value="tab3">
+        <TabsTrigger
+          fullWidth
+          variant={"secondary"}
+          size={"medium"}
+          loading={false}
+          value={"tab3"}
+          disabled={false}
+        >
           Tab 3
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="tab1">
+      <TabsContent value={"tab1"}>
         <Label>Content of Tab 1</Label>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
@@ -181,29 +192,30 @@ export const TabsSecondary: Story = {
           pariatur veniam.
         </p>
       </TabsContent>
-      <TabsContent value="tab2">
+      <TabsContent value={"tab2"}>
         <Label>Content of Tab 2</Label>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
           cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
           pariatur veniam.
         </p>
       </TabsContent>
-      <TabsContent value="tab3">
+      <TabsContent value={"tab3"}>
         <Label>Content of Tab 3</Label>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
+          3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, vel
           cupiditate blanditiis exercitationem alias voluptas. Eius iusto quidem
           pariatur veniam.
         </p>
       </TabsContent>
     </Tabs>
-  ),
-};
-export const TabsTertiary: Story = {
+  );
+}
+
+export const TabsTertiaryCenter: Story = {
   render: () => (
-    <Tabs defaultValue="tab1">
-      <TabsList>
+    <Tabs defaultValue="tab1" fullWidth>
+      <TabsList position="center" className=" ">
         <TabsTrigger variant="tertiary" value="tab1">
           Tab 1
         </TabsTrigger>
@@ -226,17 +238,58 @@ export const TabsTertiary: Story = {
     </Tabs>
   ),
 };
-export const TabsFullWidth: Story = {
+export const TabsTertiaryRight: Story = {
+  render: () => (
+    <Tabs defaultValue="tab1" fullWidth>
+      <TabsList position="right" className=" ">
+        <TabsTrigger variant="tertiary" value="tab1">
+          Tab 1
+        </TabsTrigger>
+        <TabsTrigger variant="tertiary" value="tab2">
+          Tab 2
+        </TabsTrigger>
+        <TabsTrigger variant="tertiary" value="tab3">
+          Tab 3
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="tab1">
+        <Label>Content of Tab 1</Label>
+      </TabsContent>
+      <TabsContent value="tab2">
+        <Label>Content of Tab 2</Label>
+      </TabsContent>
+      <TabsContent value="tab3">
+        <Label>Content of Tab 3</Label>
+      </TabsContent>
+    </Tabs>
+  ),
+};
+export const TabsLargeFullWidth: Story = {
   render: () => (
     <Tabs defaultValue="tab1" fullWidth>
       <TabsList>
-        <TabsTrigger variant="tertiary" value="tab1" className="w-full">
+        <TabsTrigger
+          size="large"
+          variant="secondary"
+          value="tab1"
+          className="w-full"
+        >
           Tab 1
         </TabsTrigger>
-        <TabsTrigger variant="tertiary" value="tab2" className="w-full">
+        <TabsTrigger
+          size="large"
+          variant="tertiary"
+          value="tab2"
+          className="w-full"
+        >
           Tab 2
         </TabsTrigger>
-        <TabsTrigger variant="tertiary" value="tab3" className="w-full">
+        <TabsTrigger
+          size="large"
+          variant="primary"
+          value="tab3"
+          className="w-full"
+        >
           Tab 3
         </TabsTrigger>
       </TabsList>
