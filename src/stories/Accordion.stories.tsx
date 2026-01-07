@@ -8,17 +8,21 @@ import {
 type AccordionExampleUiProps = {
   defaultExpandedTab?: string;
 
-  label: string;
-  value: string;
+  label1: string;
+  label2: string;
+  label3: string;
+  name: string;
 };
 const AccordionExampleUi = ({
-  label = "Tab",
+  label1 = "Tab",
+  label2 = "Tab2",
+  label3 = "Tab3",
   defaultExpandedTab,
-  value,
+  name,
 }: AccordionExampleUiProps) => {
   return (
     <Accordion defaultExpandedTab={defaultExpandedTab}>
-      <AccordionHeaderTrigger value={value || "tab1"} label={label + 1}>
+      <AccordionHeaderTrigger name={name || "tab1"} label={label1}>
         <AccordionContent>
           <h2 className="text-2xl">Accordion Content 1</h2>
           <p className="text-xs">
@@ -39,7 +43,7 @@ const AccordionExampleUi = ({
           </p>
         </AccordionContent>
       </AccordionHeaderTrigger>
-      <AccordionHeaderTrigger value={value || "tab2"} label={label + 2}>
+      <AccordionHeaderTrigger name={name || "tab2"} label={label2}>
         <AccordionContent>
           <h2 className="text-xl">Accordion Content 2</h2>
           <p className="text-xs">
@@ -52,7 +56,7 @@ const AccordionExampleUi = ({
           </p>
         </AccordionContent>
       </AccordionHeaderTrigger>
-      <AccordionHeaderTrigger value={value || "tab3"} label={label + 3}>
+      <AccordionHeaderTrigger name={name || "tab3"} label={label3}>
         <AccordionContent>
           <h2 className="text-xl">Accordion Content 3</h2>
           <p>
@@ -82,22 +86,38 @@ const meta: Meta<typeof AccordionExampleUi> = {
   component: AccordionExampleUi,
   tags: ["autodocs"],
   argTypes: {
-    label: {
+    label1: {
       control: "text",
       defaultExpandedTab: "Accordion tab",
       description: "Label for each tab used on <b>AccordionHeaderTrigger</b>",
+      type: "string",
     },
-    value: {
+    label2: {
+      control: "text",
+      defaultExpandedTab: "Accordion tab 2",
+      description: "Label for each tab used on <b>AccordionHeaderTrigger</b>",
+      type: "string",
+    },
+    label3: {
+      control: "text",
+      defaultExpandedTab: "Accordion tab 3",
+      description: "Label for each tab used on <b>AccordionHeaderTrigger</b>",
+      type: "string",
+    },
+    name: {
       control: "check",
       description:
-        "Unique custom value to identify each tab, used on component: <b>AccordionHeaderTrigger</b>",
+        "Unique custom <b>name</b> to identify each tab, used on component: <b>AccordionHeaderTrigger</b>",
+      type: "string",
     },
 
     defaultExpandedTab: {
       control: "radio",
       options: ["tab1", "tab2", "tab3"],
+      defaultValue: "tab1",
       description:
         "Default expanded tab, can be of any string value, used on component: <b>Accordion</b>",
+      type: "string",
     },
   },
 };
@@ -109,10 +129,13 @@ type Story = StoryObj<typeof AccordionExampleUi>;
 export const AccordionUIExample: Story = {
   render: (args) => (
     // classname container
-    <Accordion defaultExpandedTab={args.defaultExpandedTab} className="p-8">
+    <Accordion
+      defaultExpandedTab={args.defaultExpandedTab || "tab1"}
+      className="p-8"
+    >
       <AccordionHeaderTrigger
-        value={"tab1"}
-        label={args.label || "Accordion Title 1"}
+        name={"tab1"}
+        label={args.label1 || "Accordion Title 1"}
         className="text-xl font-bold"
         classNameContentLabel=""
         classNameContentLabelContainer=""
@@ -139,8 +162,8 @@ export const AccordionUIExample: Story = {
       </AccordionHeaderTrigger>
       <AccordionHeaderTrigger
         className="text-xl font-bold"
-        value={"tab2"}
-        label={"Accordion Title 2"}
+        name={"tab2"}
+        label={args.label2 || "Accordion Title 1"}
       >
         <AccordionContent>
           <h2 className="text-xl mb-2">Accordion content 2</h2>
@@ -156,8 +179,8 @@ export const AccordionUIExample: Story = {
       </AccordionHeaderTrigger>
       <AccordionHeaderTrigger
         className="text-xl font-bold"
-        value={"tab3"}
-        label={"Accordion title 3"}
+        name={"tab3"}
+        label={args.label3 || "Accordion Title 1"}
       >
         <AccordionContent>
           <h2 className="text-xl mb-2">Accordion content 3</h2>

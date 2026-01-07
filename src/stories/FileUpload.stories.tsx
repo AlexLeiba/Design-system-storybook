@@ -32,7 +32,6 @@ const meta: Meta = {
       },
       description: "Define allowed file types",
     },
-    buttonClassName: { control: "check" },
     buttonTitle: { control: "text" },
     uploadVariant: {
       control: "radio",
@@ -42,16 +41,13 @@ const meta: Meta = {
     disabled: { control: "boolean" },
     error: { control: "text" },
     success: { control: "boolean" },
-    title: { control: "text" },
+    label: { control: "text" },
     inputName: {
       control: "check",
       description: "Input name which will be stored in the submitted form",
     },
     className: { control: "check", description: "FileUpload container class" },
-    dragAndDropContainerClassName: {
-      control: "check",
-      description: "FileUpload drag and drop container class",
-    },
+
     dragAndDropContainerTitle: {
       control: "check",
       description: "FileUpload drag and drop container title",
@@ -64,12 +60,7 @@ const meta: Meta = {
       control: "check",
       description: "FileUpload drag and drop container icon",
     },
-    errorClassName: { control: "check" },
-    successClassName: { control: "check" },
-    previewImageContainerClassName: {
-      control: "check",
-      description: "FileUpload preview image container class",
-    },
+
     previewImageContainerTitle: {
       control: "check",
       description: "FileUpload preview image container title",
@@ -82,11 +73,6 @@ const meta: Meta = {
       control: "check",
       description: "FileUpload preview image container icon",
     },
-    previewImageCloseButtonClassName: {
-      control: "check",
-      description: "FileUpload preview image close button class",
-    },
-    titleClassName: { control: "check" },
   },
   args: {},
   parameters: {
@@ -103,12 +89,16 @@ export default meta;
 type Story = StoryObj<typeof FileUpload>;
 
 export const FileUploadDefaultSingle: Story = {
-  args: { buttonTitle: "File Upload Primary Single" },
+  args: {
+    buttonTitle: "File Upload Primary Single",
+    label: "Upload File",
+  },
 };
 export const FileUploadDefaultMultiple: Story = {
   args: {
     buttonTitle: "File Upload Primary Multiple",
     uploadVariant: "multiple",
+    label: "Upload Multiple Files",
   },
 };
 
@@ -117,6 +107,7 @@ export const FileUploadSecondary: Story = {
     buttonVariant: "secondary",
     buttonTitle: "Upload File Secondary",
     size: "small",
+    label: "Upload File",
   },
 };
 export const FileUploadTertiary: Story = {
@@ -124,6 +115,7 @@ export const FileUploadTertiary: Story = {
     buttonVariant: "tertiary",
     buttonTitle: "Upload File",
     size: "medium",
+    label: "Upload File",
   },
 };
 export const FileUploadPrimaryLarge: Story = {
@@ -131,5 +123,6 @@ export const FileUploadPrimaryLarge: Story = {
     buttonVariant: "primary",
     buttonTitle: "Upload File",
     size: "large",
+    label: "Upload File",
   },
 };

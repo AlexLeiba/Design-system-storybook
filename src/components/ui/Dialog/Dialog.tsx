@@ -10,7 +10,6 @@ import React, {
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../../lib/utilities";
 import { Button } from "../Button/Button";
-import Label from "../Label/Label";
 
 type ContextProps = {
   open: boolean;
@@ -53,11 +52,11 @@ export function Dialog({
   const refContainer = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
+    if (!withClickOutside) return;
     const clickOutside = (e: MouseEvent) => {
       if (
         refContainer.current &&
-        !refContainer.current.contains(e.target as Node) &&
-        withClickOutside
+        !refContainer.current.contains(e.target as Node)
       ) {
         setOpen(false);
         handleClose?.();
@@ -77,9 +76,14 @@ export function Dialog({
     if (open) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
       handleClose?.();
+
+      document.body.style.overflow = "auto";
     }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [open]);
   return (
     <DialogContext.Provider
@@ -212,7 +216,7 @@ export function DialogFooter({
           }}
           className={cn(classNameCancelButton)}
         >
-          <Label>{cancelButtonTitle || "Cancel"}</Label>
+          {cancelButtonTitle || "Cancel"}
         </Button>
         <Button
           loading={loading}
@@ -223,7 +227,7 @@ export function DialogFooter({
           variant={variant === "delete" ? "destructive" : "secondary"}
           onClick={handleSubmit}
         >
-          <Label>{submitButtonTitle || "Submit"}</Label>
+          {submitButtonTitle || "Submit"}
         </Button>
       </div>
     </div>

@@ -43,14 +43,14 @@ export function Accordion({
 }
 
 type AccordionItemProps = ComponentProps<"button"> & {
-  value: string;
+  name: string;
   children: React.ReactNode;
   label: string;
   classNameContentLabel?: string;
   classNameContentLabelContainer?: string;
 };
 export function AccordionHeaderTrigger({
-  value = "",
+  name = "",
   children,
   className = "",
   classNameContentLabel = "",
@@ -70,18 +70,20 @@ export function AccordionHeaderTrigger({
 
   function handleExpandContent() {
     setItem((prev) => {
-      if (prev === value) {
+      if (prev === name) {
         return "";
       }
 
-      return value;
+      return name;
     });
   }
   return (
-    <div>
+    <>
+      {/* TRIGGER */}
       <button
+        title={label}
         className={cn(
-          "hover:underline flex  text-xl w-full justify-between p-2 cursor-pointer",
+          "hover:underline hover:underline-offset-3 hover:opacity-70 flex  text-xl w-full justify-between p-2 cursor-pointer",
           className
         )}
         onClick={handleExpandContent}
@@ -90,22 +92,23 @@ export function AccordionHeaderTrigger({
         <ChevronDown
           className={cn(
             "transition-all",
-            item === value ? "rotate-180 " : "rotate-0"
+            item === name ? "rotate-180 " : "rotate-0"
           )}
         />
       </button>
+      {/* CONTENT */}
       <div
         className={cn(
-          "border-b-2 transition-all duration-200 overflow-hidden",
+          "border-b border-gray-400 transition-all duration-200 overflow-hidden",
           classNameContentLabelContainer
         )}
-        style={{ height: item === value ? size : 0 }}
+        style={{ height: item === name ? size : 0 }}
       >
         <div ref={ref} className={cn("p-2", classNameContentLabel)}>
           {children}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

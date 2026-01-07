@@ -34,6 +34,7 @@ const meta: Meta = {
     placeholder: {
       control: "text",
       defaultValue: "Placeholder when no options is selected",
+      type: "string",
     },
     size: {
       control: "radio",
@@ -47,14 +48,17 @@ const meta: Meta = {
     error: {
       control: "text",
       defaultValue: "",
+      type: "string",
     },
     success: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     disabled: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     selectType: {
       control: "radio",
@@ -64,34 +68,42 @@ const meta: Meta = {
     className: {
       control: "check",
       defaultValue: "className of the dropdown container",
+      type: "string",
     },
     classNameLabel: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
     classNameError: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
     classNameDropMenuContainer: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
     classNameDropMenuElementButton: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
     classNameDropMenuElementTitle: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
     classNameContainerSelectedMultipleOptions: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
     classNamePlaceholder: {
       control: "check",
       defaultValue: "",
+      type: "string",
     },
 
     handleSelectValue: {

@@ -19,17 +19,16 @@ function DialogComponent({
   variant,
   disabled,
   loading,
-  withClickOutside,
 }: DialogProps & DialogFooterProps) {
-  const [showDialog, setShowDialog] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
 
   return (
-    <div className="h-[500px]">
+    <div className="h-[300px]">
       <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
 
       <Dialog
         className=""
-        withClickOutside={withClickOutside}
+        withClickOutside={false}
         isOpened={showDialog}
         handleCancel={() => setShowDialog(false)}
         handleSubmit={() => setShowDialog(false)}
@@ -72,14 +71,19 @@ const meta: Meta = {
       control: "check",
       defaultValue: false,
       description: "<b>boolean prop</b>  used to open the dialog or close",
+      type: "boolean",
     },
     fullWidth: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     buttonDirection: {
       control: "radio",
       options: ["row", "column"],
+      defaultValue: "row",
+      description:
+        "Button direction <b>row</b>, <b>column</b>. Determines the layout of the buttons.",
     },
     buttonPosition: {
       control: "radio",
@@ -92,24 +96,29 @@ const meta: Meta = {
     cancelButtonTitle: {
       control: "text",
       defaultValue: "Cancel",
+      type: "string",
     },
     submitButtonTitle: {
       control: "text",
       defaultValue: "Submit",
+      type: "string",
     },
     disabled: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     loading: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     withClickOutside: {
       control: "check",
       defaultValue: false,
       description:
-        "<b>boolean prop</b> detects if the user clicks  outside to close the dialog, for testing purposes only, is set to false in order to keep the dialog visible while ",
+        "<b>boolean prop</b> detects if the user clicks outside to close the dialog, for testing purposes only it is set to false in order to keep the dialog visible while testing ",
+      type: "boolean",
     },
   },
   parameters: {
@@ -141,7 +150,7 @@ export const DialogDefault: Story = {
     const [showDialog, setShowDialog] = useState(false);
 
     return (
-      <div className="h-[500px]">
+      <div className="h-[300px]">
         <Button onClick={() => setShowDialog(true)}>Open Dialog</Button>
 
         <Dialog
@@ -183,7 +192,7 @@ export const DialogDefault: Story = {
 
 export const DialogVertical: Story = {
   render: () => {
-    const [showDialog, setShowDialog] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
 
     return (
       <div className="h-[500px]">
@@ -228,7 +237,7 @@ export const DialogVertical: Story = {
 
 export const DialogHorizontalFullWidth: Story = {
   render: () => {
-    const [showDialog, setShowDialog] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
 
     return (
       <div className="h-[500px]">
@@ -273,7 +282,7 @@ export const DialogHorizontalFullWidth: Story = {
 
 export const DialogHorizontalRight: Story = {
   render: () => {
-    const [showDialog, setShowDialog] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
 
     return (
       <div className="h-[500px]">
@@ -318,7 +327,7 @@ export const DialogHorizontalRight: Story = {
 
 export const DialogHorizontalLeft: Story = {
   render: () => {
-    const [showDialog, setShowDialog] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
 
     return (
       <div className="h-[500px]">
@@ -363,7 +372,7 @@ export const DialogHorizontalLeft: Story = {
 
 export const DialogDelete: Story = {
   render: () => {
-    const [showDialog, setShowDialog] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
 
     return (
       <div className="h-[500px]">

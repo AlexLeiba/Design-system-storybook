@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../components/ui/Button/Button";
-import Label from "../components/ui/Label/Label";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Meta<typeof Button> takes care to pass only attributes that exists in Meta.
@@ -13,17 +12,20 @@ const meta: Omit<Meta<typeof Button>, "iconRight" | "iconLeft"> = {
       control: "text",
       defaultValue: "Click me",
       description:
-        "You can pass any JSX value here or the button title for example.",
+        "You can pass any JSX value here or the button label for example.",
     },
     variant: {
       control: "radio",
       options: ["primary", "secondary", "tertiary", "ghost", "link"],
       defaultValue: "primary",
+      description:
+        "Button variant <b>primary</b>, <b>secondary</b>, <b>tertiary</b>, <b>ghost</b>, <b>link</b>.",
     },
     size: {
       control: "radio",
       options: ["small", "medium", "large"],
       defaultValue: "medium",
+      description: "Button size <b>small</b>, <b>medium</b>, <b>large</b>.",
     },
     iconLeft: {
       control: "boolean",
@@ -37,10 +39,12 @@ const meta: Omit<Meta<typeof Button>, "iconRight" | "iconLeft"> = {
     loading: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     disabled: {
       control: "boolean",
       defaultValue: false,
+      type: "boolean",
     },
     className: {
       control: "check",

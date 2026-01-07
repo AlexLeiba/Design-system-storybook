@@ -6,19 +6,13 @@ import { PreviewImage } from "./PreviewImage";
 import { Button } from "../Button/Button";
 import { cn } from "../../../../lib/utilities";
 
-// TODO
-// slider to clear interval on click
-// dropdown: disabled state
-// input disabled
-// checkbox,radio disabled
-
 type Props = ComponentProps<"div"> & {
   handleSubmitFile?: (data: {
     error: string;
     file: { name: string; url: string }[];
   }) => void;
   buttonTitle?: string;
-  title?: string;
+  label?: string;
   error?: string;
   success?: boolean;
   uploadVariant?: "single" | "multiple";
@@ -34,18 +28,18 @@ type Props = ComponentProps<"div"> & {
   size: "small" | "medium" | "large";
   loading?: boolean;
   disabled?: boolean;
-  // classnames for style
-  titleClassName?: string;
-  errorClassName?: string;
-  buttonClassName?: string;
-  dragAndDropContainerClassName?: string;
-  previewImageContainerClassName?: string;
-  previewImageCloseButtonClassName?: string;
   allowedFileTypes: {
     files: string[];
     images: string[];
   };
   inputName?: string;
+  // classnames for style
+  classNamelabel?: string;
+  classNameError?: string;
+  classNameButton?: string;
+  classNameDragAndDropContainer?: string;
+  classNamePreviewImageContainer?: string;
+  classNamePreviewImageCloseButton?: string;
 };
 
 const allowedTypes = {
@@ -57,7 +51,7 @@ export function FileUpload({
   handleSubmitFile,
   error,
   success,
-  title,
+  label,
   buttonTitle = "Upload",
   fileTypes = "images",
   uploadVariant = "single",
@@ -66,18 +60,17 @@ export function FileUpload({
   size = "medium",
   loading = false,
   disabled,
-  titleClassName = "",
-  errorClassName = "",
-  buttonClassName = "",
-  dragAndDropContainerClassName = "",
-  previewImageContainerClassName = "",
-  previewImageCloseButtonClassName = "",
   allowedFileTypes = allowedTypes,
   inputName,
+  classNamelabel = "",
+  classNameButton = "",
+  classNameDragAndDropContainer = "",
+  classNamePreviewImageContainer = "",
+  classNamePreviewImageCloseButton = "",
+  classNameError = "",
   className = "",
   ...props
 }: Props) {
-  // TODO add loader here
   const [previewUrl, setPreviewUrl] = React.useState<string>("");
   const [uploadedMultipleFiles, setUploadedMultipleFiles] = React.useState<
     {
@@ -92,17 +85,28 @@ export function FileUpload({
 
   const uploadRef = useRef<HTMLInputElement>(null);
 
-  function handleUploadFile(e: File) {
-    // console.log("types", e.target.files?.[0]);
-    const fileData = e;
+  useEffect(() => {
+    if (uploadVariant === "multiple") {
+      handleSubmitFile?.({
+        error: "",
+        file: uploadedMultipleFiles,
+      });
+    }
+    if (uploadVariant === "single" && uploadedSingleFile) {
+      handleSubmitFile?.({
+        error: "",
+        file: [{ name: uploadedSingleFile?.name, url: previewUrl }],
+      });
+    }
+  }, [uploadedMultipleFiles, uploadedSingleFile]);
 
+  function handleUploadFile(fileData: File) {
     try {
       if (!fileData) {
-        throw new Error(`No file  was provided, try again please`);
+        throw new Error(`No file was provided, try again please`);
       }
       //check file type
       const fileFormat = fileData?.type.split("/")[1];
-      console.log("🚀 ~ handleUploadFile ~ fileFormat:", fileFormat);
 
       if (!fileFormat) {
         throw new Error(`No file format was provided, try again please`);
@@ -161,42 +165,27 @@ export function FileUpload({
     }
   }
 
-  useEffect(() => {
-    if (uploadVariant === "multiple") {
-      handleSubmitFile?.({
-        error: "",
-        file: uploadedMultipleFiles,
-      });
-    }
-    if (uploadVariant === "single" && uploadedSingleFile) {
-      handleSubmitFile?.({
-        error: "",
-        file: [{ name: uploadedSingleFile?.name, url: previewUrl }],
-      });
-    }
-  }, [uploadedMultipleFiles, uploadedSingleFile]);
-
   return (
     <div className={cn("flex flex-col gap-1", className)} {...props}>
       {/* LABEL */}
-      {title && (
-        <label htmlFor={title || "fileUpload"}>
+      {label && (
+        <label htmlFor={label || "fileUpload"}>
           <p
             className={cn(
               labelInputVariants({
                 errorState: !!error,
                 successState: !!success,
               }),
-              titleClassName
+              classNamelabel
             )}
           >
-            {title}
+            {label}
           </p>
         </label>
       )}
       <input
         name={inputName}
-        id={title || "fileUpload"}
+        id={label || "fileUpload"}
         ref={uploadRef}
         className="hidden"
         type="file"
@@ -210,7 +199,7 @@ export function FileUpload({
         <Button
           title={`upload ${fileTypes}`}
           disabled={disabled || loading}
-          className={buttonClassName}
+          className={classNameButton}
           loading={loading}
           size={size}
           variant={buttonVariant}
@@ -224,11 +213,11 @@ export function FileUpload({
         <DragAndDropContainer
           title={`upload ${fileTypes}`}
           disabled={disabled || loading}
-          className={dragAndDropContainerClassName}
+          className={classNameDragAndDropContainer}
           buttonTitle={buttonTitle}
           onClick={() => uploadRef.current?.click()}
           size={size}
-          $title={title}
+          label={label}
           onDrop={(e) => {
             e.preventDefault();
             const file = e.dataTransfer.files?.[0];
@@ -237,7 +226,7 @@ export function FileUpload({
         />
       )}
       {(error || caughtError) && (
-        <p className={cn("text-sm text-red-600", errorClassName)}>
+        <p className={cn("text-sm text-red-600", classNameError)}>
           {error || caughtError}
         </p>
       )}
@@ -250,8 +239,8 @@ export function FileUpload({
               <>
                 {fileTypes === "files" && (
                   <PreviewFile
-                    className={previewImageContainerClassName}
-                    closeButtonClassName={previewImageCloseButtonClassName}
+                    className={classNamePreviewImageContainer}
+                    closeButtonClassName={classNamePreviewImageCloseButton}
                     size={size}
                     key={index}
                     fileUrl={file.url}
@@ -261,8 +250,8 @@ export function FileUpload({
                 )}
                 {fileTypes === "images" && (
                   <PreviewImage
-                    className={previewImageContainerClassName}
-                    closeButtonClassName={previewImageCloseButtonClassName}
+                    className={classNamePreviewImageContainer}
+                    closeButtonClassName={classNamePreviewImageCloseButton}
                     size={size}
                     key={index}
                     imgUrl={file.url}
@@ -278,8 +267,8 @@ export function FileUpload({
         <>
           {fileTypes === "files" && (
             <PreviewFile
-              className={previewImageContainerClassName}
-              closeButtonClassName={previewImageCloseButtonClassName}
+              className={classNamePreviewImageContainer}
+              closeButtonClassName={classNamePreviewImageCloseButton}
               size={size}
               fileUrl={previewUrl}
               fileName={uploadedSingleFile.name}
@@ -288,8 +277,8 @@ export function FileUpload({
           )}
           {fileTypes === "images" && (
             <PreviewImage
-              className={previewImageContainerClassName}
-              closeButtonClassName={previewImageCloseButtonClassName}
+              className={classNamePreviewImageContainer}
+              closeButtonClassName={classNamePreviewImageCloseButton}
               size={size}
               imgUrl={previewUrl}
               handleClear={() => handleDelete(0)}

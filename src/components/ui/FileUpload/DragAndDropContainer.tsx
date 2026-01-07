@@ -36,13 +36,13 @@ const containerVariants = cva(
 type Props = VariantProps<typeof containerVariants> &
   ComponentProps<"button"> & {
     size?: "small" | "medium" | "large";
-    $title?: string;
+    label?: string;
     buttonTitle?: string;
     handleClick?: () => void;
   };
 export function DragAndDropContainer({
   size = "medium",
-  $title = "Drag and drop files here",
+  label = "Drag and drop files here",
   buttonTitle,
   handleClick,
   className = "",
@@ -70,7 +70,7 @@ export function DragAndDropContainer({
       )}
       {...props}
     >
-      <p>{buttonTitle || $title}</p>
+      <p>{buttonTitle || label}</p>
     </button>
   );
 }

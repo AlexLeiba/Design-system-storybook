@@ -7,6 +7,60 @@ import {
 } from "../components/ui/Tabs/Tabs";
 import Label from "../components/ui/Label/Label";
 
+const meta: Meta<typeof TabsDefault> = {
+  title: "Example/Tabs",
+  component: TabsDefault,
+  tags: ["autodocs"],
+  argTypes: {
+    value: {
+      control: "check",
+      description:
+        "on <b>TabsTrigger</b> the <b>value</b> attribute represents the tab id, based on selected <b>value</b> the <b>TabsContent</b> will render its content.",
+    },
+    defaultValue: {
+      control: "check",
+      description: "Represents the default selected tab.",
+    },
+
+    loading: {
+      control: "boolean",
+      defaultValue: false,
+    },
+    variant: {
+      control: "radio",
+      options: ["primary", "secondary", "tertiary"],
+      defaultValue: "primary",
+    },
+    size: {
+      control: "radio",
+      options: ["small", "medium", "large"],
+      defaultValue: "medium",
+    },
+    disabled: {
+      control: "boolean",
+      defaultValue: false,
+    },
+    fullWidthContainer: {
+      control: "boolean",
+      defaultValue: false,
+    },
+    fullWidthTabs: {
+      control: "boolean",
+      defaultValue: false,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
+      },
+    },
+  },
+};
+
+export default meta;
+
 type TabsContentProps = {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "small" | "medium" | "large";
@@ -91,61 +145,6 @@ export function TabsDefault({
     </Tabs>
   );
 }
-
-// component info.
-const meta: Meta<typeof TabsDefault> = {
-  title: "Example/Tabs",
-  component: TabsDefault,
-  tags: ["autodocs"],
-  argTypes: {
-    value: {
-      control: "check",
-      description:
-        "on <b>TabsTrigger</b> the <b>value</b> attribute represents the tab id, based on selected <b>value</b> the <b>TabsContent</b> will render its content.",
-    },
-    defaultValue: {
-      control: "check",
-      description: "Represents the default selected tab.",
-    },
-
-    loading: {
-      control: "boolean",
-      defaultValue: false,
-    },
-    variant: {
-      control: "radio",
-      options: ["primary", "secondary", "tertiary"],
-      defaultValue: "primary",
-    },
-    size: {
-      control: "radio",
-      options: ["small", "medium", "large"],
-      defaultValue: "medium",
-    },
-    disabled: {
-      control: "boolean",
-      defaultValue: false,
-    },
-    fullWidthContainer: {
-      control: "boolean",
-      defaultValue: false,
-    },
-    fullWidthTabs: {
-      control: "boolean",
-      defaultValue: false,
-    },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Check out the <b>code usage</b> and all <b>props</b>  by clicking the button below : <b>Show code</b>",
-      },
-    },
-  },
-};
-
-export default meta;
 
 type Story = Omit<StoryObj<typeof TabsDefault>, "children">;
 

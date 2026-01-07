@@ -7,7 +7,7 @@ const meta: Meta<typeof SearchInput> = {
   tags: ["autodocs"],
   argTypes: {
     value: { control: "text" },
-    title: { control: "text" },
+    label: { control: "text" },
 
     sizeType: {
       control: "radio",
@@ -42,7 +42,7 @@ type Story = StoryObj<typeof SearchInput>;
 
 export const DefaultInput: Story = {
   args: {
-    title: "Search Input label",
+    label: "Search Input label",
     value: "search input placeholder...",
     sizeType: "medium",
     handleChange: (v) => console.log(v),
@@ -50,7 +50,7 @@ export const DefaultInput: Story = {
 };
 export const SmallSearchInput: Story = {
   args: {
-    title: "Search Input label",
+    label: "Search Input label",
     value: "search input placeholder...",
     sizeType: "small",
     handleChange: (v) => console.log(v),
@@ -58,7 +58,7 @@ export const SmallSearchInput: Story = {
 };
 export const MediumSearchInput: Story = {
   args: {
-    title: "Search Input label",
+    label: "Search Input label",
     value: "search input placeholder...",
     sizeType: "medium",
     handleChange: (v) => console.log(v),
@@ -66,7 +66,7 @@ export const MediumSearchInput: Story = {
 };
 export const LargeSearchInput: Story = {
   args: {
-    title: "Search Input label",
+    label: "Search Input label",
     value: "search input placeholder...",
     sizeType: "large",
     handleChange: (v) => console.log(v),
@@ -74,7 +74,7 @@ export const LargeSearchInput: Story = {
 };
 export const DisabledSearchInput: Story = {
   args: {
-    title: "Search Input label",
+    label: "Search Input label",
     value: "search input placeholder...",
     sizeType: "large",
     disabled: true,
